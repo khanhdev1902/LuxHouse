@@ -1,10 +1,15 @@
-import { Button } from "@/components/ui/button";
+// import { ThemeProvider } from "@/components/providers/theme"
+// import { Toaster } from "@/components/ui/toaster"
+// import { AuthProvider } from "@/context/AuthContext"
+import AppRouter from "@/routes"
 
 export default function App() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      LYZY Shop
-      <Button>Click me</Button>
-    </div>
-  );
+    // <AuthProvider>
+      // <ThemeProvider>
+        <AppRouter />
+        // <Toaster />
+      // </ThemeProvider>
+    // </AuthProvider>
+  )
 }
