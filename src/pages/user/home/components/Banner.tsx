@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Banner() {
   return (
     <div className='pt-32 w-full'>
