@@ -1,6 +1,10 @@
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @layer base {
   :root {
@@ -63,14 +67,19 @@
     @apply border-border;
   }
   body {
-    @apply bg-[#F3F4F6] text-foreground  text-[#434343] box-border;
+    @apply bg-white text-foreground  text-[#434343] box-border;
   }
 }
-.wrapper {
-  @apply p-2 md:px-40
+.ant-rate-star {
+  margin: 0px; /* chỉnh spacing ở đây */
 }
+
+/* bg-[#F3F4F6] */
 .text-col{
   @apply bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent
+}
+.bg-col{
+  @apply bg-gradient-to-r from-cyan-500 to-purple-500
 }
 .text-col-hover:hover {
   @apply bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent

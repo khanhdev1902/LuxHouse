@@ -27,7 +27,7 @@ const menuItems = [
 
 export default function Header() {
   return (
-    <header className="fixed top-0 left-0 w-full bg-white ">
+    <header className="fixed top-0 left-0 w-full bg-white z-50 shadow-xl">
       <Container className="flex flex-col gap-4">
         <div
           className={cn(
