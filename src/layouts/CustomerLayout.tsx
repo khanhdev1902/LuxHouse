@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 
 export default function CustomerLayout() {
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen h-[1500px]'>
       <Header/>
-      <main className='flex-grow px-4 md:px-8 bg-gray-50'>
+      <main className='flex-grow'>
         <Outlet/>
       </main>
       <Footer/>
