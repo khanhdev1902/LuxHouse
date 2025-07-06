@@ -7,6 +7,8 @@ import VerticalDropdown from "./components/VerticalDropDown";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Store from "./components/Store";
 import Container from "@/components/ui/Container";
+import React from "react";
+import { debounce } from "@/utils/debounce";
 const menuItems = [
   {
     title: "Sản phẩm",
@@ -25,9 +27,34 @@ const menuItems = [
   { title: "Cửa hàng", submenu: [] },
 ];
 
-export default function Header() {
+interface HeaderProps {
+  className?: string;
+  onHandleResize: (value: number) => void;
+}
+export default function Header({ className, onHandleResize }: HeaderProps) {
+  const headerRef = React.useRef<HTMLDivElement>(null);
+  const handleResizeRef = React.useRef<() => void>(()=>{});
+  React.useEffect(() => {
+    handleResizeRef.current = debounce(() => {
+      if (headerRef.current) {
+        onHandleResize(headerRef.current.offsetHeight);
+      }
+    }, 300);
+    handleResizeRef.current();
+    window.addEventListener("resize", handleResizeRef.current);
+    return () => {
+      window.removeEventListener("resize", handleResizeRef.current!);
+    };
+  }, []);
+
   return (
-    <header className="fixed top-0 left-0 w-full bg-white z-50 shadow-xl">
+    <header
+      ref={headerRef}
+      className={cn(
+        "fixed top-0 left-0 w-full bg-white z-50 shadow-xl",
+        className
+      )}
+    >
       <Container className="flex flex-col gap-4">
         <div
           className={cn(
@@ -36,7 +63,7 @@ export default function Header() {
           )}
         >
           <div
-            className={cn("flex flex-row- gap-2 items-center cursor-pointer")}
+            className={cn("flex flex-row gap-2 items-center cursor-pointer")}
           >
             <GiHamburgerMenu className={cn("size-8", "sm:hidden")} />
             <Logo className="text-[20px]" />

@@ -32,35 +32,35 @@ const sampleProducts = [
     price: 7990000,
   },
   {
-    id: 4,
+    id: 5,
     title: "Bàn ăn gỗ sồi",
     image:
       "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
     price: 7990000,
   },
   {
-    id: 4,
+    id: 6,
     title: "Bàn ăn gỗ sồi",
     image:
       "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
     price: 7990000,
   },
   {
-    id: 4,
+    id: 7,
     title: "Bàn ăn gỗ sồi",
     image:
       "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
     price: 7990000,
   },
   {
-    id: 4,
+    id: 8,
     title: "Bàn ăn gỗ sồi",
     image:
       "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
     price: 7990000,
   },
   {
-    id: 4,
+    id: 9,
     title: "Bàn ăn gỗ sồi",
     image:
       "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
