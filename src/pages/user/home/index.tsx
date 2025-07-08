@@ -67,7 +67,7 @@ const sampleProducts = [
     price: 7990000,
   },
 ];
-import { motion, scale } from "motion/react";
+import { motion } from "motion/react";
 export default function Home() {
   return (
     <>
@@ -84,10 +84,10 @@ export default function Home() {
             rotate: -360,
           }}
           transition={{
-            x: { duration: 3, delay: 0.075, ease: "easeOut" },
+            x: { duration: 2, delay: 0.075, ease: "easeOut" },
             rotate: {
               // repeat: Infinity,
-              duration: 3,
+              duration: 2,
               // ease: "linear"
               ease: "easeOut",
             },
