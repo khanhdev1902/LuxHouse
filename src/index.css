@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'swiper/css';
 @import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
@@ -61,13 +62,16 @@
     --chart-5: 340 75% 55%
   }
 }
-
+body {
+  font-family: "Montserrat", sans-serif;
+}
+/* text-[#434343] */
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-white text-foreground  text-[#434343] box-border;
+    @apply bg-white text-black   box-border;
   }
 }
 .ant-rate-star {
@@ -83,4 +87,17 @@
 }
 .text-col-hover:hover {
   @apply bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent
+}
+.price-color {color: #f94c43;}
+.custom-prev, .custom-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 24px;
+  background: white;
+  border-radius: 9999px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }

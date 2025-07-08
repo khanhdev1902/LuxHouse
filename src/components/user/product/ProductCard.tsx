@@ -23,15 +23,23 @@ export default function ProductCard({ className, product }: ProductCardProps) {
       </div>
       <img src={product?.image} alt={product?.title || "Product Card"} />
       <div className=" py-1 space-y-2">
-        <p className="text-lg font-semibold">{product?.title}</p>
-        <p className="">500.000 đ</p>
-        <div className="flex flex-row justify-between">
-          <Rating/>
+        <p className=" font-semibold line-clamp-2 min-h-[3em] leading-snug">{product?.title}</p>
+        <div className="flex flex-row gap-2 text-xs sm:text-sm">
+          <span className="price-color">32,500.000 đ</span>
+          <span className="text-[#939393] line-through decoration-1">
+            42,900.000đ
+          </span>
+        </div>
+        <div className="flex flex-row justify-between flex-wrap">
+          <div className="flex flex-row gap-1 items-center text-xs sm:text-sm">
+            <Rating number={4.5}/>
+            <span>{`(${29})`}</span>
+          </div>
           <span>Đã bán 27</span>
         </div>
         <div className="flex flex-row gap-2">
-          <div className=" inline-block w-6 h-6 rounded-full border border-cyan-500 bg-col"></div>
-          <div className=" inline-block w-6 h-6 rounded-full border border-cyan-500 bg-col"></div>
+          <div className=" inline-block w-6 h-6 rounded-full border hover:border-gray-200 bg-[#D2AF84]"></div>
+          <div className=" inline-block w-6 h-6 rounded-full border hover:border-gray-200 bg-[#d3d0d3]"></div>
         </div>
       </div>
     </div>
