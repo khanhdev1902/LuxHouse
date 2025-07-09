@@ -1,10 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion, scale } from "framer-motion";
-import React, { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import React from "react";
 
 export default function ChatBot() {
-  const [isChatBox, setIsChatBox] = useState(false);
+  const [isChatBox, setIsChatBox] = React.useState(false);
 
   return (
     <>
@@ -31,8 +31,8 @@ export default function ChatBot() {
                 border-cyan-50 select-none font-semibold text-lg"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                transition={{ duration:0.2, delay:0.0075, ease:'easeOut'}}
-                onClick={()=>setIsChatBox(false)}
+                transition={{ duration: 0.2, delay: 0.0075, ease: "easeOut" }}
+                onClick={() => setIsChatBox(false)}
               >
                 x
               </motion.span>
