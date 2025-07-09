@@ -67,33 +67,11 @@ const sampleProducts = [
     price: 7990000,
   },
 ];
-import { motion } from "motion/react";
 export default function Home() {
   return (
     <>
       <Banner />
       <Container className="pt-5 space-y-5">
-        <motion.img
-          src="chat.png"
-          alt="icon-chatbot"
-          className=" fixed bottom-8 -right-40 z-10 size-14 shadow-lg rounded-full cursor-pointer"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          animate={{
-            x: -200,
-            rotate: -360,
-          }}
-          transition={{
-            x: { duration: 2, delay: 0.075, ease: "easeOut" },
-            rotate: {
-              // repeat: Infinity,
-              duration: 2,
-              // ease: "linear"
-              ease: "easeOut",
-            },
-          }}
-        />
-
         <section className=" w-full">
           <ProductSlider
             title="Hàng mới"

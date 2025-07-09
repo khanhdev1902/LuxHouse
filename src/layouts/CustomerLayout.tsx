@@ -1,3 +1,4 @@
+import ChatBot from "@/components/chatbot";
 import Footer from "@/components/user/footer";
 import Header from "@/components/user/header";
 import React from "react";
@@ -8,6 +9,7 @@ export default function CustomerLayout() {
   const handleResize = (sizeHeight: number) => setHeaderHeight(sizeHeight);
   return (
     <div className="flex flex-col min-h-screen h-[1500px]">
+      <ChatBot/>
       <Header onHandleResize={handleResize} />
       <main className={`flex-grow`} style={{ paddingTop: `${headerHeight}px` }}>
         <Outlet />

@@ -9,7 +9,7 @@ export default function SearchInput({ className }: SearchInputProps) {
   return (
     <div
       className={cn(
-        "relative group w-full sm:w-[500px] xl:focus-within:w-[800px] border-2 rounded-3xl focus-within:border-cyan-500 transition-all duration-500 ease-in-out",
+        "relative group w-full sm:w-[400px] xl:focus-within:w-[600px] border-2 rounded-3xl focus-within:border-cyan-500 transition-all duration-500 ease-in-out",
         className
       )}
     >

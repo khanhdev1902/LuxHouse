@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 export default function Banner() {
   return (
     <div className="w-full ">
-      <Swiper navigation slidesPerView={1} modules={[Navigation, Pagination]} loop={true}>
+      <Swiper navigation slidesPerView={1} modules={[Navigation, Pagination]} pagination={true} loop={true}>
         <SwiperSlide>
           <img
             src="/slideshow_1.jpg"

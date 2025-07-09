@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
 import clsx from "clsx";
+import { useNavigate } from "react-router-dom";
 
 type MenuItem = {
   title: string;
@@ -15,6 +16,7 @@ interface VerticalDropdownProps {
 export default function VerticalDropdown({ menuItems }: VerticalDropdownProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate()
 
   // Auto close when click outside
   useEffect(() => {
@@ -60,6 +62,8 @@ export default function VerticalDropdown({ menuItems }: VerticalDropdownProps) {
                     <span
                       key={i}
                       className="text-gray-700 text-col-hover transition-all cursor-pointer p-1 px-4 border-b border-gray-100"
+                      onClick={()=>{navigate("/products")}}
+                      
                     >
                       {sub}
                     </span>

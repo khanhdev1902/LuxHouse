@@ -5,10 +5,10 @@ import Logo from "./components/Logo";
 import SearchInput from "./components/SearchInput";
 import VerticalDropdown from "./components/VerticalDropDown";
 import { GiHamburgerMenu } from "react-icons/gi";
-import Store from "./components/Store";
 import Container from "@/components/ui/Container";
 import React from "react";
 import { debounce } from "@/utils/debounce";
+import { IoSearchSharp } from "react-icons/io5";
 const menuItems = [
   {
     title: "Sản phẩm",
@@ -51,7 +51,7 @@ export default function Header({ className, onHandleResize }: HeaderProps) {
     <header
       ref={headerRef}
       className={cn(
-        "fixed top-0 left-0 w-full bg-white z-50 shadow-lg",
+        "fixed top-0 left-0 w-full bg-white z-10 shadow-lg",
         className
       )}
     >
@@ -68,9 +68,12 @@ export default function Header({ className, onHandleResize }: HeaderProps) {
             <GiHamburgerMenu className={cn("size-8", "sm:hidden")} />
             <Logo className="text-[20px]" />
           </div>
-          <SearchInput className={cn("order-2", "sm:order-none")} />
-          <div className={cn("flex flex-row gap-4")}>
-            <Store />
+          <div className={cn("flex flex-row items-center gap-4")}>
+          <SearchInput className={cn(" hidden", "sm:block")} />
+          <IoSearchSharp className="size-7 sm:hidden hover:text-cyan-500"/>
+          
+          
+            {/* <Store /> */}
             <Account />
             <Cart />
           </div>
