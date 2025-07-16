@@ -35,6 +35,7 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem
   }
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -62,34 +63,46 @@
     --chart-5: 340 75% 55%
   }
 }
+
 body {
   font-family: "Montserrat", sans-serif;
 }
+
 /* text-[#434343] */
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-white text-black   box-border;
+    @apply bg-white text-black box-border;
   }
 }
+
 .ant-rate-star {
-  margin: 0px; /* chỉnh spacing ở đây */
+  margin: 0px;
+  /* chỉnh spacing ở đây */
 }
 
 /* bg-[#F3F4F6] */
-.text-col{
+.text-col {
   @apply bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent
 }
-.bg-col{
+
+.bg-col {
   @apply bg-gradient-to-r from-cyan-500 to-purple-500
 }
+
 .text-col-hover:hover {
   @apply bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent
 }
-.price-color {color: #f94c43;}
-.custom-prev, .custom-next {
+
+.price-color {
+  color: #f94c43;
+}
+
+.custom-prev,
+.custom-next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -99,5 +112,27 @@ body {
   font-size: 24px;
   background: white;
   border-radius: 9999px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
+
+/*--------- custom-scrollbar ---------------------------------*/
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to top left, #06b5d4c3, #8a5cf6d6);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to top left, #06b5d4c3, #8a5cf6d6);
+}
+
+/* -------------------------------------------------------------- */
