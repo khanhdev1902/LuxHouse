@@ -51,7 +51,7 @@ export default function Header({ className, onHandleResize }: HeaderProps) {
     <header
       ref={headerRef}
       className={cn(
-        "fixed top-0 left-0 w-full bg-white z-10 shadow-lg",
+        "fixed top-0 left-0 w-full bg-white z-10 shadow-sm",
         className
       )}
     >
