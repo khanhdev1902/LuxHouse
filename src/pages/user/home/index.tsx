@@ -5,7 +5,7 @@ import ProductSlider from "@/components/user/product/ProudctSlider";
 const sampleProducts = [
   {
     id: 1,
-    title: "Ghế Sofa Vải MOHO GIORGIO - MOHO Signature",
+    title: "Ghế Sofa Vải MOHO GIORGIO - MOHO Signature hahhah ahaha ahhah",
     image:
       "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
     price: 12990000,

@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
-import { motion, AnimatePresence, scale } from "framer-motion";
+import { motion } from "framer-motion";
 const slideShows = [
   "/slideshow_1_master.jpg",
   "/slideshow_3_master.jpg",
@@ -44,7 +44,7 @@ export default function Banner() {
           initial={{ x: -70, opacity: 0 }}
           animate={{ x: isHover ? 0 : -70, opacity: isHover ? 1 : 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          whileTap={{scale:0.8}}
+          whileTap={{ scale: 0.8 }}
           onClick={() => swiperRef.current?.slidePrev(500)}
           className="absolute right-5 top-1/2 -translate-y-1/2 z-10"
         >

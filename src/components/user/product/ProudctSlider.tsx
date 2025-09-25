@@ -1,6 +1,6 @@
 // components/ProductSlider.tsx
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation} from "swiper/modules";
 import { cn } from "@/lib/utils";
 import ProductCard from "./ProductCard";
 
@@ -31,12 +31,14 @@ export default function ProductSlider({
       <span className=" font-semibold price-color cursor-pointer">Xem thêm</span>
       </div>
       <Swiper
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Autoplay]}
         navigation={{
           prevEl: ".custom-prev",
           nextEl: ".custom-next",
         }}
-        // pagination={{ clickable: true }}
+        loop
+        // autoplay={{delay:4000, disableOnInteraction:false}}
+        // speed={2200}
         spaceBetween={15}
         slidesPerView={2}
         breakpoints={{
@@ -46,7 +48,7 @@ export default function ProductSlider({
         }}
       >
         <div className=" opacity-0 group-hover:opacity-100 active:opacity-100">
-          <div className="custom-prev ml-60">←</div>
+          <div className="custom-prev ml-60 text-4xl">←</div>
           <div className="custom-next">→</div>
         </div>
         {products.map((product) => (

@@ -102,20 +102,6 @@ body {
   color: #f94c43;
 }
 
-.custom-prev,
-.custom-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  cursor: pointer;
-  padding: 8px;
-  font-size: 24px;
-  background: white;
-  border-radius: 9999px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
 /*--------- custom-scrollbar ---------------------------------*/
 
 ::-webkit-scrollbar {
