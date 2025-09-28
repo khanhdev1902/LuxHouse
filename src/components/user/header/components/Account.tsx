@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/tooltip";
 
 export default function Account() {
-  const [user, setUser] = React.useState(false);
   return (
     <Tooltip>
       <TooltipTrigger asChild>
