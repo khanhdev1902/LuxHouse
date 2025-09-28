@@ -1,6 +1,7 @@
 import Rating from "@/components/ui/Rating";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 const image =
   "https://cdn.hstatic.net/products/200000065946/pro_nau_combo_phong_ngu_2_san_pham_scarlet_noi_that_moho_10a7d498d2604a449b704b2dd0fa3f01_master.jpg";
 interface Product {
@@ -14,12 +15,14 @@ interface ProductCardProps {
   product?: Product;
 }
 export default function ProductCard({ className, product }: ProductCardProps) {
+  const navigation = useNavigate()
   return (
     <div
       className={cn(
         " relative cursor-pointer select-none ",
         className
       )}
+      onClick={()=>navigation("products/1")}
     >
       <div className=" absolute top-1 left-0 z-50 bg-red-500 text-white py-1 px-3 rounded-br-lg text-sm opacity-95">
         35%

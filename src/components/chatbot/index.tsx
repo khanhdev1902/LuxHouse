@@ -63,7 +63,7 @@ export default function ChatBot() {
                 className=" relative rounded-t-lg bg-gradient-to-tl from-cyan-500 to-purple-500
              text-white font-semibold p-2 flex flex-row gap-2 items-center shadow-lg border-b border-t-gray-200 select-none"
               >
-                <img src="chatbot.png" alt="" className="size-10" />
+                <img src="/chatbot.png" alt="" className="size-10" />
                 <div className="flex flex-col">
                   <span>Trợ lý ảo ZORO</span>
                   <div className="flex flex-row gap-2 items-center">
@@ -122,7 +122,7 @@ export default function ChatBot() {
                         {/* Icon ở giữa KHÔNG xoay */}
                         <div className="absolute inset-[3px] bg-white rounded-full flex items-center justify-center shadow-md border border-gray-200">
                           <img
-                            src="iconchatbot.png"
+                            src="/iconchatbot.png"
                             alt=""
                             className="size-6 select-none"
                           />
@@ -147,7 +147,7 @@ export default function ChatBot() {
                       {/* Icon ở giữa KHÔNG xoay */}
                       <div className="absolute inset-[3px] bg-white rounded-full flex items-center justify-center shadow-md border border-gray-200">
                         <img
-                          src="iconchatbot.png"
+                          src="/iconchatbot.png"
                           alt=""
                           className="size-6 select-none"
                         />
@@ -188,7 +188,7 @@ export default function ChatBot() {
 
       {/* Nút chatbot hình tròn */}
       <motion.img
-        src="chat.png"
+        src="/chat.png"
         alt="icon-chatbot"
         className="fixed bottom-8 right-10 z-10 size-14 shadow-lg rounded-full cursor-pointer select-none"
         onClick={() => setIsChatBox(!isChatBox)}
