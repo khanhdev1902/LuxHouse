@@ -23,7 +23,7 @@ export default function Cart() {
             9
           </span>
         </div>
-        <span className="hidden lg:inline select-none">Giỏ hàng</span>
+        {/* <span className="hidden lg:inline select-none">Giỏ hàng</span> */}
       </div>
     </div>
   );

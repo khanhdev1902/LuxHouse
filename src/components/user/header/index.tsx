@@ -78,7 +78,7 @@ export default function Header({ className, onHandleResize }: HeaderProps) {
             <Cart />
           </div>
         </div>
-        <nav className={cn(" hidden", "sm:flex flex-row gap-2")}>
+        <nav className={cn(" hidden", "lg:flex flex-row gap-2")}>
           <VerticalDropdown menuItems={menuItems} />
         </nav>
       </Container>

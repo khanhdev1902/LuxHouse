@@ -14,7 +14,7 @@ export default function CartSheet({ handleIsCartSheet }: CartSheetProps) {
       exit={{ x: 100, opacity: 0 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-      <div className="flex flex-col h-screen bg-white">
+      <div className="flex flex-col h-full bg-white">
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           <div className="flex items-center justify-between border-b pb-2">
             <span className=" text-2xl font-bold bg-gradient-to-tl from-cyan-500 to-purple-500 bg-clip-text text-transparent">
