@@ -39,7 +39,9 @@ export default function VerticalDropdown({ menuItems }: VerticalDropdownProps) {
             onMouseLeave={() => setActiveIndex(null)}
             className="relative cursor-pointer group"
           >
-            <div className="flex flex-row gap-1 items-center group text-[#434343] text-col-hover cursor-pointer">
+            <div className="flex flex-row gap-1 items-center group text-[#434343] text-col-hover cursor-pointer"
+              onClick={()=>navigate("/products")}
+            >
               <span className="font-semibold transition-colors ">
                 {item.title}
               </span>
