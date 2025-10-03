@@ -8,10 +8,15 @@ import { MoveLeft, MoveRight } from "lucide-react";
 import React from "react";
 
 interface Product {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
+  id?:number;
+  title?: string;
+  image_1?: string;
+  image_2?: string;
+  price?: number;
+  discount?: number;
+  sold?: number;
+  rating?: number;
+  rating_users?: number;
 }
 
 interface ProductSliderProps {
@@ -82,7 +87,7 @@ export default function ProductSlider({
           </>
           {products.map((product) => (
             <SwiperSlide
-              key={product.id}
+              key={product?.id}
               className=" h-auto pb-12 custom-rate-spacing"
             >
               <ProductCard product={product} />
