@@ -10,7 +10,7 @@ import useToggle from "@/hooks/common/useToggle";
 
 export default function Account() {
   const ref = React.useRef<HTMLDivElement | null>(null);
-  const { value: isOpen,toggle, off } = useToggle();
+  const { value: isOpen, toggle, off } = useToggle();
   useClickOutside(ref, off);
   return (
     <div
@@ -20,7 +20,20 @@ export default function Account() {
     >
       <Tooltip>
         <TooltipTrigger asChild>
-          <img src="/avt.jpg" alt="" className="rounded-full size-12" />
+          <div className="flex flex-row gap-1 justify-center items-center">
+            <img src="/avt.jpg" alt="" className="rounded-full size-9" />
+            <div className="flex flex-col gap-0">
+              <span className="text-[#434343]">Tài khoản của</span>
+              <p className="flex flex-row gap-0 justify-center items-center font-medium line-clamp-1 whitespace-nowrap w-28 leading-snug">
+                khanhdeddo
+              </p>
+              {/* <span className="text-[#434343]">Đăng ký/ Đăng nhập</span>
+              <span className="flex flex-row gap-0 justify-center items-center font-medium">
+                Tài khoản của bạn
+                <IoIosArrowDown />
+              </span> */}
+            </div>
+          </div>
         </TooltipTrigger>
         <TooltipContent
           side="top"

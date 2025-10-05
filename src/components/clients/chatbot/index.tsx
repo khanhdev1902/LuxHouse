@@ -191,14 +191,14 @@ export default function ChatBot() {
       {/* Nút chatbot hình tròn */}
       <motion.div
         className="fixed bottom-8 right-10 z-20 size-16 shadow-lg rounded-2xl cursor-pointer select-none flex flex-row items-center justify-center bg-gradient-to-tr from-[#e65c00] to-[#f9d423]"
-        onClick={() => setIsChatBox(!isChatBox)}
+        onClick={() => setIsChatBox((v) => !v)}
         animate={{
-          rotate: isChatBox ? 360 : -360,
+          rotate: -360,
         }}
         transition={{
-          duration: isChatBox ? 0.7 : 3,
-          ease: isChatBox ? "easeInOut" : "linear",
-          repeat: isChatBox ? 0 : Infinity,
+          duration: 3,
+          ease: "linear",
+          repeat: Infinity,
         }}
       >
         {isChatBox ? (
@@ -206,7 +206,7 @@ export default function ChatBot() {
         ) : (
           <GoDependabot className=" relative z-30 size-7 text-white" />
         )}
-        </motion.div>
+      </motion.div>
     </>
   );
 }

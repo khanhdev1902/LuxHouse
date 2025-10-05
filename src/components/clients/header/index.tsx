@@ -56,7 +56,7 @@ export default function Header({ className, onHandleResize }: HeaderProps) {
         className
       )}
     >
-      <Container className="flex flex-col gap-4">
+      <Container>
         <div
           className={cn(
             "flex flex-row flex-wrap justify-between items-center gap-4",
@@ -64,17 +64,19 @@ export default function Header({ className, onHandleResize }: HeaderProps) {
           )}
         >
           <div
-            className={cn("flex flex-row gap-2 items-center cursor-pointer")}
+            className={cn(
+              "flex flex-row gap-2 items-center justify-center cursor-pointer"
+            )}
           >
             <GiHamburgerMenu className={cn("size-8", "sm:hidden")} />
             <Logo className="text-[20px]" />
           </div>
-          <SearchInput className={cn(" hidden", "sm:flex")} />
-          <div className={cn("flex flex-row items-center gap-10")}>
+          <SearchInput/>
+          <div className={cn("flex flex-row items-center justify-end gap-4")}>
             <IoSearchSharp className="size-7 sm:hidden hover:text-cyan-500" />
-            <Notification/>
-            <Cart />
             <Account />
+            <Notification />
+            <Cart />
           </div>
         </div>
         <nav className={cn(" hidden", "lg:flex flex-row gap-2")}>

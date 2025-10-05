@@ -14,7 +14,7 @@ export default function SearchInput({ className }: SearchInputProps) {
   return (
     <div
       className={cn(
-        " relative flex flex-row items-center border border-gray-100 rounded-sm focus-within:border-[#f096198e] duration-300 ease-in-out",
+        " relative flex-row items-center border border-gray-100 rounded-sm focus-within:border-[#f096198e] duration-300 ease-in-out hidden sm:flex",
         className
       )}
     >
