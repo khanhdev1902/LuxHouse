@@ -87,15 +87,15 @@ body {
 
 /* bg-[#F3F4F6] */
 .text-col {
-  @apply bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent
+  @apply bg-gradient-to-tr from-[#c02425] to-[#f0cb35] bg-clip-text text-transparent
 }
 
 .bg-col {
-  @apply bg-gradient-to-r from-cyan-500 to-purple-500
+  @apply bg-gradient-to-tr from-[#c02425] to-[#f0cb35]
 }
 
 .text-col-hover:hover {
-  @apply bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent
+  @apply bg-gradient-to-tr from-[#c02425] to-[#f0cb35] bg-clip-text text-transparent
 }
 
 .price-color {

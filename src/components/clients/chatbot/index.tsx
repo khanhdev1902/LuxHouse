@@ -1,11 +1,13 @@
 "use client";
 import ReactMarkdown from "react-markdown";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUp } from "lucide-react";
+import { IoMdClose } from "react-icons/io";
 import React from "react";
 import axios from "axios";
 import { cn } from "@/lib/utils";
 const apiUrl = import.meta.env.VITE_API_URL;
+import { GoDependabot } from "react-icons/go";
+import { ArrowUp } from "lucide-react";
 type Message = {
   sender: "user" | "genimi";
   text: string;
@@ -55,7 +57,7 @@ export default function ChatBot() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 40 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed bottom-24 right-5 z-20 shadow-xl border border-gray-200 w-80 sm:w-96 h-[500px] bg-white rounded-lg
+            className="fixed bottom-24 right-5 z-[60] shadow-xl border border-gray-200 w-80 sm:w-96 h-[500px] bg-white rounded-lg
             "
           >
             <div className=" relative w-full h-full flex flex-col">
@@ -187,22 +189,24 @@ export default function ChatBot() {
       </AnimatePresence>
 
       {/* Nút chatbot hình tròn */}
-      <motion.img
-        src="/chat.png"
-        alt="icon-chatbot"
-        className="fixed bottom-8 right-10 z-10 size-14 shadow-lg rounded-full cursor-pointer select-none"
+      <motion.div
+        className="fixed bottom-8 right-10 z-20 size-16 shadow-lg rounded-2xl cursor-pointer select-none flex flex-row items-center justify-center bg-gradient-to-tr from-[#e65c00] to-[#f9d423]"
         onClick={() => setIsChatBox(!isChatBox)}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
         animate={{
-          x: 0,
-          rotate: isChatBox ? 0 : -360,
+          rotate: isChatBox ? 360 : -360,
         }}
         transition={{
-          duration: 0.4,
-          ease: "easeOut",
+          duration: isChatBox ? 0.7 : 3,
+          ease: isChatBox ? "easeInOut" : "linear",
+          repeat: isChatBox ? 0 : Infinity,
         }}
-      />
+      >
+        {isChatBox ? (
+          <IoMdClose className=" relative z-30 size-7 text-white" />
+        ) : (
+          <GoDependabot className=" relative z-30 size-7 text-white" />
+        )}
+        </motion.div>
     </>
   );
 }

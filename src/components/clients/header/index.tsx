@@ -9,6 +9,7 @@ import Container from "@/components/ui/Container";
 import React from "react";
 import { debounce } from "@/utils/debounce";
 import { IoSearchSharp } from "react-icons/io5";
+import Notification from "./components/Notification";
 const menuItems = [
   {
     title: "Sản phẩm",
@@ -33,7 +34,7 @@ interface HeaderProps {
 }
 export default function Header({ className, onHandleResize }: HeaderProps) {
   const headerRef = React.useRef<HTMLDivElement>(null);
-  const handleResizeRef = React.useRef<() => void>(()=>{});
+  const handleResizeRef = React.useRef<() => void>(() => {});
   React.useEffect(() => {
     handleResizeRef.current = debounce(() => {
       if (headerRef.current) {
@@ -68,14 +69,12 @@ export default function Header({ className, onHandleResize }: HeaderProps) {
             <GiHamburgerMenu className={cn("size-8", "sm:hidden")} />
             <Logo className="text-[20px]" />
           </div>
-          <div className={cn("flex flex-row items-center gap-4")}>
-          <SearchInput className={cn(" hidden", "sm:block")} />
-          <IoSearchSharp className="size-7 sm:hidden hover:text-cyan-500"/>
-          
-          
-            {/* <Store /> */}
-            <Account />
+          <SearchInput className={cn(" hidden", "sm:flex")} />
+          <div className={cn("flex flex-row items-center gap-10")}>
+            <IoSearchSharp className="size-7 sm:hidden hover:text-cyan-500" />
+            <Notification/>
             <Cart />
+            <Account />
           </div>
         </div>
         <nav className={cn(" hidden", "lg:flex flex-row gap-2")}>

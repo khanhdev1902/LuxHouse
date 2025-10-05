@@ -1,5 +1,5 @@
 import type { RouteObject } from "react-router-dom"
-import CustomerLayout from "@/layouts/CustomerLayout"
+import CustomerLayout from "@/layouts/ClientsLayout"
 import Home from "@/pages/user/home"
 import Products from "@/pages/user/products"
 import ProductDetail from "@/pages/user/productDetail"

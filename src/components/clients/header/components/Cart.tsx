@@ -1,24 +1,22 @@
-import React from "react";
 import { AnimatePresence } from "framer-motion";
 import { BsBagPlus } from "react-icons/bs";
 import CartSheet from "../../CartSheet";
+import useToggle from "@/hooks/common/useToggle";
 
 export default function Cart() {
-  const [isCartSheet, setIsCartSheet] = React.useState(false);
-  const handleIsCartSheet = (vlaue: boolean) => {
-    setIsCartSheet(vlaue);
-  };
+  const { value: isOpen, off, on } = useToggle(false);
+  console.log(isOpen);
   return (
     <div>
       <AnimatePresence>
-        {isCartSheet && <CartSheet handleIsCartSheet={setIsCartSheet} />}
+        {isOpen && <CartSheet handleIsCartSheet={off} />}
       </AnimatePresence>
       <div
         className=" relative flex flex-col items-center justify-end text-col-hover group  cursor-pointer"
-        onClick={() => handleIsCartSheet(true)}
+        onClick={on}
       >
         <BsBagPlus className="size-7 group-hover:text-cyan-600" />
-        <span className="absolute -top-3 -right-3 bg-cyan-600 h-6 w-6 flex justify-center items-center rounded-full text-white font-bold text-xs text-center">
+        <span className="absolute -top-3 -right-3 bg-[#F04D4C] h-6 w-6 flex justify-center items-center rounded-full text-white font-bold text-xs text-center select-none">
           0
         </span>
       </div>

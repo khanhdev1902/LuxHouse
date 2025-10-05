@@ -1,7 +1,7 @@
 import Container from "@/components/ui/Container";
 import Banner from "./components/Banner";
-import ProductSlider from "@/components/user/product/ProudctSlider";
-import ProductCard from "@/components/user/product/ProductCard";
+import ProductSlider from "@/components/clients/product/ProudctSlider";
+import ProductCard from "@/components/clients/product/ProductCard";
 
 const sampleProducts = [
   {

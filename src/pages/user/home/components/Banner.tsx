@@ -38,7 +38,7 @@ export default function Banner() {
           onClick={() => swiperRef.current?.slidePrev(300)}
           className="absolute left-5 top-1/2 -translate-y-1/2 z-10"
         >
-          <ArrowBigLeft className=" size-12 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-500 p-2 text-white opacity-70" />
+          <ArrowBigLeft className=" size-12 rounded-full bg-col p-2 text-white opacity-70" />
         </motion.button>
         <motion.button
           initial={{ x: -70, opacity: 0 }}
@@ -48,7 +48,7 @@ export default function Banner() {
           onClick={() => swiperRef.current?.slidePrev(300)}
           className="absolute right-5 top-1/2 -translate-y-1/2 z-10"
         >
-          <ArrowBigRight className=" size-12 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-500 p-2 text-white opacity-80" />
+          <ArrowBigRight className=" size-12 rounded-full bg-col p-2 text-white opacity-80" />
         </motion.button>
         {slideShows.map((src, i) => (
           <SwiperSlide key={i}>

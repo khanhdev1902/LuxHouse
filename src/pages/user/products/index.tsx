@@ -3,7 +3,7 @@ import Container from "@/components/ui/Container";
 import { ChevronDown, Funnel } from "lucide-react";
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import ProductCard from "@/components/user/product/ProductCard";
+import ProductCard from "@/components/clients/product/ProductCard";
 
 const sampleProducts = [
   {

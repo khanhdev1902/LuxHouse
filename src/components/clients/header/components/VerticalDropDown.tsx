@@ -45,7 +45,7 @@ export default function VerticalDropdown({ menuItems }: VerticalDropdownProps) {
               <span className="font-semibold transition-colors ">
                 {item.title}
               </span>
-              <FaAngleDown className={clsx("transition-transform group-hover:rotate-180 size-4 duration-300 ease-in-out delay-75 group-hover:text-cyan-500",item?.submenu.length===0 && "hidden" )}/>
+              <FaAngleDown className={clsx("transition-transform group-hover:rotate-180 size-4 duration-300 ease-in-out delay-75 group-hover:text-[#c02425]",item?.submenu.length===0 && "hidden" )}/>
             </div>
 
             <AnimatePresence>

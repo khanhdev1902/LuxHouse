@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import ProductCard from "./ProductCard";
 import { MoveLeft, MoveRight } from "lucide-react";
-import React from "react";
+import useToggle from "@/hooks/common/useToggle";
 
 interface Product {
-  id?:number;
+  id?: number;
   title?: string;
   image_1?: string;
   image_2?: string;
@@ -32,7 +32,7 @@ export default function ProductSlider({
   slidesPerView = 4,
   className,
 }: ProductSliderProps) {
-  const [isHover, setIsHover] = React.useState<true | false>(false);
+  const { value: isHover, on, off } = useToggle();
   return (
     <div className={cn("space-y-6", className)}>
       <div className="flex flex-row justify-between">
@@ -41,10 +41,7 @@ export default function ProductSlider({
           Xem thêm
         </button>
       </div>
-      <motion.div
-        onHoverStart={() => setIsHover(true)}
-        onHoverEnd={() => setIsHover(false)}
-      >
+      <motion.div onHoverStart={on} onHoverEnd={off}>
         <Swiper
           modules={[Navigation, Autoplay]}
           navigation={{
@@ -69,7 +66,7 @@ export default function ProductSlider({
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="custom-prev absolute top-1/3 left-4 text-2xl
             text-white z-10 select-none cursor-pointer rounded-full 
-              p-3 bg-gradient-to-tr from-cyan-500 to-purple-500"
+              p-3 bg-col"
             >
               <MoveLeft />
             </motion.button>
@@ -80,7 +77,7 @@ export default function ProductSlider({
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="custom-next absolute top-1/3 right-4 text-2xl
           text-white z-10 select-none cursor-pointer rounded-full 
-            p-3 bg-gradient-to-tr from-cyan-500 to-purple-500"
+            p-3 bg-col"
             >
               <MoveRight />
             </motion.button>
