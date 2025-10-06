@@ -1,9 +1,22 @@
-import Container from "@/components/ui/Container";
-import Banner from "./components/Banner";
-import ProductSlider from "@/components/clients/product/ProudctSlider";
-import ProductCard from "@/components/clients/product/ProductCard";
+export const navbarHeaders = [
+  {
+    title: "Sản phẩm",
+    submenu: [
+      "Bộ sưu tập",
+      "Phòng ngủ",
+      "Phòng khách",
+      "Phòng ăn",
+      "Phòng làm việc",
+    ],
+  },
+  { title: "Khuyến mãi", submenu: ["Khuyến mãi hè", "Mã khuyến mãi"] },
+  { title: "Tin tức", submenu: ["Bài viết", "Mọi người", "Mạng xã hội"] },
+  { title: "Liên hệ hợp tác", submenu: [] },
+  { title: "Về ZORO", submenu: [] },
+  { title: "Cửa hàng", submenu: [] },
+];
 
-const sampleProducts = [
+export const dataTestProducts = [
   {
     id: 1,
     title: "Giường Ngủ Có Hộc & Ổ Điện MOHO VIENNA - MÀU TỰ NHIÊN",
@@ -115,29 +128,73 @@ const sampleProducts = [
     rating: 4.3,
     rating_users: 11,
   },
-];
-export default function Home() {
-  return (
-    <>
-      <Banner />
-      <Container className="pt-5 space-y-5">
-        <section className=" w-full">
-          <ProductSlider
-            title="Hàng mới"
-            products={sampleProducts}
-            slidesPerView={4}
-          />
-        </section>
 
-        <section className="">
-          <div>Bán chạy</div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
-            {sampleProducts.map((product, key) => (
-              <ProductCard product={product} key={key} />
-            ))}
-          </div>
-        </section>
-      </Container>
-    </>
-  );
-}
+  {
+    id: 9,
+    title: "Ghế Sofa Vải MOHO GIORGIO - MOHO Signature hahhah ahaha ahhah",
+    image_1:
+      "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
+    image_2:
+      "https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_noi_that_moho_giuong_co_hoc_vienna_88ba7274638540c0afc3a4d40860ced1_master.jpg",
+    price: 12990000,
+  },
+
+  {
+    id: 10,
+    title: "Ghế Sofa Vải MOHO GIORGIO - MOHO Signature hahhah ahaha ahhah",
+    image_1:
+      "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
+    image_2:
+      "https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_noi_that_moho_giuong_co_hoc_vienna_88ba7274638540c0afc3a4d40860ced1_master.jpg",
+    price: 12990000,
+  },
+
+  {
+    id: 11,
+    title: "Ghế Sofa Vải MOHO GIORGIO - MOHO Signature hahhah ahaha ahhah",
+    image_1:
+      "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
+    image_2:
+      "https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_noi_that_moho_giuong_co_hoc_vienna_88ba7274638540c0afc3a4d40860ced1_master.jpg",
+    price: 12990000,
+  },
+
+  {
+    id: 12,
+    title: "Ghế Sofa Vải MOHO GIORGIO - MOHO Signature hahhah ahaha ahhah",
+    image_1:
+      "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
+    image_2:
+      "https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_noi_that_moho_giuong_co_hoc_vienna_88ba7274638540c0afc3a4d40860ced1_master.jpg",
+    price: 12990000,
+  },
+
+  {
+    id: 13,
+    title: "Ghế Sofa Vải MOHO GIORGIO - MOHO Signature hahhah ahaha ahhah",
+    image_1:
+      "https://product.hstatic.net/200000065946/product/pro_nau_vline_noi_tat_moho_5a78a6e6a8c1423cbaf8e1977d924692_master.jpg",
+    image_2:
+      "https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_noi_that_moho_giuong_co_hoc_vienna_88ba7274638540c0afc3a4d40860ced1_master.jpg",
+    price: 12990000,
+  },
+];
+
+export const allCategorieProducts = [
+    { name: "Bếp" },
+    { name: "Chăn Ga - Gối Nệm" },
+    { name: "Bình - Chậu - Lọ" },
+    { name: "Tủ Quần Áo" },
+    { name: "Tranh Treo Tường" },
+    { name: "Giường Ngủ" },
+    { name: "Ghế Sofa" },
+    { name: "Ghế Ăn" },
+    { name: "Bàn Ăn" },
+    { name: "Đồ Nhà Bếp" },
+    { name: "Gương" },
+    { name: "Thảm" },
+    { name: "Tủ Kệ Tivi" },
+    { name: "Combo Basic" },
+    { name: "Vạn Thành" },
+    { name: "Full Combo" },
+  ];

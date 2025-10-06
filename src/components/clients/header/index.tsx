@@ -10,23 +10,7 @@ import React from "react";
 import { debounce } from "@/utils/debounce";
 import { IoSearchSharp } from "react-icons/io5";
 import Notification from "./components/Notification";
-const menuItems = [
-  {
-    title: "Sản phẩm",
-    submenu: [
-      "Bộ sưu tập",
-      "Phòng ngủ",
-      "Phòng khách",
-      "Phòng ăn",
-      "Phòng làm việc",
-    ],
-  },
-  { title: "Khuyến mãi", submenu: ["Khuyến mãi hè", "Mã khuyến mãi"] },
-  { title: "Tin tức", submenu: ["Bài viết", "Mọi người", "Mạng xã hội"] },
-  { title: "Liên hệ hợp tác", submenu: [] },
-  { title: "Về ZORO", submenu: [] },
-  { title: "Cửa hàng", submenu: [] },
-];
+import { navbarHeaders } from "@/constant/const-home";
 
 interface HeaderProps {
   className?: string;
@@ -71,7 +55,7 @@ export default function Header({ className, onHandleResize }: HeaderProps) {
             <GiHamburgerMenu className={cn("size-8", "sm:hidden")} />
             <Logo className="text-[20px]" />
           </div>
-          <SearchInput/>
+          <SearchInput />
           <div className={cn("flex flex-row items-center justify-end gap-4")}>
             <IoSearchSharp className="size-7 sm:hidden hover:text-cyan-500" />
             <Account />
@@ -80,7 +64,7 @@ export default function Header({ className, onHandleResize }: HeaderProps) {
           </div>
         </div>
         <nav className={cn(" hidden", "lg:flex flex-row gap-2")}>
-          <VerticalDropdown menuItems={menuItems} />
+          <VerticalDropdown menuItems={navbarHeaders} />
         </nav>
       </Container>
     </header>

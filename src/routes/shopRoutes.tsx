@@ -1,8 +1,8 @@
 import type { RouteObject } from "react-router-dom"
 import CustomerLayout from "@/layouts/ClientsLayout"
-import Home from "@/pages/user/home"
-import Products from "@/pages/user/products"
-import ProductDetail from "@/pages/user/productDetail"
+import Home from "@/pages/clients/home"
+import Products from "@/pages/clients/products"
+import ProductDetail from "@/pages/clients/productDetail"
 
 export const shopRoutes: RouteObject[] = [
   {

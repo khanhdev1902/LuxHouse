@@ -1,20 +1,17 @@
 "use client";
-import ReactMarkdown from "react-markdown";
-import { AnimatePresence, motion } from "framer-motion";
-import { IoMdClose } from "react-icons/io";
 import React from "react";
 import axios from "axios";
-import { cn } from "@/lib/utils";
 const apiUrl = import.meta.env.VITE_API_URL;
-import { GoDependabot } from "react-icons/go";
-import { ArrowUp } from "lucide-react";
+import ChatToggle from "./components/ChatToggle";
+import useToggle from "@/hooks/common/useToggle";
+import ChatBox from "./components/ChatBox";
 type Message = {
   sender: "user" | "genimi";
   text: string;
 };
 
 export default function ChatBot() {
-  const [isChatBox, setIsChatBox] = React.useState(false);
+  const { value: isOpen, toggle, off } = useToggle();
   const [message, setMesage] = React.useState("");
   const [isloading, setIsloading] = React.useState(false);
   const [arr, setArr] = React.useState<Message[]>([
@@ -48,9 +45,10 @@ export default function ChatBot() {
   console.log(arr);
   return (
     <>
-      {/* Chatbox hiển thị có animation ra + vào */}
-      <AnimatePresence mode="wait">
-        {isChatBox && (
+      <ChatToggle toggle={toggle} isOpen={isOpen} />
+      <ChatBox toggle={off} isOpen={isOpen} />
+      {/* <AnimatePresence mode="wait">
+        {isOpen && (
           <motion.div
             key="chatbox"
             initial={{ opacity: 0, scale: 0.8, y: 40 }}
@@ -82,7 +80,7 @@ export default function ChatBot() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   transition={{ duration: 0.2, delay: 0.0075, ease: "easeOut" }}
-                  onClick={() => setIsChatBox(false)}
+                  onClick={off}
                 >
                   x
                 </motion.span>
@@ -105,12 +103,11 @@ export default function ChatBot() {
                           item.sender === "genimi" && "order-2"
                         )}
                       >
-                        {/* Nội thất ZORO xin chào 😎! <br /> Bạn muốn mua gì hôm nay */}
-
+                        
                         <ReactMarkdown>{item.text}</ReactMarkdown>
                       </motion.span>
                       <div className="relative w-10 h-10">
-                        {/* Vòng xoay bên ngoài */}
+                       
                         <motion.div
                           className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500"
                           animate={{ rotate: 360 }}
@@ -121,7 +118,7 @@ export default function ChatBot() {
                           }}
                         />
 
-                        {/* Icon ở giữa KHÔNG xoay */}
+                       
                         <div className="absolute inset-[3px] bg-white rounded-full flex items-center justify-center shadow-md border border-gray-200">
                           <img
                             src="/iconchatbot.png"
@@ -135,7 +132,7 @@ export default function ChatBot() {
                 {isloading && (
                   <div className="flex flex-row gap-2">
                     <div className="relative w-10 h-10">
-                      {/* Vòng xoay bên ngoài */}
+                    
                       <motion.div
                         className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500"
                         animate={{ rotate: 360 }}
@@ -146,7 +143,7 @@ export default function ChatBot() {
                         }}
                       />
 
-                      {/* Icon ở giữa KHÔNG xoay */}
+                     
                       <div className="absolute inset-[3px] bg-white rounded-full flex items-center justify-center shadow-md border border-gray-200">
                         <img
                           src="/iconchatbot.png"
@@ -186,27 +183,7 @@ export default function ChatBot() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
-
-      {/* Nút chatbot hình tròn */}
-      <motion.div
-        className="fixed bottom-8 right-10 z-20 size-16 shadow-lg rounded-2xl cursor-pointer select-none flex flex-row items-center justify-center bg-gradient-to-tr from-[#e65c00] to-[#f9d423]"
-        onClick={() => setIsChatBox((v) => !v)}
-        animate={{
-          rotate: -360,
-        }}
-        transition={{
-          duration: 3,
-          ease: "linear",
-          repeat: Infinity,
-        }}
-      >
-        {isChatBox ? (
-          <IoMdClose className=" relative z-30 size-7 text-white" />
-        ) : (
-          <GoDependabot className=" relative z-30 size-7 text-white" />
-        )}
-      </motion.div>
+      </AnimatePresence> */}
     </>
   );
 }

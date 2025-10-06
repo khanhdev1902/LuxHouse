@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { IoSearchSharp } from "react-icons/io5";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { dataTestProducts } from "@/constant/const-home";
+import useToggle from "@/hooks/common/useToggle";
 
 interface SearchInputProps {
   className?: string;
@@ -10,7 +12,7 @@ interface SearchInputProps {
 
 export default function SearchInput({ className }: SearchInputProps) {
   const [search, setSearch] = React.useState<string>();
-  const [isFocus, setIsFocus] = React.useState<boolean>(false);
+  const {value: isFocus, on, off} = useToggle()
   return (
     <div
       className={cn(
@@ -24,8 +26,8 @@ export default function SearchInput({ className }: SearchInputProps) {
         className=" border-none focus:outline-none px-5 py-1 min-w-96"
         value={search}
         onChange={(e) => setSearch(e?.target.value)}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
+        onFocus={on}
+        onBlur={off}
       />
       <motion.div
         className=" border-l border-gray-200 px-7 py-2 bg-col rounded-r-sm cursor-pointer"
@@ -44,59 +46,21 @@ export default function SearchInput({ className }: SearchInputProps) {
             </div>
           ) : (
             <>
-              <motion.div className=" w-full p-2 flex flex-row justify-center items-center gap-5 border-b border-gray-200 cursor-pointer">
-                <div className="flex flex-col">
-                  <span className=" font-semibold">
-                    Nệm Cao Su Nhân Tạo Mát Lạnh TATANA
-                  </span>
-                  <span>5,903,000₫ 7,870,000₫</span>
-                </div>
-                <img
-                  src="https://product.hstatic.net/200000065946/product/pro_nem_cao_su_tatana_75cfcf32a63b4a9ca9af1b0e1b2c6ca7_master.png"
-                  alt=""
-                  className="w-20 h-16 object-cover"
-                />
-              </motion.div>
-              <motion.div className=" w-full p-2 flex flex-row justify-center items-center gap-5 border-b border-gray-200">
-                <div className="flex flex-col">
-                  <span className=" font-semibold">
-                    Nệm Cao Su Nhân Tạo Mát Lạnh TATANA
-                  </span>
-                  <span>5,903,000₫ 7,870,000₫</span>
-                </div>
-                <img
-                  src="https://product.hstatic.net/200000065946/product/pro_nem_cao_su_tatana_75cfcf32a63b4a9ca9af1b0e1b2c6ca7_master.png"
-                  alt=""
-                  className="w-20 h-16 object-cover"
-                />
-              </motion.div>
-              <motion.div className=" w-full p-2 flex flex-row justify-center items-center gap-5 border-b border-gray-200">
-                <div className="flex flex-col">
-                  <span className=" font-semibold">
-                    Nệm Cao Su Nhân Tạo Mát Lạnh TATANA
-                  </span>
-                  <span>5,903,000₫ 7,870,000₫</span>
-                </div>
-                <img
-                  src="https://product.hstatic.net/200000065946/product/pro_nem_cao_su_tatana_75cfcf32a63b4a9ca9af1b0e1b2c6ca7_master.png"
-                  alt=""
-                  className="w-20 h-16 object-cover"
-                />
-              </motion.div>
-              <motion.div className=" w-full p-2 flex flex-row justify-center items-center gap-5 border-b border-gray-200">
-                <div className="flex flex-col">
-                  <span className=" font-semibold">
-                    Nệm Cao Su Nhân Tạo Mát Lạnh TATANA
-                  </span>
-                  <span>5,903,000₫ 7,870,000₫</span>
-                </div>
-                <img
-                  src="https://product.hstatic.net/200000065946/product/pro_nem_cao_su_tatana_75cfcf32a63b4a9ca9af1b0e1b2c6ca7_master.png"
-                  alt=""
-                  className="w-20 h-16 object-cover"
-                />
-              </motion.div>
-
+              {dataTestProducts.slice(0,4).map((product, key) => (
+                <motion.div key={key} className=" w-full p-2 flex flex-row justify-center items-center gap-5 border-b border-gray-200 cursor-pointer">
+                  <div className="flex flex-col">
+                    <span className=" font-semibold">
+                      {product?.title}
+                    </span>
+                    <span>{product.price}</span>
+                  </div>
+                  <img
+                    src={product.image_1}
+                    alt=""
+                    className="w-20 h-16 object-cover"
+                  />
+                </motion.div>
+              ))}
               <div className="flex flex-row justify-center items-center p-2 gap-2 border-b rounded-b-sm border-gray-200 cursor-pointer">
                 <span className=" font-semibold">Xem thêm 19 sản phẩm</span>
                 <FaArrowRightLong className="size-4" />
