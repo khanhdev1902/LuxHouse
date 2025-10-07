@@ -11,7 +11,7 @@ export default function Logo({ className }: LogoProps) {
       onClick={()=>navigation("/")}
     >
       <FaHouseTsunami className="size-10 text-[#c02425] "/>
-    <h1 className={cn("text-[42px] m-0 p-0 font-bold text-col")}>LuxHouse</h1>
+    <h1 className={cn("text-3xl sm:text-[42px] m-0 p-0 font-bold text-col")}>LuxHouse</h1>
     </div>
   );
 }

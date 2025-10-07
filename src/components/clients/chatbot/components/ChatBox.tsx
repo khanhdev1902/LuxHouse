@@ -29,7 +29,10 @@ export default function ChatBox({ toggle, isOpen }: ChatBoxProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed bottom-16 right-8 z-[60] bg-white w-[600px] h-[600px] flex flex-col rounded-lg shadow-xl"
+          className={cn(
+            "fixed bottom-16 top-0 right-0 left-0 z-[60] bg-white w-auto h-auto flex flex-col rounded-lg shadow-xl",
+            "sm:top-auto sm:left-auto sm:right-8 sm:w-[600px] sm:h-[600px]"
+          )}
           initial={{ x: 50, y: 10, scale: 0.8, opacity: 0 }}
           animate={{ x: 0, y: 0, scale: 1, opacity: 1 }}
           exit={{ x: 50, y: 10, scale: 0.8, opacity: 0 }}
@@ -63,9 +66,9 @@ export default function ChatBox({ toggle, isOpen }: ChatBoxProps) {
           >
             {!isAtBottom && (
               <motion.div
-                initial={{ opacity: 0, scale:0.8 }}
-                animate={{ opacity: 0.5, scale:1 }}
-                exit={{ opacity: 0, scale:0.8 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 0.5, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className=" absolute z-10 bottom-24 right-20 p-1 bg-white shadow-lg border border-gray-200 rounded-full text-4xl text-slate-600 cursor-pointer select-none"
                 onClick={scrollToEdge}

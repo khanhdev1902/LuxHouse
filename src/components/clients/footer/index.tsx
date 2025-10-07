@@ -24,7 +24,7 @@ export default function Footer() {
     },
   ];
   return (
-    <div className="pt-20 space-y-20">
+    <footer className="pt-20 space-y-20">
       <Container className="grid grid-cols-2 lg:grid-cols-4">
         {labelTitle.map((item, key) => (
           <motion.div
@@ -113,6 +113,6 @@ export default function Footer() {
           <span>Copyright © 2025 Khanh Deddo</span>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }

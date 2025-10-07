@@ -8,10 +8,13 @@ export default function ClientsLayout() {
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const handleResize = (sizeHeight: number) => setHeaderHeight(sizeHeight);
   return (
-    <div className="flex flex-col min-h-screen h-[1500px]">
+    <div className="relative flex flex-col w-full min-h-screen overflow-x-hidden">
       <ChatBot />
-      <Header onHandleResize={handleResize} />
-      <main className={`flex-grow`} style={{ paddingTop: `${headerHeight}px` }}>
+      <Header
+        onHandleResize={handleResize}
+        className="fixed top-0 left-0 w-full bg-white z-50 shadow-sm select-none"
+      />
+      <main className="flex-grow" style={{ paddingTop: `${headerHeight}px` }}>
         <Outlet />
       </main>
       <Footer />

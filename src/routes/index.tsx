@@ -1,15 +1,12 @@
 import { useRoutes } from "react-router-dom";
-import { shopRoutes } from "./shopRoutes";
-import ScrollOnTop from "@/utils/ScrollOnTop";
+import { ClientRouters } from "./ClientRouters";
+import ScrollToTop from "@/utils/ScrollToTop";
 
 export default function AppRouter() {
-  const routes = useRoutes([
-    ...shopRoutes,
-    // 👉 sau này có thể thêm: ...adminRoutes, ...authRoutes,...
-  ]);
+  const routes = useRoutes([...ClientRouters]);
   return (
     <>
-      <ScrollOnTop />
+      <ScrollToTop />
       {routes}
     </>
   );

@@ -67,6 +67,8 @@
 
 body {
   font-family: "Montserrat", sans-serif;
+  height: 100%;
+  width: 100%;
 }
 
 /* text-[#434343] */
@@ -95,7 +97,7 @@ body {
 }
 
 .text-col-hover:hover {
-  @apply bg-gradient-to-tr from-[#c02425] to-[#f0cb35] bg-clip-text text-transparent
+  @apply bg-gradient-to-tr from-[#c02425] to-[#f0cb35] bg-clip-text text-transparent transition-colors;
 }
 
 .price-color {

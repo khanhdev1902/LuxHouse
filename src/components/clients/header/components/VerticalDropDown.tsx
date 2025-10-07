@@ -1,9 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
-import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
-
+import { cn } from "@/lib/utils";
 type MenuItem = {
   title: string;
   submenu: string[];
@@ -12,70 +11,63 @@ type MenuItem = {
 interface VerticalDropdownProps {
   menuItems: MenuItem[];
 }
-
 export default function VerticalDropdown({ menuItems }: VerticalDropdownProps) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate()
-
-  // Auto close when click outside
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (!containerRef.current?.contains(e.target as Node)) {
-        setActiveIndex(null);
-      }
-    };
-    window.addEventListener("click", handleClickOutside);
-    return () => window.removeEventListener("click", handleClickOutside);
-  }, []);
-
+  const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
+  const navigate = useNavigate();
   return (
-    <div ref={containerRef} className="relative">
-      <div className="flex space-x-6">
-        {menuItems.map((item, index) => (
-          <div
-            key={index}
-            onMouseEnter={() => setActiveIndex(index)}
-            onMouseLeave={() => setActiveIndex(null)}
-            className="relative cursor-pointer group"
+    <div className="flex gap-6">
+      {menuItems.map((item, index) => (
+        <div
+          key={index}
+          onClick={() => navigate("/products")}
+          onMouseEnter={() => setActiveIndex(index)}
+          onMouseLeave={() => setActiveIndex(null)}
+          className="relative flex items-center gap-1 cursor-pointer group text-[#434343]"
+        >
+          <span
+            className={cn(
+              "font-semibold transition-colors delay-75 duration-300",
+              "group-hover:bg-gradient-to-tr group-hover:from-[#c02425] group-hover:to-[#f0cb35] group-hover:bg-clip-text group-hover:text-transparent"
+            )}
           >
-            <div className="flex flex-row gap-1 items-center group text-[#434343] text-col-hover cursor-pointer"
-              onClick={()=>navigate("/products")}
-            >
-              <span className="font-semibold transition-colors ">
-                {item.title}
-              </span>
-              <FaAngleDown className={clsx("transition-transform group-hover:rotate-180 size-4 duration-300 ease-in-out delay-75 group-hover:text-[#c02425]",item?.submenu.length===0 && "hidden" )}/>
-            </div>
+            {item.title}
+          </span>
+          <FaAngleDown
+            className={cn(
+              item?.submenu.length === 0 && "hidden",
+              "group-hover:rotate-180 size-4 duration-300 ease-in-out group-hover:text-[#c02425]"
+            )}
+          />
 
-            <AnimatePresence>
-              {activeIndex === index && item?.submenu?.length > 0 &&(
-                <motion.div
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className={clsx(
-                    "absolute top-full left-0 bg-white shadow-lg mt-2 min-w-[180px] z-20",
-                    "flex flex-col space-y-2 border border-gray-100 rounded-md"
-                  )}
-                >
-                  {item?.submenu?.map((sub, i) => (
-                    <span
-                      key={i}
-                      className="text-gray-700 text-col-hover transition-all cursor-pointer p-1 px-4 border-b border-gray-100"
-                      onClick={()=>{navigate("/products")}}
-                      
-                    >
-                      {sub}
-                    </span>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        ))}
-      </div>
+          <AnimatePresence>
+            {activeIndex === index && item?.submenu?.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="absolute top-full left-0 bg-white shadow-lg mt-2 min-w-[180px] z-20 flex flex-col rounded-sm"
+              >
+                {item?.submenu?.map((sub, i) => (
+                  <span
+                    key={i}
+                    className={cn(
+                      i === 0 && "rounded-t-sm",
+                      i === item?.submenu?.length - 1 && "rounded-b-sm",
+                      " text-col-hover cursor-pointer p-2 px-4 border border-gray-100"
+                    )}
+                    onClick={() => {
+                      navigate("/products");
+                    }}
+                  >
+                    {sub}
+                  </span>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      ))}
     </div>
   );
 }

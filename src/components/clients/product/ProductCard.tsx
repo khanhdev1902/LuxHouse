@@ -23,7 +23,7 @@ export default function ProductCard({ className, product }: ProductCardProps) {
   return (
     <div
       className={cn(" relative cursor-pointer select-none ", className)}
-      onClick={() => navigation("products/1")}
+      onClick={() => navigation("/products/1")}
     >
       {(product?.discount ?? 0) > 0 && (
         <span className=" absolute top-1 left-0 z-20 bg-red-500 text-white py-1 px-3 rounded-br-lg text-xs font-medium opacity-95">

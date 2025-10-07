@@ -16,21 +16,21 @@ export default function SearchInput({ className }: SearchInputProps) {
   return (
     <div
       className={cn(
-        " relative flex-row items-center border border-gray-100 rounded-sm focus-within:border-[#f096198e] duration-300 ease-in-out hidden sm:flex",
-        className
+        className,
+        " relative border border-gray-200 rounded-sm focus-within:border-[#f096198e] duration-300 ease-in-out"
       )}
     >
       <input
         type="text"
         placeholder="Tìm kiếm sản phẩm..."
-        className=" border-none focus:outline-none px-5 py-1 min-w-96"
+        className=" border-none focus:outline-none px-5 py-2 w-full max-w-96 rounded-sm"
         value={search}
         onChange={(e) => setSearch(e?.target.value)}
         onFocus={on}
         onBlur={off}
       />
       <motion.div
-        className=" border-l border-gray-200 px-7 py-2 bg-col rounded-r-sm cursor-pointer"
+        className=" absolute top-0 bottom-0 right-0 h-auto border flex items-center justify-center px-7 bg-col rounded-sm cursor-pointer"
         whileTap={{ scale: 1.1 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
