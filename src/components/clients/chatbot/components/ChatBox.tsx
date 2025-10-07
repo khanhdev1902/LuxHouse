@@ -6,23 +6,25 @@ import { FaFileImage } from "react-icons/fa6";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { MdGifBox } from "react-icons/md";
 import { BsSendFill } from "react-icons/bs";
+import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import "./ChatBox.css";
 import React from "react";
+import useChat from "@/hooks/useChat";
+import useAutoScroll from "@/hooks/useAutoScroll";
+import { cn } from "@/lib/utils";
 type Toggle = () => void;
 interface ChatBoxProps {
   toggle: Toggle;
   isOpen: boolean;
 }
-interface Message {
-  sender: "user" | "bot";
-  content: string;
-  timestamp: string;
-}
 export default function ChatBox({ toggle, isOpen }: ChatBoxProps) {
-  const [searchValue, setSeachValue] = React.useState<string>("");
-  const [historyChat, setHistoryChat] = React.useState<Message[]>([
-    { sender: "user", content: "hahahhaha", timestamp: "aaaa" },
-  ]);
+  const { message, setMessage, historyChat, handleSend } = useChat();
+  const chatRef = React.useRef<HTMLDivElement>(null);
+  const { isAtBottom, scrollToEdge } = useAutoScroll(
+    chatRef,
+    [historyChat],
+    true
+  );
   return (
     <AnimatePresence>
       {isOpen && (
@@ -55,9 +57,39 @@ export default function ChatBox({ toggle, isOpen }: ChatBoxProps) {
               className="size-9 cursor-pointer bg-[#ffffff2b] rounded-full p-2"
             />
           </header>
-          <main className=" flex-grow overflow-y-auto p-2">
+          <main
+            ref={chatRef}
+            className=" flex-grow overflow-y-auto p-2 flex flex-col gap-2"
+          >
+            {!isAtBottom && (
+              <motion.div
+                initial={{ opacity: 0, scale:0.8 }}
+                animate={{ opacity: 0.5, scale:1 }}
+                exit={{ opacity: 0, scale:0.8 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className=" absolute z-10 bottom-24 right-20 p-1 bg-white shadow-lg border border-gray-200 rounded-full text-4xl text-slate-600 cursor-pointer select-none"
+                onClick={scrollToEdge}
+              >
+                <MdKeyboardDoubleArrowDown />
+              </motion.div>
+            )}
             {historyChat.map((message, key) => (
-              <div key={key}>{message.content}</div>
+              <div
+                key={key}
+                className={cn(
+                  "flex items-center",
+                  message.sender === "user" && "justify-end"
+                )}
+              >
+                <motion.span
+                  initial={{ x: 0, y: 0, opacity: 0 }}
+                  animate={{ x: 0, y: 0, opacity: 1, scaleX: 1 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className=" rounded-full border border-slate-100 shadow-sm px-2 py-1"
+                >
+                  {message.content}
+                </motion.span>
+              </div>
             ))}
           </main>
           <footer className="border-t border-t-slate-200 shadow-lg ">
@@ -71,19 +103,10 @@ export default function ChatBox({ toggle, isOpen }: ChatBoxProps) {
                 <input
                   type="text"
                   placeholder="Aa"
-                  value={searchValue}
-                  onChange={(e) => setSeachValue(e.target.value)}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   onKeyDown={(e) =>
-                    e.key === "Enter" &&
-                    (setHistoryChat((prev) => [
-                      ...prev,
-                      {
-                        sender: "user",
-                        content: searchValue,
-                        timestamp: new Date().toLocaleString(),
-                      },
-                    ]),
-                    setSeachValue(""))
+                    e.key === "Enter" && message.length > 0 && handleSend()
                   }
                   className=" w-full border-none focus:outline-none rounded-full px-5 py-2"
                 />
@@ -94,10 +117,13 @@ export default function ChatBox({ toggle, isOpen }: ChatBoxProps) {
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ scale: 1.1 }}
               >
-                {searchValue.length > 0 ? (
-                  <BsSendFill className="text-[#764ba2] size-7" />
+                {message.length > 0 ? (
+                  <BsSendFill
+                    className="text-[#764ba2] size-7"
+                    onClick={() => handleSend()}
+                  />
                 ) : (
-                  "😎"
+                  <span onClick={() => handleSend("😎")}>😎</span>
                 )}
               </motion.button>
             </nav>

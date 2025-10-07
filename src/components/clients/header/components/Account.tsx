@@ -5,8 +5,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import useClickOutside from "@/hooks/common/useClickOutside";
-import useToggle from "@/hooks/common/useToggle";
+import useClickOutside from "@/hooks/useClickOutside";
+import useToggle from "@/hooks/useToggle";
 
 export default function Account() {
   const ref = React.useRef<HTMLDivElement | null>(null);

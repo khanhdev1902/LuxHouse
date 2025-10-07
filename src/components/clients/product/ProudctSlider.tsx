@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import ProductCard from "./ProductCard";
 import { MoveLeft, MoveRight } from "lucide-react";
-import useToggle from "@/hooks/common/useToggle";
+import useToggle from "@/hooks/useToggle";
 
 interface Product {
   id?: number;

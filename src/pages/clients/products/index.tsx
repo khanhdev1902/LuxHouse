@@ -5,7 +5,7 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "@/components/clients/product/ProductCard";
 import { allCategorieProducts, dataTestProducts } from "@/constant/const-home";
-import useToggle from "@/hooks/common/useToggle";
+import useToggle from "@/hooks/useToggle";
 
 export default function Products() {
   const { value: isOpen, on, off } = useToggle();

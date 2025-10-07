@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { BsBagPlus } from "react-icons/bs";
-import useToggle from "@/hooks/common/useToggle";
+import useToggle from "@/hooks/useToggle";
 import { IoMdClose } from "react-icons/io";
 import { dataTestProducts } from "@/constant/const-home";
 export default function Cart() {
@@ -40,7 +40,10 @@ export default function Cart() {
             </header>
             <div className="py-2 flex-1 overflow-y-auto">
               {dataTestProducts.slice(2, 5).map((product, key) => (
-                <div key={key} className="flex flex-row justify-center items-center p-4 border-b cursor-pointer">
+                <div
+                  key={key}
+                  className="flex flex-row justify-center items-center p-4 border-b cursor-pointer"
+                >
                   <div>
                     <span className=" font-semibold line-clamp-2">
                       {product?.title}
