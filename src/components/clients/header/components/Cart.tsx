@@ -18,7 +18,7 @@ export default function Cart() {
             7
           </span>
         </div>
-        <span>Giỏ hàng</span>
+        <span className=" whitespace-nowrap">Giỏ hàng</span>
       </div>
 
       {/* CartSheet */}

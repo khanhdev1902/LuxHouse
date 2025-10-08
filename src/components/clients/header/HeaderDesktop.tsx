@@ -35,7 +35,7 @@ export default function HeaderDesktop({
   return (
     <header ref={headerRef} className={className}>
       <Container className=" flex flex-col gap-8">
-        <div className="flex flex-wrap justify-between items-center gap-8">
+        <div className="flex justify-between items-center gap-8">
           <Logo />
           <SearchInput className=" flex-grow" />
           <div className="flex flex-row items-center justify-end gap-4">
