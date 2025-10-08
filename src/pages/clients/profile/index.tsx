@@ -1,5 +1,5 @@
+import Container from "@/components/ui/Container";
+
 export default function Profile() {
-  return (
-    <div>Profile</div>
-  )
+  return <Container>Profile</Container>;
 }

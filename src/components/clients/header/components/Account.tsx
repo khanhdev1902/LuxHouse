@@ -3,13 +3,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import useClickOutside from "@/hooks/useClickOutside";
 import useToggle from "@/hooks/useToggle";
 import { useNavigate } from "react-router-dom";
+import { dataDropdownAccount } from "@/constant/const-home";
 
 export default function Account() {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const { value: isOpen, toggle, off } = useToggle();
   useClickOutside(ref, off);
-  const navigation = useNavigate()
-  const userName = "KhanhNguyễnVăn";
+  const navigation = useNavigate();
+  const user = {
+    name: "Khanh Nguyễn Văn",
+    email: "khanhdev1902@gmail.com",
+  };
   return (
     <div
       ref={ref}
@@ -21,8 +25,8 @@ export default function Account() {
         <div className="flex flex-col text-[#434343] gap-0">
           <span>Tài khoản của</span>
           <span className="font-semibold">
-            {userName.slice(0, 10)}
-            {userName.length > 10 && "..."}
+            {user?.name?.trim().slice(0, 10)}
+            {user?.name?.length > 10 && "..."}
           </span>
         </div>
       </div>
@@ -48,18 +52,22 @@ export default function Account() {
                 alt="Avatar"
                 className=" size-16 rounded-full shadow-xl"
               />
-              <div className="flex flex-col items-start">
-                <span className=" font-bold">Khanh Nguyễn Văn</span>
-                <span className=" font-medium">khanhdev1902@gmail.com</span>
+              <div onClick={()=>navigation("/account")} className="flex flex-col items-start">
+                <span className=" font-bold">{user.name}</span>
+                <span className=" font-medium">{user.email}</span>
               </div>
             </div>
-            <div className="flex flex-col gap-2 px-4 py-3 font-medium">
-            <span onClick={()=>navigation("/account")}>Tài khoản của tôi</span>
-            <span>Danh sách địa chỉ</span>
-            <span>Đơn hàng của tôi</span>
-            <span>Mã giảm giá của tôi</span>
-            <span>Cài đặt tài khoản</span>
-            <span>Đăng xuất</span>
+            <div className="flex flex-col gap-3 px-4 py-3 font-medium">
+              {dataDropdownAccount.map((item, key) => (
+                <div
+                  key={key}
+                  onClick={() => navigation(item.path)}
+                  className="flex items-center gap-2"
+                >
+                  {item.icon}
+                  <span className=" font-medium">{item.name}</span>
+                </div>
+              ))}
             </div>
           </motion.div>
         )}

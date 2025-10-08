@@ -1,3 +1,10 @@
+import { IoSettings } from "react-icons/io5";
+import { MdDiscount } from "react-icons/md";
+import { RiAccountCircleFill } from "react-icons/ri";
+import { TbLogout } from "react-icons/tb";
+import { AiFillProduct } from "react-icons/ai";
+import { FaAddressBook } from "react-icons/fa6";
+
 export const navbarHeaders = [
   {
     title: "Sản phẩm",
@@ -181,20 +188,53 @@ export const dataTestProducts = [
 ];
 
 export const allCategorieProducts = [
-    { name: "Bếp" },
-    { name: "Chăn Ga - Gối Nệm" },
-    { name: "Bình - Chậu - Lọ" },
-    { name: "Tủ Quần Áo" },
-    { name: "Tranh Treo Tường" },
-    { name: "Giường Ngủ" },
-    { name: "Ghế Sofa" },
-    { name: "Ghế Ăn" },
-    { name: "Bàn Ăn" },
-    { name: "Đồ Nhà Bếp" },
-    { name: "Gương" },
-    { name: "Thảm" },
-    { name: "Tủ Kệ Tivi" },
-    { name: "Combo Basic" },
-    { name: "Vạn Thành" },
-    { name: "Full Combo" },
-  ];
+  { name: "Bếp" },
+  { name: "Chăn Ga - Gối Nệm" },
+  { name: "Bình - Chậu - Lọ" },
+  { name: "Tủ Quần Áo" },
+  { name: "Tranh Treo Tường" },
+  { name: "Giường Ngủ" },
+  { name: "Ghế Sofa" },
+  { name: "Ghế Ăn" },
+  { name: "Bàn Ăn" },
+  { name: "Đồ Nhà Bếp" },
+  { name: "Gương" },
+  { name: "Thảm" },
+  { name: "Tủ Kệ Tivi" },
+  { name: "Combo Basic" },
+  { name: "Vạn Thành" },
+  { name: "Full Combo" },
+];
+
+export const dataDropdownAccount = [
+  {
+    path: "/account",
+    icon: <RiAccountCircleFill className=" size-6 text-[#434343]" />,
+    name: "Tài khoản của tôi",
+  },
+  {
+    path: "/account/addresses",
+    icon: <FaAddressBook className="size-6 text-[#434343]" />,
+    name: "Danh sách địa chỉ",
+  },
+  {
+    path: "/account/orders",
+    icon: <AiFillProduct className="size-6 text-[#434343]" />,
+    name: "Đơn hàng của tôi",
+  },
+  {
+    path: "/account/vouchers",
+    icon: <MdDiscount className="size-6 text-[#434343]" />,
+    name: "Mã giảm giá của tôi",
+  },
+  {
+    path: "/account/setting",
+    icon: <IoSettings className="size-6 text-[#434343]" />,
+    name: "Cài đặt",
+  },
+  {
+    path: "",
+    icon: <TbLogout className="size-6 text-[#434343]" />,
+    name: "Đăng xuất",
+  },
+];
