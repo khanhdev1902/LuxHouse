@@ -13,7 +13,7 @@ export default function Notification() {
           13
         </span>
       </div>
-      <span className=" whitespace-nowrap">Thông báo</span>
+      <span className=" whitespace-nowrap hidden xl:block">Thông báo</span>
       <motion.div></motion.div>
     </motion.div>
   );

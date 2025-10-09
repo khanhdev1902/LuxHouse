@@ -18,14 +18,14 @@ export default function Cart() {
             7
           </span>
         </div>
-        <span className=" whitespace-nowrap">Giỏ hàng</span>
+        <span className=" whitespace-nowrap hidden xl:block">Giỏ hàng</span>
       </div>
 
       {/* CartSheet */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="h-screen w-full flex flex-col sm:w-[500px] fixed top-0 right-0 border border-gray-200 shadow-lg bg-white"
+            className="h-screen w-full flex flex-col sm:w-[500px] z-50 fixed top-0 right-0 border border-gray-200 shadow-lg bg-white"
             initial={{ x: 200, y: 0, opacity: 0 }}
             animate={{ x: 0, y: 0, opacity: 1 }}
             exit={{ x: 200, y: 0, opacity: 0 }}
@@ -33,10 +33,7 @@ export default function Cart() {
           >
             <header className="flex flex-row justify-between items-center py-4 px-5 border-b border-gray-200 shadow-sm">
               <span className="text-3xl font-bold text-col">Giỏ hàng</span>
-              <IoMdClose
-                onClick={off}
-                className="size-7 text-red-700 cursor-pointer"
-              />
+              <IoMdClose onClick={off} className="size-7 text-red-700 cursor-pointer" />
             </header>
             <div className="py-2 flex-1 overflow-y-auto">
               {dataTestProducts.slice(2, 5).map((product, key) => (
@@ -45,9 +42,7 @@ export default function Cart() {
                   className="flex flex-row justify-center items-center p-4 border-b cursor-pointer"
                 >
                   <div>
-                    <span className=" font-semibold line-clamp-2">
-                      {product?.title}
-                    </span>
+                    <span className=" font-semibold line-clamp-2">{product?.title}</span>
                     <div className="flex flex-row justify-between items-center pr-5">
                       <div className="flex flex-row items-center gap-2">
                         <span className="w-10 h-6 rounded-sm p-2 bg-slate-300 flex flex-row justify-center items-center text-xs">
@@ -64,11 +59,7 @@ export default function Cart() {
                       </motion.div>
                     </div>
                   </div>
-                  <img
-                    src={product?.image_1}
-                    alt=""
-                    className="min-w-32 h-20 select-none"
-                  />
+                  <img src={product?.image_1} alt="" className="min-w-32 h-20 select-none" />
                 </div>
               ))}
             </div>
@@ -87,7 +78,7 @@ export default function Cart() {
                   XEM GIỎ HÀNG
                 </motion.button>
                 <motion.button
-                  className="bg-gradient-to-r from-red-600 to-orange-600 text-white text-sm font-semibold px-16 py-3 rounded-sm shadow-lg whitespace-nowrap cursor-pointer"
+                  className="bg-gradient-to-r from-red-600 to-orange-600 text-white text-sm font-semibold px-16 py-3 rounded-sm shadow-lg  cursor-pointer"
                   whileTap={{ scale: 0.9 }}
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}

@@ -38,10 +38,10 @@ export default function HeaderDesktop({
         <div className="flex justify-between items-center gap-8">
           <Logo />
           <SearchInput className=" flex-grow" />
-          <div className="flex flex-row items-center justify-end gap-4">
-            <Account />
+          <div className="flex flex-row items-center justify-end gap-10 xl:gap-5">
             <Notification />
             <Cart />
+            <Account className="xl:-order-1"/>
           </div>
         </div>
         <VerticalDropdown menuItems={navbarHeaders} />

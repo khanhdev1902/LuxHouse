@@ -240,5 +240,7 @@ export const dataDropdownAccount = [
 ];
 
 const images = import.meta.glob("@/assets/slideshow_desktop/*.jpg", { eager: true });
+const images_mb = import.meta.glob("@/assets/slideshow_mobile/*.jpg", { eager: true });
 export const slideShowDesktop = Object.values(images).map((m: any) => m.default);
+export const slideShowMObile = Object.values(images_mb).map((m: any) => m.default);
 

@@ -3,11 +3,23 @@ import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { TbArrowBigLeft, TbArrowBigRight } from "react-icons/tb";
-import { slideShowDesktop } from "@/constant/const-home";
+import { slideShowDesktop, slideShowMObile } from "@/constant/const-home";
 
 export default function Banner() {
   const swiperRef = React.useRef<any>(null);
   const [isHover, setIsHover] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    setIsMobile(mediaQuery.matches);
+
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  const slides = isMobile ? slideShowMObile : slideShowDesktop;
 
   return (
     <motion.div
@@ -46,7 +58,7 @@ export default function Banner() {
         >
           <TbArrowBigRight className=" size-12 rounded-full bg-col p-2 text-white opacity-80" />
         </motion.button>
-        {slideShowDesktop.map((slideshow, i) => (
+        {slides.map((slideshow, i) => (
           <SwiperSlide key={i}>
             <img src={slideshow} alt="" className="w-full h-auto object-cover" />
           </SwiperSlide>
