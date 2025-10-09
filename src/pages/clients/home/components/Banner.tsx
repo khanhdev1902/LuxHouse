@@ -1,16 +1,12 @@
+import React from "react";
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
-import { motion } from "framer-motion";
-const slideShows = [
-  "/slideshow_1_master.jpg",
-  "/slideshow_3_master.jpg",
-  "/slideshow_4_master.jpg",
-];
-import React, { useRef } from "react";
-import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import { TbArrowBigLeft, TbArrowBigRight } from "react-icons/tb";
+import { slideShowDesktop } from "@/constant/const-home";
 
 export default function Banner() {
-  const swiperRef = useRef<any>(null);
+  const swiperRef = React.useRef<any>(null);
   const [isHover, setIsHover] = React.useState(false);
 
   return (
@@ -38,7 +34,7 @@ export default function Banner() {
           onClick={() => swiperRef.current?.slidePrev(300)}
           className="absolute left-5 top-1/2 -translate-y-1/2 z-10"
         >
-          <ArrowBigLeft className=" size-12 rounded-full bg-col p-2 text-white opacity-70" />
+          <TbArrowBigLeft className=" size-12 rounded-full bg-col p-2 text-white opacity-70" />
         </motion.button>
         <motion.button
           initial={{ x: -70, opacity: 0 }}
@@ -48,11 +44,11 @@ export default function Banner() {
           onClick={() => swiperRef.current?.slidePrev(300)}
           className="absolute right-5 top-1/2 -translate-y-1/2 z-10"
         >
-          <ArrowBigRight className=" size-12 rounded-full bg-col p-2 text-white opacity-80" />
+          <TbArrowBigRight className=" size-12 rounded-full bg-col p-2 text-white opacity-80" />
         </motion.button>
-        {slideShows.map((src, i) => (
+        {slideShowDesktop.map((slideshow, i) => (
           <SwiperSlide key={i}>
-            <img src={src} alt="" className="w-full h-auto object-cover" />
+            <img src={slideshow} alt="" className="w-full h-auto object-cover" />
           </SwiperSlide>
         ))}
       </Swiper>

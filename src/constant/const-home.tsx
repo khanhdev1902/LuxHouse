@@ -238,3 +238,7 @@ export const dataDropdownAccount = [
     name: "Đăng xuất",
   },
 ];
+
+const images = import.meta.glob("@/assets/slideshow_desktop/*.jpg", { eager: true });
+export const slideShowDesktop = Object.values(images).map((m: any) => m.default);
+

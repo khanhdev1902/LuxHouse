@@ -1,11 +1,11 @@
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Container from "@/components/ui/Container";
-import { ChevronDown, Funnel } from "lucide-react";
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "@/components/clients/product/ProductCard";
 import { allCategorieProducts, dataTestProducts } from "@/constant/const-home";
 import useToggle from "@/hooks/useToggle";
+import { BsChevronDown, BsFunnel } from "react-icons/bs";
 
 export default function Products() {
   const { value: isOpen, on, off } = useToggle();
@@ -45,7 +45,7 @@ export default function Products() {
 
           <div className="flex flex-row items-center gap-2">
             <div className="flex flex-row gap-2 items-center">
-              <Funnel className=" text-gray-500 size-5" />
+              <BsFunnel className=" text-gray-500 size-5" />
               <span className=" text-lg font-medium whitespace-nowrap">
                 BỘ LỌC
               </span>
@@ -58,7 +58,7 @@ export default function Products() {
                 onHoverEnd={off}
               >
                 <span className="text-sm font-medium">DANH MỤC</span>
-                <ChevronDown className="size-4" />
+                <BsChevronDown className="size-4" />
                 {isOpen && (
                   <AnimatePresence>
                     <motion.div
@@ -91,15 +91,15 @@ export default function Products() {
               </motion.div>
               <div className="relative flex flex-row justify-between items-center gap-32 border border-gray-300 p-3">
                 <span className="text-sm font-medium ">GIÁ SẢN PHẨM</span>
-                <ChevronDown className="size-4" />
+                <BsChevronDown className="size-4" />
               </div>
               <div className="relative flex flex-row justify-between items-center gap-32 border border-gray-300 p-3">
                 <span className="text-sm font-medium ">MÀU SẮC</span>
-                <ChevronDown className="size-4" />
+                <BsChevronDown className="size-4" />
               </div>
               <div className="relative flex flex-row justify-between items-center gap-32 border border-gray-300 p-3">
                 <span className="text-sm font-medium ">KÍCH THƯỚC</span>
-                <ChevronDown className="size-4" />
+                <BsChevronDown className="size-4" />
               </div>
             </div>
           </div>
