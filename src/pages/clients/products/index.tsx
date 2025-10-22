@@ -1,4 +1,3 @@
-import BreadCrumb from "@/components/ui/BreadCrumb";
 import Container from "@/components/ui/Container";
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -21,7 +20,6 @@ export default function Products() {
   };
   return (
     <>
-      <BreadCrumb />
       <div className="w-full h-auto">
         <img src="/bg-products.jpg" alt="" className="w-full" />
       </div>

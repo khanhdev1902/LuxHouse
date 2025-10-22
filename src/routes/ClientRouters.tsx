@@ -10,6 +10,7 @@ import Setting from "@/pages/clients/setting";
 import Addresses from "@/pages/clients/addresses";
 import Vouchers from "@/pages/clients/vouchers";
 import NotFound from "@/pages/notfound";
+import ClientsAccountLayout from "@/layouts/ClientsAccountLayout";
 
 export const ClientRouters: RouteObject[] = [
   {
@@ -19,13 +20,14 @@ export const ClientRouters: RouteObject[] = [
       { index: true, element: <Home /> },
       { path: "products", element: <Products /> },
       { path: "products/:id", element: <ProductDetail /> },
+      { path: "cart", element: <Cart /> },
       {
         path: "account",
+        element:<ClientsAccountLayout/>,
         children: [
           { index: true, element: <Navigate to="profile" replace /> },
           { path: "profile", element: <Profile /> },
           { path: "addresses", element: <Addresses /> },
-          { path: "cart", element: <Cart /> },
           { path: "orders", element: <Orders /> },
           { path: "vouchers", element: <Vouchers /> },
           { path: "setting", element: <Setting /> },

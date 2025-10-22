@@ -4,6 +4,15 @@ import { RiAccountCircleFill } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import { AiFillProduct } from "react-icons/ai";
 import { FaAddressBook } from "react-icons/fa6";
+import user_avata from "@/assets/Avata.jpg"
+
+export const user = {
+  firstName:"Khanh",
+  lastName:"Nguyễn Văn",
+  email:"khanhdeddo@gmail.com",
+  phone:"0345755059",
+  avata:user_avata
+}
 
 export const navbarHeaders = [
   {
