@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { IoSearchSharp } from "react-icons/io5";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { dataTestProducts } from "@/constant/const-home";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/hooks/use-toggle";
 
 interface SearchInputProps {
   className?: string;
@@ -55,11 +55,7 @@ export default function SearchInput({ className }: SearchInputProps) {
                     <span className=" font-semibold">{product?.title}</span>
                     <span>{product.price}</span>
                   </div>
-                  <img
-                    src={product.image_1}
-                    alt=""
-                    className="w-20 h-16 object-cover"
-                  />
+                  <img src={product.image_1} alt="" className="w-20 h-16 object-cover" />
                 </motion.div>
               ))}
               <div className="flex flex-row justify-center items-center p-2 gap-2 border-b rounded-b-sm border-gray-200 cursor-pointer">

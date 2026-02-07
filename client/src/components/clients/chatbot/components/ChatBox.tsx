@@ -9,8 +9,8 @@ import { BsSendFill } from "react-icons/bs";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import "./ChatBox.css";
 import React from "react";
-import useChat from "@/hooks/useChat";
-import useAutoScroll from "@/hooks/useAutoScroll";
+import useChat from "@/hooks/use-chat";
+import useAutoScroll from "@/hooks/use-auto-scroll";
 import { cn } from "@/lib/utils";
 type Toggle = () => void;
 interface ChatBoxProps {

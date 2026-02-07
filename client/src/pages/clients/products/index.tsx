@@ -3,7 +3,7 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "@/components/clients/product/ProductCard";
 import { allCategorieProducts, dataTestProducts } from "@/constant/const-home";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/hooks/use-toggle";
 import { BsChevronDown, BsFunnel } from "react-icons/bs";
 
 export default function Products() {
@@ -28,11 +28,7 @@ export default function Products() {
           <div className=" flex flex-row justify-between my-4">
             <span className="text-3xl font-bold">Tất cả sản phẩm</span>
 
-            <select
-              id="category"
-              name="category"
-              className=" bottom-1 border-gray-100 p-1 px-3"
-            >
+            <select id="category" name="category" className=" bottom-1 border-gray-100 p-1 px-3">
               <option value="">--Sản phẩm nổi bật--</option>
               <option value="Increasing">Giá: Tăng dần</option>
               <option value="Decreasing">Giá: Giảm dần</option>
@@ -44,9 +40,7 @@ export default function Products() {
           <div className="flex flex-row items-center gap-2">
             <div className="flex flex-row gap-2 items-center">
               <BsFunnel className=" text-gray-500 size-5" />
-              <span className=" text-lg font-medium whitespace-nowrap">
-                BỘ LỌC
-              </span>
+              <span className=" text-lg font-medium whitespace-nowrap">BỘ LỌC</span>
             </div>
             <div className="px-4">|</div>
             <div className="w-full flex flex-row justify-between">
@@ -103,8 +97,7 @@ export default function Products() {
           </div>
           {categories.length > 0 && (
             <div className="mt-2 text-sm text-gray-700">
-              Đã chọn:{" "}
-              {categories.length > 0 ? categories.join(", ") : "Chưa chọn gì"}
+              Đã chọn: {categories.length > 0 ? categories.join(", ") : "Chưa chọn gì"}
             </div>
           )}
         </nav>

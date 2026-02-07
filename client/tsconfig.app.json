@@ -7,11 +7,9 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-     "baseUrl": ".",
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["client/public/src/*"]
     },
 
     /* Bundler mode */
@@ -30,5 +28,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["client/public/src"]
 }

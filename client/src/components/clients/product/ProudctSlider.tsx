@@ -4,7 +4,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import ProductCard from "./ProductCard";
-import useToggle from "@/hooks/useToggle";
+import useToggle from "@/hooks/use-toggle";
 import { TbArrowMoveLeft, TbArrowMoveRight } from "react-icons/tb";
 
 interface Product {
@@ -37,9 +37,7 @@ export default function ProductSlider({
     <div className={cn("space-y-6", className)}>
       <div className="flex flex-row justify-between">
         {title && <span className="text-2xl font-bold text-col">{title}</span>}
-        <button className=" font-semibold price-color cursor-pointer opacity-90">
-          Xem thêm
-        </button>
+        <button className=" font-semibold price-color cursor-pointer opacity-90">Xem thêm</button>
       </div>
       <motion.div onHoverStart={on} onHoverEnd={off}>
         <Swiper
@@ -83,10 +81,7 @@ export default function ProductSlider({
             </motion.button>
           </>
           {products.map((product) => (
-            <SwiperSlide
-              key={product?.id}
-              className=" h-auto pb-12 custom-rate-spacing"
-            >
+            <SwiperSlide key={product?.id} className=" h-auto pb-12 custom-rate-spacing">
               <ProductCard product={product} />
             </SwiperSlide>
           ))}
