@@ -7,3 +7,78 @@ generator client {
 datasource db {
   provider = "mysql"
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  phone     String?
+  email     String   @unique
+  password  String
+  ratings   Rating[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("users")
+}
+
+model Product {
+  id          Int             @id @default(autoincrement())
+  code        String          @unique
+  slug        String          @unique
+  name        String
+  description String?
+  price       Decimal         @db.Decimal(12, 2)
+  stock       Int             @default(0)
+  isActive    Boolean         @default(true)
+  images      ProductImage[]
+  categories  ProductCategory[]
+  ratings     Rating[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@map("products")
+}
+
+model ProductImage {
+  id        Int      @id @default(autoincrement())
+  url       String
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("product_images")
+}
+model Rating {
+  id        Int      @id @default(autoincrement())
+  score     Int
+  comment   String?
+  userId    Int
+  productId Int
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("ratings")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  slug      String   @unique
+  products  ProductCategory[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model ProductCategory {
+  productId  Int
+  categoryId Int
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+  @@map("product_categories")
+}
