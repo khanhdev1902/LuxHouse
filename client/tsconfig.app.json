@@ -9,7 +9,7 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["client/public/src/*"]
+      "@/*": ["src/*"]
     },
 
     /* Bundler mode */
@@ -28,5 +28,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["client/public/src"]
+  "include": ["src"]
 }
