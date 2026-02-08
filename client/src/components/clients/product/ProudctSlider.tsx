@@ -3,25 +3,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import ProductCard from "./ProductCard";
-import useToggle from "@/hooks/use-toggle";
+import useToggle from "@/hooks/useToggle";
 import { TbArrowMoveLeft, TbArrowMoveRight } from "react-icons/tb";
-
-interface Product {
-  id?: number;
-  title?: string;
-  image_1?: string;
-  image_2?: string;
-  price?: number;
-  discount?: number;
-  sold?: number;
-  rating?: number;
-  rating_users?: number;
-}
+import type { ListProduct } from "@/types/product";
+import ProductCard from "./ProductCard";
 
 interface ProductSliderProps {
   title?: string;
-  products: Product[];
+  products: ListProduct[];
   slidesPerView?: number;
   className?: string;
 }

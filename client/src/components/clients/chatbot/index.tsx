@@ -3,7 +3,7 @@
 // import axios from "axios";
 // const apiUrl = import.meta.env.VITE_API_URL;
 import ChatToggle from "./components/ChatToggle";
-import useToggle from "@/hooks/use-toggle";
+import useToggle from "@/hooks/useToggle";
 import ChatBox from "./components/ChatBox";
 // type Message = {
 //   sender: "user" | "genimi";

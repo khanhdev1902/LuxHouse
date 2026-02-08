@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { IoSearchSharp } from "react-icons/io5";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { dataTestProducts } from "@/constant/const-home";
-import useToggle from "@/hooks/use-toggle";
+import useToggle from "@/hooks/useToggle";
 
 interface SearchInputProps {
   className?: string;

@@ -2,12 +2,15 @@ import Container from "@/components/ui/Container";
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "@/components/clients/product/ProductCard";
-import { allCategorieProducts, dataTestProducts } from "@/constant/const-home";
-import useToggle from "@/hooks/use-toggle";
+import { allCategorieProducts } from "@/constant/const-home";
+import useToggle from "@/hooks/useToggle";
 import { BsChevronDown, BsFunnel } from "react-icons/bs";
+import { useProducts } from "@/hooks/useProducts";
+import Loading from "@/components/ui/Loading";
 
 export default function Products() {
   const { value: isOpen, on, off } = useToggle();
+  const { data: products } = useProducts();
   const [categories, setCategories] = React.useState<string[]>([]);
 
   const handleChange = (value: string) => {
@@ -18,6 +21,7 @@ export default function Products() {
           : [...prev, value] // thêm nếu chưa có
     );
   };
+  if (!products.length) return <Loading />;
   return (
     <>
       <div className="w-full h-auto">
@@ -103,7 +107,7 @@ export default function Products() {
         </nav>
 
         <div className=" grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full h-auto">
-          {dataTestProducts.map((product, key) => (
+          {products.map((product, key) => (
             <ProductCard key={key} product={product} className="" />
           ))}
         </div>

@@ -1,7 +1,6 @@
 import ChatBot from "@/components/clients/chatbot";
 import Footer from "@/components/clients/footer";
 import Header from "@/components/clients/header";
-import { Breadcrumbs } from "@/components/ui/BreadCrumb";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
@@ -16,7 +15,6 @@ export default function ClientsLayout() {
         className="fixed top-0 left-0 w-full bg-white z-50 shadow-sm select-none"
       />
       <main className="flex-grow" style={{ paddingTop: `${headerHeight}px` }}>
-        <Breadcrumbs />
         <Outlet />
       </main>
       <Footer />

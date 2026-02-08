@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { BsBagPlus } from "react-icons/bs";
-import useToggle from "@/hooks/use-toggle";
+import useToggle from "@/hooks/useToggle";
 import { IoMdClose } from "react-icons/io";
 import { dataTestProducts } from "@/constant/const-home";
 export default function Cart() {

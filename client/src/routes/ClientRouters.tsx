@@ -19,7 +19,7 @@ export const ClientRouters: RouteObject[] = [
     children: [
       { index: true, element: <Home /> },
       { path: "products", element: <Products /> },
-      { path: "products/:id", element: <ProductDetail /> },
+      { path: "products/:slug", element: <ProductDetail /> },
       { path: "cart", element: <Cart /> },
       {
         path: "account",
