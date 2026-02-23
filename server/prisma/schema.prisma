@@ -8,58 +8,64 @@ datasource db {
   provider = "mysql"
 }
 
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPING
+  COMPLETED
+  CANCELLED
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String?
-  phone     String?
+  role     String   @default("customer")
+  phone     String   @unique
   email     String   @unique
   password  String
-  ratings   Rating[]
+  addresses UserAddress[]
+  cart      Cart[]
+  orders    Order[]
+  reviews   Review[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@map("users")
 }
 
+model UserAddress {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  address   String
+  city      String
+  state     String
+  zipCode   String
+  country   String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user_addresses")
+}
+
 model Product {
   id          Int             @id @default(autoincrement())
-  code        String          @unique
+  productCode String?         @unique
   slug        String          @unique
   name        String
-  description String?
-  price       Decimal         @db.Decimal(12, 2)
-  stock       Int             @default(0)
+  description String?         @db.Text
   isActive    Boolean         @default(true)
+  averageRating Float         @default(0)
+  reviewCount Int             @default(0)
+  sold        Int             @default(0)
   images      ProductImage[]
   categories  ProductCategory[]
-  ratings     Rating[]
+  attributes  ProductAttribute[]
+  reviews     Review[]
+  variants    ProductVariant[]
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 
   @@map("products")
-}
-
-model ProductImage {
-  id        Int      @id @default(autoincrement())
-  url       String
-  productId Int
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("product_images")
-}
-model Rating {
-  id        Int      @id @default(autoincrement())
-  score     Int
-  comment   String?
-  userId    Int
-  productId Int
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("ratings")
 }
 
 model Category {
@@ -67,6 +73,7 @@ model Category {
   name      String   @unique
   slug      String   @unique
   products  ProductCategory[]
+  discountCategories DiscountCategory[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -81,4 +88,228 @@ model ProductCategory {
 
   @@id([productId, categoryId])
   @@map("product_categories")
+}
+
+model ProductVariant {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  sku       String   @unique
+  price     Decimal  @db.Decimal(12, 2)
+  stock     Int      @default(0)
+  defaultVariant Boolean @default(false)
+  attributeValues VariantAttributeValue[]
+  images    ProductImage[]
+  cartItems CartItem[]
+  orderItems OrderItem[]
+  discountProductVariants DiscountProductVariant[]
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("product_variants")
+}
+
+model ProductImage {
+  id               Int @id @default(autoincrement())
+  url              String
+  isMain           Boolean @default(false)
+
+  productId        Int
+  productVariantId Int?
+
+  product          Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productVariant   ProductVariant? @relation(fields: [productVariantId], references: [id], onDelete: Cascade)
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([productId, url])
+  @@unique([productVariantId, url])
+  @@index([productId])
+  @@index([productVariantId])
+  @@map("product_images")
+}
+
+model Attribute {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  values    AttributeValue[]
+  products  ProductAttribute[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("attributes")
+}
+
+model ProductAttribute {
+  productId  Int
+  attributeId Int
+  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  attribute  Attribute @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+
+  @@id([productId, attributeId])
+  @@map("product_attributes")
+}
+
+model AttributeValue {
+  id          Int      @id @default(autoincrement())
+  attributeId Int
+  value       String
+  attribute   Attribute @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+  variantValues VariantAttributeValue[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([attributeId, value])
+  @@map("attribute_values")
+}
+
+model VariantAttributeValue {
+  productVariantId   Int
+  attributeValueId   Int
+  productVariant     ProductVariant   @relation(fields: [productVariantId], references: [id], onDelete: Cascade)
+  attributeValue     AttributeValue   @relation(fields: [attributeValueId], references: [id], onDelete: Cascade)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  @@unique([productVariantId, attributeValueId])
+  @@id([productVariantId, attributeValueId])
+  @@map("variant_attribute_values")
+}
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  cartItems CartItem[]
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("carts")
+}
+
+model CartItem {
+  id              Int             @id @default(autoincrement())
+  cartId          Int
+  productVariantId Int
+  quantity        Int
+  price           Decimal         @db.Decimal(12, 2)
+  cart            Cart            @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id], onDelete: Cascade)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("cart_items")
+}
+
+model Order {
+  id          Int             @id @default(autoincrement())
+  userId      Int
+  totalAmount Decimal         @db.Decimal(12, 2)
+  status      OrderStatus     @default(PENDING)
+  shippingName String
+  shippingPhone String
+  shippingAddress String
+  shippingCity String
+  shippingState String
+  shippingZipCode String
+  shippingCountry String
+  orderItems  OrderItem[]
+  payments    Payment[]
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id              Int             @id @default(autoincrement())
+  orderId         Int
+  productVariantId Int
+  quantity        Int
+  originalPrice   Decimal         @db.Decimal(12, 2)
+  discountedAmount Decimal         @db.Decimal(12, 2)
+  finalPrice      Decimal         @db.Decimal(12, 2)
+  order           Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id], onDelete: Cascade)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("order_items")
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  method    String
+  amount    Decimal  @db.Decimal(12, 2)
+  status    String   @default("pending")
+  transactionId String? @unique
+  paidAt    DateTime?
+  refundedAt DateTime?
+  refundReason String?
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("payments")
+}
+
+model Discount {
+  id          Int      @id @default(autoincrement())
+  name        String
+  type        String   @default("amount")// "amount" or "percentage"
+  value       Decimal  @db.Decimal(12, 2)
+  discountType String  // (FLASH_SALE | VOUCHER | MANUAL)
+  startDate   DateTime
+  endDate     DateTime
+  userlimit   Int?     // null means unlimited
+  isPercentage Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  priority    Int      @default(0) // Higher priority discounts are applied first
+  discountCategories DiscountCategory[]
+  discountProducts DiscountProductVariant[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("discounts")
+}
+
+model DiscountCategory {
+  discountId Int
+  categoryId Int
+  discount   Discount @relation(fields: [discountId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@id([discountId, categoryId])
+  @@map("discount_categories")
+}
+
+model DiscountProductVariant {
+  discountId       Int
+  productVariantId Int
+  discount         Discount       @relation(fields: [discountId], references: [id], onDelete: Cascade)
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id], onDelete: Cascade)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@id([discountId, productVariantId])
+  @@map("discount_product_variants")
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  rating    Int
+  comment   String?
+  userId    Int
+  productId Int
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reviews")
 }

@@ -5,7 +5,9 @@ export async function seedUsers(prisma: PrismaService) {
     const hashedPassword = await bcrypt.hash(user.password, 10);
     await prisma.user.upsert({
       where: { email: user.email },
-      update: {},
+      update: {
+        role: 'ADMIN',
+      },
       create: {
         name: user.name,
         phone: user.phone,
@@ -20,9 +22,9 @@ export async function seedUsers(prisma: PrismaService) {
 
 const Users = [
   {
-    name: 'Alice',
-    phone: '1234567890',
-    email: 'alice@gmail.com',
-    password: '123456',
+    name: 'Astrol',
+    phone: '0345755059',
+    email: 'astrol@gmail.com',
+    password: '1902@Astrol',
   },
 ];

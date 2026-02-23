@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { ApiResponse, ApiResponseType } from 'src/common/base/api-response';
 import { PrismaService } from 'src/prisma.service';
 import { productDetailSelect, productListSelect } from './product.select';
-import { mapProductDetail, mapProductListItem } from './product.mapper';
+import { mapProductListItem } from './product.mapper';
 import { ProductDetail, ProductListItem } from './product.interface';
+import { count } from 'console';
 
 @Injectable()
 export class ProductService {
@@ -16,14 +18,12 @@ export class ProductService {
       orderBy: { createdAt: 'desc' },
       select: productListSelect,
     });
-
+    console.log('products', products);
     const result = products.map(mapProductListItem);
     return ApiResponse.ok(result, 'Lấy danh sách sản phẩm thành công', 200);
   }
 
-  async getProductBySlug(
-    slug: string,
-  ): Promise<ApiResponseType<ProductDetail | null>> {
+  async getProductBySlug(slug: string): Promise<unknown> {
     const product = await this.prismaService.product.findUnique({
       where: { slug },
       select: productDetailSelect,
@@ -31,7 +31,7 @@ export class ProductService {
     if (!product) {
       return ApiResponse.error(null, 'Không tìm thấy sản phẩm', 404);
     }
-    const result = mapProductDetail(product);
-    return ApiResponse.ok(result, 'Lấy sản phẩm thành công', 200);
+    // const result = mapProductDetail(product);
+    return ApiResponse.ok(product, 'Lấy sản phẩm thành công', 200);
   }
 }

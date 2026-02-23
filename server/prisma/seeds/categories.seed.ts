@@ -1,12 +1,6 @@
 import { PrismaService } from 'src/prisma.service';
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
+import { slugify } from 'src/helper/slugify';
+
 export async function seedCategories(prisma: PrismaService) {
   for (const category of allCategorieProducts) {
     await prisma.category.upsert({

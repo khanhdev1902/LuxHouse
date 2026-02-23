@@ -23,20 +23,15 @@ export * from './enums.js';
  */
 export type User = Prisma.UserModel
 /**
+ * Model UserAddress
+ * 
+ */
+export type UserAddress = Prisma.UserAddressModel
+/**
  * Model Product
  * 
  */
 export type Product = Prisma.ProductModel
-/**
- * Model ProductImage
- * 
- */
-export type ProductImage = Prisma.ProductImageModel
-/**
- * Model Rating
- * 
- */
-export type Rating = Prisma.RatingModel
 /**
  * Model Category
  * 
@@ -47,3 +42,78 @@ export type Category = Prisma.CategoryModel
  * 
  */
 export type ProductCategory = Prisma.ProductCategoryModel
+/**
+ * Model ProductVariant
+ * 
+ */
+export type ProductVariant = Prisma.ProductVariantModel
+/**
+ * Model ProductImage
+ * 
+ */
+export type ProductImage = Prisma.ProductImageModel
+/**
+ * Model Attribute
+ * 
+ */
+export type Attribute = Prisma.AttributeModel
+/**
+ * Model ProductAttribute
+ * 
+ */
+export type ProductAttribute = Prisma.ProductAttributeModel
+/**
+ * Model AttributeValue
+ * 
+ */
+export type AttributeValue = Prisma.AttributeValueModel
+/**
+ * Model VariantAttributeValue
+ * 
+ */
+export type VariantAttributeValue = Prisma.VariantAttributeValueModel
+/**
+ * Model Cart
+ * 
+ */
+export type Cart = Prisma.CartModel
+/**
+ * Model CartItem
+ * 
+ */
+export type CartItem = Prisma.CartItemModel
+/**
+ * Model Order
+ * 
+ */
+export type Order = Prisma.OrderModel
+/**
+ * Model OrderItem
+ * 
+ */
+export type OrderItem = Prisma.OrderItemModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
+ * Model Discount
+ * 
+ */
+export type Discount = Prisma.DiscountModel
+/**
+ * Model DiscountCategory
+ * 
+ */
+export type DiscountCategory = Prisma.DiscountCategoryModel
+/**
+ * Model DiscountProductVariant
+ * 
+ */
+export type DiscountProductVariant = Prisma.DiscountProductVariantModel
+/**
+ * Model Review
+ * 
+ */
+export type Review = Prisma.ReviewModel
