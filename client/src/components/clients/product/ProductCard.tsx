@@ -1,12 +1,12 @@
 import Rating from "@/components/ui/Rating";
 import { cn } from "@/lib/utils";
-import type { ListProduct } from "@/types/product";
+import type { ProductListItem } from "@/types/product";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
   className?: string;
-  product?: ListProduct;
+  product?: ProductListItem;
 }
 export default function ProductCard({ className, product }: ProductCardProps) {
   const navigation = useNavigate();
@@ -17,9 +17,9 @@ export default function ProductCard({ className, product }: ProductCardProps) {
       className={cn(" relative cursor-pointer select-none ", className)}
       onClick={() => navigation(`/products/${product?.slug}`)}
     >
-      {(product?.discount ?? 0) > 0 && (
-        <span className=" absolute top-1 left-0 z-20 bg-red-500 text-white py-1 px-3 rounded-br-lg text-xs font-medium opacity-95">
-          {`${((product?.discount ?? 0) * 100).toString().slice(0, 2)}%`}
+      {(product?.discountPercent ?? 0) > 0 && (
+        <span className=" absolute top-1 left-0 z-20 bg-red-600 text-white py-1 px-3 rounded-br-lg text-sm font-normal">
+          {`-${product?.discountPercent ?? 0}%`}
         </span>
       )}
       <img src={product?.images[0]} alt={product?.name || "Product Card"} />
@@ -38,7 +38,7 @@ export default function ProductCard({ className, product }: ProductCardProps) {
             {new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
-            }).format((product?.price ?? 0) * (1 - (product?.discount ?? 0)))}
+            }).format(product?.price ?? 0)}
           </span>
 
           <span className="text-[#939393] line-through decoration-1">
@@ -46,13 +46,13 @@ export default function ProductCard({ className, product }: ProductCardProps) {
             {new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
-            }).format(product?.price ?? 0)}
+            }).format(product?.originalPrice ?? 0)}
           </span>
         </div>
         <div className="flex flex-row justify-between flex-wrap">
           <div className="flex flex-row gap-1 items-center text-xs sm:text-sm">
-            <Rating number={product?.rating} />
-            <span>{`(${product?.rating_users ?? 0})`}</span>
+            <Rating rating={product?.averageRating ?? 0} />
+            <span>{`(${product?.reviewCount ?? 0})`}</span>
           </div>
           <span>{`Đã bán ${product?.sold ?? 0}`}</span>
         </div>

@@ -4,26 +4,21 @@ import { RiAccountCircleFill } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import { AiFillProduct } from "react-icons/ai";
 import { FaAddressBook } from "react-icons/fa6";
-import user_avata from "@/assets/Avata.jpg"
+import user_avata from "@/assets/Avata.jpg";
+import type { Cart } from "@/types/cart";
 
 export const user = {
-  firstName:"Khanh",
-  lastName:"Nguyễn Văn",
-  email:"khanhdeddo@gmail.com",
-  phone:"0345755059",
-  avata:user_avata
-}
+  firstName: "Khanh",
+  lastName: "Nguyễn Văn",
+  email: "khanhdeddo@gmail.com",
+  phone: "0345755059",
+  avata: user_avata,
+};
 
 export const navbarHeaders = [
   {
     title: "Sản phẩm",
-    submenu: [
-      "Bộ sưu tập",
-      "Phòng ngủ",
-      "Phòng khách",
-      "Phòng ăn",
-      "Phòng làm việc",
-    ],
+    submenu: ["Bộ sưu tập", "Phòng ngủ", "Phòng khách", "Phòng ăn", "Phòng làm việc"],
   },
   { title: "Khuyến mãi", submenu: ["Khuyến mãi hè", "Mã khuyến mãi"] },
   { title: "Tin tức", submenu: ["Bài viết", "Mọi người", "Mạng xã hội"] },
@@ -31,6 +26,61 @@ export const navbarHeaders = [
   { title: "Về ZORO", submenu: [] },
   { title: "Cửa hàng", submenu: [] },
 ];
+
+export const cart: Cart = {
+  id: "1",
+  userId: "1",
+  cartItems: [
+    {
+      id: "1",
+      cartId: "1",
+      productVariantId: "1",
+      name: "Giường Ngủ Bọc Vải Cao Cấp MOHO BOND",
+      image:
+        "https://cdn.hstatic.net/products/200000065946/pro_xam_giuong_boc_vai_moho_bond_720dcf953f07421bb06648f1f2cf7d2d_medium.png",
+      quantity: 5,
+      originPrice: 17490000,
+      price: 9490000,
+      attribute: "Xám / 1m6",
+    },
+    {
+      id: "1",
+      cartId: "1",
+      productVariantId: "1",
+      name: "Giường Ngủ Bọc Vải Cao Cấp MOHO BOND",
+      image:
+        "https://cdn.hstatic.net/products/200000065946/pro_xam_giuong_boc_vai_moho_bond_720dcf953f07421bb06648f1f2cf7d2d_medium.png",
+      quantity: 5,
+      originPrice: 17490000,
+      price: 9490000,
+      attribute: "Xám / 1m6",
+    },
+    {
+      id: "1",
+      cartId: "1",
+      productVariantId: "1",
+      name: "Giường Ngủ Bọc Vải Cao Cấp MOHO BOND",
+      image:
+        "https://cdn.hstatic.net/products/200000065946/pro_xam_giuong_boc_vai_moho_bond_720dcf953f07421bb06648f1f2cf7d2d_medium.png",
+      quantity: 5,
+      originPrice: 17490000,
+      price: 9490000,
+      attribute: "Xám / 1m6",
+    },
+    {
+      id: "1",
+      cartId: "1",
+      productVariantId: "1",
+      name: "Giường Ngủ Bọc Vải Cao Cấp MOHO BOND",
+      image:
+        "https://cdn.hstatic.net/products/200000065946/pro_xam_giuong_boc_vai_moho_bond_720dcf953f07421bb06648f1f2cf7d2d_medium.png",
+      quantity: 5,
+      originPrice: 17490000,
+      price: 9490000,
+      attribute: "Xám / 1m6",
+    },
+  ],
+};
 
 export const dataTestProducts = [
   {
@@ -252,4 +302,3 @@ const images = import.meta.glob("@/assets/slideshow-desktop/*.jpg", { eager: tru
 const images_mb = import.meta.glob("@/assets/slideshow-mobile/*.jpg", { eager: true });
 export const slideShowDesktop = Object.values(images).map((m: any) => m.default);
 export const slideShowMObile = Object.values(images_mb).map((m: any) => m.default);
-

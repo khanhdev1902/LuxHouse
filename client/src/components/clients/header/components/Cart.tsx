@@ -2,9 +2,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { BsBagPlus } from "react-icons/bs";
 import useToggle from "@/hooks/useToggle";
 import { IoMdClose } from "react-icons/io";
-import { dataTestProducts } from "@/constant/const-home";
+import { useNavigate } from "react-router-dom";
+import { cart } from "@/constant/const-home";
+import CartItem from "../../cart/CartItem";
+import { formatCurrency } from "@/utils/formatCurrency";
 export default function Cart() {
   const { value: isOpen, toggle, off } = useToggle(false);
+  const navigate = useNavigate();
+  const totalAmount = cart.cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
   return (
     <div>
       {/* Icon cart on header */}
@@ -15,7 +20,7 @@ export default function Cart() {
         <div className="relative">
           <BsBagPlus className="size-6 text-[#434343]" />
           <span className="absolute -top-3 -right-3 bg-[#F04D4C] h-6 w-6 flex justify-center items-center rounded-full text-white font-bold text-xs text-center select-none">
-            7
+            {cart.cartItems.length ?? 0}
           </span>
         </div>
         <span className=" whitespace-nowrap hidden xl:block">Giỏ hàng</span>
@@ -36,51 +41,32 @@ export default function Cart() {
               <IoMdClose onClick={off} className="size-7 text-red-700 cursor-pointer" />
             </header>
             <div className="py-2 flex-1 overflow-y-auto">
-              {dataTestProducts.slice(2, 5).map((product, key) => (
-                <div
-                  key={key}
-                  className="flex flex-row justify-center items-center p-4 border-b cursor-pointer"
-                >
-                  <div>
-                    <span className=" font-semibold line-clamp-2">{product?.title}</span>
-                    <div className="flex flex-row justify-between items-center pr-5">
-                      <div className="flex flex-row items-center gap-2">
-                        <span className="w-10 h-6 rounded-sm p-2 bg-slate-300 flex flex-row justify-center items-center text-xs">
-                          {product?.sold}
-                        </span>
-                        <span>{product?.price}--- 19,816,667₫</span>
-                      </div>
-                      <motion.div
-                        className="size-6 bg-slate-300 p-1 rounded-sm shadow-sm cursor-pointer"
-                        whileTap={{ scale: 0.9 }}
-                        whileHover={{ scale: 1.1 }}
-                      >
-                        <IoMdClose />
-                      </motion.div>
-                    </div>
-                  </div>
-                  <img src={product?.image_1} alt="" className="min-w-32 h-20 select-none" />
-                </div>
+              {cart.cartItems.map((item) => (
+                <CartItem key={item.id} data={item} mode="small" />
               ))}
             </div>
             <footer className="flex flex-col gap-4 p-4 border-t border-gray-200">
               <div className="flex flex-row items-center justify-start gap-4">
                 <span className=" text-lg font-bold">Tổng tiền:</span>
-                <span className="text-red-600 font-bold">1.902.000.000 đ</span>
+                <span className="text-red-600 font-bold">{formatCurrency(totalAmount)}</span>
               </div>
-              <div className="flex flex-row justify-between items-center gap-2">
+              <div className="flex flex-row justify-center items-center gap-2">
                 <motion.button
-                  className="bg-gradient-to-r from-orange-600 to-blue-600 text-white text-sm font-semibold px-16 py-3 rounded-sm shadow-lg whitespace-nowrap cursor-pointer"
+                  className="bg-[#27678f] w-full text-white text-sm font-semibold px-14 py-3 rounded-xl whitespace-nowrap cursor-pointer"
                   whileTap={{ scale: 0.9 }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.01 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
+                  onClick={() => {
+                    off();
+                    navigate("/cart");
+                  }}
                 >
                   XEM GIỎ HÀNG
                 </motion.button>
                 <motion.button
-                  className="bg-gradient-to-r from-red-600 to-orange-600 text-white text-sm font-semibold px-16 py-3 rounded-sm shadow-lg  cursor-pointer"
+                  className="bg-[#ef683a] w-full text-white text-sm font-semibold px-14 py-3 rounded-xl whitespace-nowrap cursor-pointer"
                   whileTap={{ scale: 0.9 }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.01 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                 >
                   THANH TOÁN

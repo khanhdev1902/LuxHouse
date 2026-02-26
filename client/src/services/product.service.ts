@@ -1,10 +1,10 @@
 import { API_ENDPOINTS } from "@/constant/api-endpoints";
 import http from "@/lib/http";
 import type { ApiResponse } from "@/types/api-response";
-import type { ListProduct, ProductDetail } from "@/types/product";
+import type { ProductDetail, ProductListItem } from "@/types/product";
 
-export async function getProducts(): Promise<ListProduct[]> {
-  const res = await http.get<ApiResponse<ListProduct[]>>(API_ENDPOINTS.PRODUCT);
+export async function getProducts(): Promise<ProductListItem[]> {
+  const res = await http.get<ApiResponse<ProductListItem[]>>(API_ENDPOINTS.PRODUCT);
   const { data } = res.data;
   return data;
 }

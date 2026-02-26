@@ -1,23 +1,52 @@
-export interface ListProduct {
-  id: number;
+export interface ProductCategory {
   name: string;
   slug: string;
-  price: number;
-  images: string[];
-  discount?: number;
-  sold?: number;
-  rating?: number;
-  rating_users?: number;
 }
 
-export interface ProductDetail extends ListProduct {
-  code: string;
+export interface variantImage {
+  url: string;
+  isMain: boolean;
+}
+
+export interface ProductVariant {
+  id: string;
+  sku: string;
+  price: number;
   stock: number;
-  categories: {
+  defaultVariant: boolean;
+  discount?: {
+    value?: string,
+  };
+  attributes: {
     name: string;
-    slug: string;
+    value: string;
   }[];
+  images: variantImage[];
+}
+
+export interface ProductListItem {
+  id: string;
+  name: string;
+  slug: string;
+  originalPrice?: number;
+  price?: number;
+  discountPercent?: number;
+  images?: string[];
+  averageRating: number;
+  reviewCount: number;
+  sold: number;
+}
+
+export interface ProductDetail extends ProductListItem {
+  productCode: string | null;
+  description: string | null;
+  isActive: boolean;
+  options: {
+    name: string;
+    values: string[];
+  }[];
+  defaultVariantId: string | null;
+  categories: ProductCategory[];
+  variants: ProductVariant[];
   createdAt: string;
-  description: string;
-  specifications: Record<string, string>;
 }

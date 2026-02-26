@@ -11,6 +11,8 @@ import Addresses from "@/pages/clients/addresses";
 import Vouchers from "@/pages/clients/vouchers";
 import NotFound from "@/pages/notfound";
 import ClientsAccountLayout from "@/layouts/ClientsAccountLayout";
+import Login from "@/auth/login";
+import Register from "@/auth/register";
 
 export const ClientRouters: RouteObject[] = [
   {
@@ -23,7 +25,7 @@ export const ClientRouters: RouteObject[] = [
       { path: "cart", element: <Cart /> },
       {
         path: "account",
-        element:<ClientsAccountLayout/>,
+        element: <ClientsAccountLayout />,
         children: [
           { index: true, element: <Navigate to="profile" replace /> },
           { path: "profile", element: <Profile /> },
@@ -35,5 +37,13 @@ export const ClientRouters: RouteObject[] = [
       },
     ],
   },
-  { path: "*", element: <NotFound /> }
+  {
+    path: "login",
+    element: <Login/>,
+  },
+  {
+    path: "register",
+    element: <Register/>,
+  },
+  { path: "*", element: <NotFound /> },
 ];

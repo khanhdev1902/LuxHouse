@@ -1,19 +1,62 @@
 import { Breadcrumbs } from "@/components/ui/BreadCrumb";
 import Container from "@/components/ui/Container";
+import ProductGallery from "./components/ProductGallery";
+import ProductInfor from "./components/ProductInfor";
 import { useProductDetail } from "@/hooks/useProducts";
 import { useParams } from "react-router-dom";
+import RelatedProducts from "./components/RelatedProducts";
+import { useEffect, useState } from "react";
+import type { ProductDetail } from "@/types/product";
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { data: product, isLoading, isError, error } = useProductDetail(slug!);
-  console.log({ product, isLoading, isError, error });
-  if (!product) return <div>Loading...</div>;
+  const [selectedVariant, setSelectedVariant] = useState<ProductDetail["variants"][number] | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (product?.defaultVariantId) {
+      setSelectedVariant(product.variants.find((v) => v.id === product.defaultVariantId) || null);
+    }
+  }, [product]);
+
+  if (!product) return null;
+  if (isLoading) return <div className="py-32 text-center">Loading...</div>;
+  if (isError) return <div>Error: {error?.message}</div>;
+
+  const handleVariantChange = (variantId: string) => {
+    setSelectedVariant(product.variants.find((v) => v.id === variantId) || null);
+  };
+
   return (
     <>
       <Breadcrumbs name={product.name} />
-      <Container className="w-full h-full bg-blue-300 flex flex-col items-center justify-center">
-        <div>haha</div>
-        <div>hhh</div>
+
+      <Container className="py-8">
+        {/* Hero */}
+        <div className="grid grid-cols-10 gap-16">
+          <div className="col-span-6">
+            <ProductGallery
+              product={product}
+              selectedVariant={selectedVariant}
+              onVariantChange={handleVariantChange}
+            />
+          </div>
+
+          <div className="col-span-4 sticky top-28 h-fit">
+            <ProductInfor
+              product={product}
+              selectVariant={selectedVariant}
+              onVariantChange={handleVariantChange}
+            />
+          </div>
+        </div>
+
+        {/* Story */}
+        <section className="mt-32">{/* <ProductStory product={product} /> */}</section>
+
+        <RelatedProducts categories={product.categories} />
       </Container>
     </>
   );
