@@ -1,0 +1,107 @@
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { AuthRequestDto } from './auth.request.dto';
+import { PrismaService } from 'src/prisma.service';
+import bcrypt from 'bcryptjs';
+import { IAuth } from './auth.interface';
+import { JwtService } from '@nestjs/jwt';
+import { randomBytes } from 'crypto';
+import { JwtConstants } from './auth.constant';
+import { UserWithoutPassword } from '../users/user.interface';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly jwtService: JwtService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
+
+  async register(request: AuthRequestDto): Promise<string> {
+    const { name, email, password } = request;
+    const existingUser = await this.prismaService.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) throw new BadRequestException('Email đã tồn tại');
+
+    const hashPassword = await bcrypt.hash(password, 10);
+    await this.prismaService.$transaction(async (tx) => {
+      const newUser = await tx.user.create({
+        data: {
+          name,
+          email,
+          password: hashPassword,
+        },
+      });
+      await tx.cart.create({
+        data: {
+          userId: newUser.id,
+        },
+      });
+    });
+    return 'Đăng ký tài khoản thành công!';
+  }
+
+  async authenticate(request: AuthRequestDto): Promise<IAuth> {
+    console.log('authenticate called');
+    const user = await this.validateUser(request.email, request.password);
+    if (!user) {
+      throw new UnauthorizedException('Email hoặc mật khẩu không đúng!');
+    }
+
+    const payload = { userId: user.id, email: user.email };
+    const accessToken = await this.jwtService.signAsync(payload);
+    const refreshToken = randomBytes(32).toString('hex');
+    console.log('Generated refresh token:', refreshToken);
+    const crsfToken = randomBytes(32).toString('hex');
+    const refreshTokenCacheData: { userId: number; expiresAt: number } = {
+      userId: user.id,
+      expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    };
+    const caching = await this.cacheManager.set(
+      `refreshToken:${refreshToken}`,
+      refreshTokenCacheData,
+      7 * 24 * 60 * 60 * 1000,
+    );
+    console.log('Redis:', caching);
+    return this.authResponse(accessToken, refreshToken, crsfToken);
+  }
+
+  authResponse(
+    accessToken: string,
+    refreshToken: string,
+    crsfToken: string,
+  ): IAuth {
+    return {
+      accessToken,
+      refreshToken,
+      crsfToken,
+      expiresAt: JwtConstants.expiresIn,
+      tokenType: 'Bearer',
+    };
+  }
+
+  async validateUser(
+    email: string,
+    password: string,
+  ): Promise<UserWithoutPassword | null> {
+    console.log('validateUser called');
+    const user = await this.prismaService.user.findUnique({
+      where: { email },
+    });
+    if (!user) return null;
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return null;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _pw, ...result } = user;
+    return result;
+  }
+}

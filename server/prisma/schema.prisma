@@ -20,7 +20,7 @@ model User {
   id        Int      @id @default(autoincrement())
   name      String?
   role     String   @default("customer")
-  phone     String   @unique
+  phone     String?   @unique
   email     String   @unique
   password  String
   addresses UserAddress[]
@@ -101,7 +101,7 @@ model ProductVariant {
   images    ProductImage[]
   cartItems CartItem[]
   orderItems OrderItem[]
-  discountProductVariants DiscountProductVariant[]
+  discounts DiscountProductVariant[]
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -258,14 +258,13 @@ model Payment {
 
 model Discount {
   id          Int      @id @default(autoincrement())
-  name        String
-  type        String   @default("amount")// "amount" or "percentage"
+  name        String?
+  type        String   @default("percentage")// "amount" or "percentage"
   value       Decimal  @db.Decimal(12, 2)
-  discountType String  // (FLASH_SALE | VOUCHER | MANUAL)
+  discountType String  // (FLASH_SALE | VOUCHER | MANUAL | VARIANT)
   startDate   DateTime
   endDate     DateTime
   userlimit   Int?     // null means unlimited
-  isPercentage Boolean  @default(false)
   isActive    Boolean  @default(true)
   priority    Int      @default(0) // Higher priority discounts are applied first
   discountCategories DiscountCategory[]

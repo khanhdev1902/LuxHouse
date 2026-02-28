@@ -49,7 +49,6 @@ export type DiscountMinAggregateOutputType = {
   startDate: Date | null
   endDate: Date | null
   userlimit: number | null
-  isPercentage: boolean | null
   isActive: boolean | null
   priority: number | null
   createdAt: Date | null
@@ -65,7 +64,6 @@ export type DiscountMaxAggregateOutputType = {
   startDate: Date | null
   endDate: Date | null
   userlimit: number | null
-  isPercentage: boolean | null
   isActive: boolean | null
   priority: number | null
   createdAt: Date | null
@@ -81,7 +79,6 @@ export type DiscountCountAggregateOutputType = {
   startDate: number
   endDate: number
   userlimit: number
-  isPercentage: number
   isActive: number
   priority: number
   createdAt: number
@@ -113,7 +110,6 @@ export type DiscountMinAggregateInputType = {
   startDate?: true
   endDate?: true
   userlimit?: true
-  isPercentage?: true
   isActive?: true
   priority?: true
   createdAt?: true
@@ -129,7 +125,6 @@ export type DiscountMaxAggregateInputType = {
   startDate?: true
   endDate?: true
   userlimit?: true
-  isPercentage?: true
   isActive?: true
   priority?: true
   createdAt?: true
@@ -145,7 +140,6 @@ export type DiscountCountAggregateInputType = {
   startDate?: true
   endDate?: true
   userlimit?: true
-  isPercentage?: true
   isActive?: true
   priority?: true
   createdAt?: true
@@ -241,14 +235,13 @@ export type DiscountGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type DiscountGroupByOutputType = {
   id: number
-  name: string
+  name: string | null
   type: string
   value: runtime.Decimal
   discountType: string
   startDate: Date
   endDate: Date
   userlimit: number | null
-  isPercentage: boolean
   isActive: boolean
   priority: number
   createdAt: Date
@@ -280,14 +273,13 @@ export type DiscountWhereInput = {
   OR?: Prisma.DiscountWhereInput[]
   NOT?: Prisma.DiscountWhereInput | Prisma.DiscountWhereInput[]
   id?: Prisma.IntFilter<"Discount"> | number
-  name?: Prisma.StringFilter<"Discount"> | string
+  name?: Prisma.StringNullableFilter<"Discount"> | string | null
   type?: Prisma.StringFilter<"Discount"> | string
   value?: Prisma.DecimalFilter<"Discount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFilter<"Discount"> | string
   startDate?: Prisma.DateTimeFilter<"Discount"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Discount"> | Date | string
   userlimit?: Prisma.IntNullableFilter<"Discount"> | number | null
-  isPercentage?: Prisma.BoolFilter<"Discount"> | boolean
   isActive?: Prisma.BoolFilter<"Discount"> | boolean
   priority?: Prisma.IntFilter<"Discount"> | number
   createdAt?: Prisma.DateTimeFilter<"Discount"> | Date | string
@@ -298,14 +290,13 @@ export type DiscountWhereInput = {
 
 export type DiscountOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   value?: Prisma.SortOrder
   discountType?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   userlimit?: Prisma.SortOrderInput | Prisma.SortOrder
-  isPercentage?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   priority?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -320,14 +311,13 @@ export type DiscountWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.DiscountWhereInput | Prisma.DiscountWhereInput[]
   OR?: Prisma.DiscountWhereInput[]
   NOT?: Prisma.DiscountWhereInput | Prisma.DiscountWhereInput[]
-  name?: Prisma.StringFilter<"Discount"> | string
+  name?: Prisma.StringNullableFilter<"Discount"> | string | null
   type?: Prisma.StringFilter<"Discount"> | string
   value?: Prisma.DecimalFilter<"Discount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFilter<"Discount"> | string
   startDate?: Prisma.DateTimeFilter<"Discount"> | Date | string
   endDate?: Prisma.DateTimeFilter<"Discount"> | Date | string
   userlimit?: Prisma.IntNullableFilter<"Discount"> | number | null
-  isPercentage?: Prisma.BoolFilter<"Discount"> | boolean
   isActive?: Prisma.BoolFilter<"Discount"> | boolean
   priority?: Prisma.IntFilter<"Discount"> | number
   createdAt?: Prisma.DateTimeFilter<"Discount"> | Date | string
@@ -338,14 +328,13 @@ export type DiscountWhereUniqueInput = Prisma.AtLeast<{
 
 export type DiscountOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   value?: Prisma.SortOrder
   discountType?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   userlimit?: Prisma.SortOrderInput | Prisma.SortOrder
-  isPercentage?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   priority?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -362,14 +351,13 @@ export type DiscountScalarWhereWithAggregatesInput = {
   OR?: Prisma.DiscountScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DiscountScalarWhereWithAggregatesInput | Prisma.DiscountScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Discount"> | number
-  name?: Prisma.StringWithAggregatesFilter<"Discount"> | string
+  name?: Prisma.StringNullableWithAggregatesFilter<"Discount"> | string | null
   type?: Prisma.StringWithAggregatesFilter<"Discount"> | string
   value?: Prisma.DecimalWithAggregatesFilter<"Discount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringWithAggregatesFilter<"Discount"> | string
   startDate?: Prisma.DateTimeWithAggregatesFilter<"Discount"> | Date | string
   endDate?: Prisma.DateTimeWithAggregatesFilter<"Discount"> | Date | string
   userlimit?: Prisma.IntNullableWithAggregatesFilter<"Discount"> | number | null
-  isPercentage?: Prisma.BoolWithAggregatesFilter<"Discount"> | boolean
   isActive?: Prisma.BoolWithAggregatesFilter<"Discount"> | boolean
   priority?: Prisma.IntWithAggregatesFilter<"Discount"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Discount"> | Date | string
@@ -377,14 +365,13 @@ export type DiscountScalarWhereWithAggregatesInput = {
 }
 
 export type DiscountCreateInput = {
-  name: string
+  name?: string | null
   type?: string
   value: runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType: string
   startDate: Date | string
   endDate: Date | string
   userlimit?: number | null
-  isPercentage?: boolean
   isActive?: boolean
   priority?: number
   createdAt?: Date | string
@@ -395,14 +382,13 @@ export type DiscountCreateInput = {
 
 export type DiscountUncheckedCreateInput = {
   id?: number
-  name: string
+  name?: string | null
   type?: string
   value: runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType: string
   startDate: Date | string
   endDate: Date | string
   userlimit?: number | null
-  isPercentage?: boolean
   isActive?: boolean
   priority?: number
   createdAt?: Date | string
@@ -412,14 +398,13 @@ export type DiscountUncheckedCreateInput = {
 }
 
 export type DiscountUpdateInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userlimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isPercentage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -430,14 +415,13 @@ export type DiscountUpdateInput = {
 
 export type DiscountUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userlimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isPercentage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -448,14 +432,13 @@ export type DiscountUncheckedUpdateInput = {
 
 export type DiscountCreateManyInput = {
   id?: number
-  name: string
+  name?: string | null
   type?: string
   value: runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType: string
   startDate: Date | string
   endDate: Date | string
   userlimit?: number | null
-  isPercentage?: boolean
   isActive?: boolean
   priority?: number
   createdAt?: Date | string
@@ -463,14 +446,13 @@ export type DiscountCreateManyInput = {
 }
 
 export type DiscountUpdateManyMutationInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userlimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isPercentage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -479,14 +461,13 @@ export type DiscountUpdateManyMutationInput = {
 
 export type DiscountUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userlimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isPercentage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -508,7 +489,6 @@ export type DiscountCountOrderByAggregateInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   userlimit?: Prisma.SortOrder
-  isPercentage?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   priority?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -531,7 +511,6 @@ export type DiscountMaxOrderByAggregateInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   userlimit?: Prisma.SortOrder
-  isPercentage?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   priority?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -547,7 +526,6 @@ export type DiscountMinOrderByAggregateInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   userlimit?: Prisma.SortOrder
-  isPercentage?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   priority?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -595,14 +573,13 @@ export type DiscountUpdateOneRequiredWithoutDiscountProductsNestedInput = {
 }
 
 export type DiscountCreateWithoutDiscountCategoriesInput = {
-  name: string
+  name?: string | null
   type?: string
   value: runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType: string
   startDate: Date | string
   endDate: Date | string
   userlimit?: number | null
-  isPercentage?: boolean
   isActive?: boolean
   priority?: number
   createdAt?: Date | string
@@ -612,14 +589,13 @@ export type DiscountCreateWithoutDiscountCategoriesInput = {
 
 export type DiscountUncheckedCreateWithoutDiscountCategoriesInput = {
   id?: number
-  name: string
+  name?: string | null
   type?: string
   value: runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType: string
   startDate: Date | string
   endDate: Date | string
   userlimit?: number | null
-  isPercentage?: boolean
   isActive?: boolean
   priority?: number
   createdAt?: Date | string
@@ -644,14 +620,13 @@ export type DiscountUpdateToOneWithWhereWithoutDiscountCategoriesInput = {
 }
 
 export type DiscountUpdateWithoutDiscountCategoriesInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userlimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isPercentage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -661,14 +636,13 @@ export type DiscountUpdateWithoutDiscountCategoriesInput = {
 
 export type DiscountUncheckedUpdateWithoutDiscountCategoriesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userlimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isPercentage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -677,14 +651,13 @@ export type DiscountUncheckedUpdateWithoutDiscountCategoriesInput = {
 }
 
 export type DiscountCreateWithoutDiscountProductsInput = {
-  name: string
+  name?: string | null
   type?: string
   value: runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType: string
   startDate: Date | string
   endDate: Date | string
   userlimit?: number | null
-  isPercentage?: boolean
   isActive?: boolean
   priority?: number
   createdAt?: Date | string
@@ -694,14 +667,13 @@ export type DiscountCreateWithoutDiscountProductsInput = {
 
 export type DiscountUncheckedCreateWithoutDiscountProductsInput = {
   id?: number
-  name: string
+  name?: string | null
   type?: string
   value: runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType: string
   startDate: Date | string
   endDate: Date | string
   userlimit?: number | null
-  isPercentage?: boolean
   isActive?: boolean
   priority?: number
   createdAt?: Date | string
@@ -726,14 +698,13 @@ export type DiscountUpdateToOneWithWhereWithoutDiscountProductsInput = {
 }
 
 export type DiscountUpdateWithoutDiscountProductsInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userlimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isPercentage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -743,14 +714,13 @@ export type DiscountUpdateWithoutDiscountProductsInput = {
 
 export type DiscountUncheckedUpdateWithoutDiscountProductsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userlimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isPercentage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -807,7 +777,6 @@ export type DiscountSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   startDate?: boolean
   endDate?: boolean
   userlimit?: boolean
-  isPercentage?: boolean
   isActive?: boolean
   priority?: boolean
   createdAt?: boolean
@@ -828,14 +797,13 @@ export type DiscountSelectScalar = {
   startDate?: boolean
   endDate?: boolean
   userlimit?: boolean
-  isPercentage?: boolean
   isActive?: boolean
   priority?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DiscountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "value" | "discountType" | "startDate" | "endDate" | "userlimit" | "isPercentage" | "isActive" | "priority" | "createdAt" | "updatedAt", ExtArgs["result"]["discount"]>
+export type DiscountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "value" | "discountType" | "startDate" | "endDate" | "userlimit" | "isActive" | "priority" | "createdAt" | "updatedAt", ExtArgs["result"]["discount"]>
 export type DiscountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   discountCategories?: boolean | Prisma.Discount$discountCategoriesArgs<ExtArgs>
   discountProducts?: boolean | Prisma.Discount$discountProductsArgs<ExtArgs>
@@ -850,14 +818,13 @@ export type $DiscountPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    name: string
+    name: string | null
     type: string
     value: runtime.Decimal
     discountType: string
     startDate: Date
     endDate: Date
     userlimit: number | null
-    isPercentage: boolean
     isActive: boolean
     priority: number
     createdAt: Date
@@ -1241,7 +1208,6 @@ export interface DiscountFieldRefs {
   readonly startDate: Prisma.FieldRef<"Discount", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"Discount", 'DateTime'>
   readonly userlimit: Prisma.FieldRef<"Discount", 'Int'>
-  readonly isPercentage: Prisma.FieldRef<"Discount", 'Boolean'>
   readonly isActive: Prisma.FieldRef<"Discount", 'Boolean'>
   readonly priority: Prisma.FieldRef<"Discount", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Discount", 'DateTime'>

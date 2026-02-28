@@ -1,4 +1,5 @@
 import { Prisma } from 'src/generated/prisma/client';
+// const now = new Date();
 
 export const productListSelect = {
   id: true,
@@ -6,9 +7,10 @@ export const productListSelect = {
   slug: true,
   averageRating: true,
   reviewCount: true,
+  sold: true,
 
   images: {
-    where: { isMain: true },
+    // where: { isMain: true },
     select: { url: true },
     take: 2,
   },
@@ -17,25 +19,15 @@ export const productListSelect = {
     select: {
       id: true,
       price: true,
+      defaultVariant: true,
 
-      discountProductVariants: {
-        where: {
-          discount: {
-            isActive: true,
-            startDate: { lte: new Date() },
-            endDate: { gte: new Date() },
-          },
-        },
-        orderBy: {
-          discount: {
-            priority: Prisma.SortOrder.asc,
-          },
-        },
-        take: 1,
+      discounts: {
         select: {
           discount: {
             select: {
+              id: true,
               value: true,
+              isActive: true,
               type: true,
             },
           },
@@ -47,11 +39,14 @@ export const productListSelect = {
 
 export const productDetailSelect = {
   id: true,
-  name: true,
-  slug: true,
   productCode: true,
+  slug: true,
+  name: true,
+  description: true,
+  isActive: true,
   averageRating: true,
   reviewCount: true,
+  sold: true,
   createdAt: true,
 
   categories: {
@@ -68,9 +63,25 @@ export const productDetailSelect = {
   variants: {
     select: {
       id: true,
+      sku: true,
       price: true,
       stock: true,
       defaultVariant: true,
+
+      attributeValues: {
+        select: {
+          attributeValue: {
+            select: {
+              attribute: {
+                select: {
+                  name: true,
+                },
+              },
+              value: true,
+            },
+          },
+        },
+      },
 
       images: {
         orderBy: { isMain: 'desc' }, // main lên trước
@@ -80,25 +91,16 @@ export const productDetailSelect = {
         },
       },
 
-      discountProductVariants: {
-        where: {
-          discount: {
-            isActive: true,
-            startDate: { lte: new Date() },
-            endDate: { gte: new Date() },
-          },
-        },
-        orderBy: {
-          discount: {
-            priority: Prisma.SortOrder.asc,
-          },
-        },
-        take: 1,
+      discounts: {
         select: {
           discount: {
             select: {
+              id: true,
               value: true,
+              isActive: true,
               type: true,
+              startDate: true,
+              endDate: true,
             },
           },
         },

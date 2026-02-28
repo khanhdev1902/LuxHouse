@@ -1,5 +1,6 @@
 import { Prisma } from 'src/generated/prisma/client';
 import { productDetailSelect, productListSelect } from './product.select';
+import { buildOptions } from './product.utils';
 
 export type ProductListDb = Prisma.ProductGetPayload<{
   select: typeof productListSelect;
@@ -8,6 +9,7 @@ export type ProductListDb = Prisma.ProductGetPayload<{
 export type ProductDetailDb = Prisma.ProductGetPayload<{
   select: typeof productDetailSelect;
 }>;
+
 export const mapProductListItem = (product: ProductListDb) => {
   if (!product.variants.length) {
     return {
@@ -21,53 +23,80 @@ export const mapProductListItem = (product: ProductListDb) => {
       images: product.images.map((i) => i.url),
       reviewCount: product.reviewCount ?? 0,
       averageRating: product.averageRating ?? 0,
+      sold: product.sold ?? 0,
     };
   }
 
-  let selectedVariant = product.variants[0];
-  let maxDiscountPercent = 0;
+  const selectedVariant =
+    product.variants.find((v) => v.defaultVariant) ?? product.variants[0];
 
-  for (const variant of product.variants) {
-    const discountObj = variant.discountProductVariants[0]?.discount;
-
-    const percent =
-      discountObj?.type === 'percent' ? Number(discountObj.value) : 0;
-
-    if (percent > maxDiscountPercent) {
-      maxDiscountPercent = percent;
-      selectedVariant = variant;
-    }
-  }
+  const activeDiscount = selectedVariant.discounts
+    ?.filter((d) => d.discount?.isActive)
+    ?.sort((a, b) => Number(b.discount.value) - Number(a.discount.value))[0];
 
   const originalPrice = Number(selectedVariant.price);
 
-  const price =
-    maxDiscountPercent > 0
-      ? originalPrice - (originalPrice * maxDiscountPercent) / 100
-      : originalPrice;
+  const discountPercent = activeDiscount
+    ? Number(activeDiscount.discount.value)
+    : 0;
+
+  const discountAmount = (discountPercent / 100) * originalPrice;
+
+  const finalPrice = originalPrice - discountAmount;
 
   return {
     id: product.id.toString(),
     name: product.name,
     slug: product.slug,
     originalPrice,
-    price,
-    discountPercent: maxDiscountPercent,
-    defaultVariantId: selectedVariant.id,
+    price: finalPrice,
+    discountPercent,
+    defaultVariantId: selectedVariant.id.toString(),
     images: product.images.map((i) => i.url),
     reviewCount: product.reviewCount ?? 0,
     averageRating: product.averageRating ?? 0,
+    sold: product.sold ?? 0,
   };
 };
+export const normalizeVariants = (product: ProductDetailDb) =>
+  product.variants.map((v) => ({
+    id: v.id.toString(),
+    sku: v.sku,
+    price: Number(v.price),
+    stock: v.stock,
+    defaultVariant: v.defaultVariant,
 
-// export const mapProductDetail = (product: ProductDetailDb) => ({
-//   id: product.id.toString(),
-//   code: product.code,
-//   name: product.name,
-//   slug: product.slug,
-//   // price: Number(product.price),
-//   stock: product.stock,
-//   images: product.images.map((i) => i.url),
-//   categories: product.categories.map((c) => c.category),
-//   createdAt: product.createdAt.toISOString(),
-// });
+    attributes: v.attributeValues.map((av) => ({
+      name: av.attributeValue.attribute.name,
+      value: av.attributeValue.value,
+    })),
+
+    images: v.images.map((i) => ({
+      url: i.url,
+      isMain: i.isMain,
+    })),
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    discount: v.discounts[0]?.discount,
+  }));
+
+export const mapProductDetail = (product: ProductDetailDb) => {
+  const nomalizedVariants = normalizeVariants(product);
+  return {
+    id: product.id.toString(),
+    productCode: product.productCode,
+    name: product.name,
+    slug: product.slug,
+    isActive: product.isActive,
+    options: buildOptions(nomalizedVariants),
+    averageRating: product.averageRating ?? 0,
+    reviewCount: product.reviewCount ?? 0,
+    sold: product.sold ?? 0,
+    defaultVariantId:
+      product.variants.find((v) => v.defaultVariant)?.id.toString() ?? null,
+    categories: product.categories.map((c) => c.category),
+    variants: nomalizedVariants,
+    description: product.description,
+    createdAt: product.createdAt.toISOString(),
+  };
+};

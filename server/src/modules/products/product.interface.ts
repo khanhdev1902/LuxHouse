@@ -5,10 +5,18 @@ export interface ProductCategory {
 
 export interface ProductVariant {
   id: string;
-  name: string;
   sku: string;
   price: number;
   stock: number;
+  defaultVariant: boolean;
+  attributes: {
+    name: string;
+    value: string;
+  }[];
+  images: {
+    url: string;
+    isMain: boolean;
+  }[];
 }
 
 export interface ProductListItem {
@@ -16,16 +24,24 @@ export interface ProductListItem {
   name: string;
   slug: string;
   originalPrice?: number;
-  price: number;
+  price?: number;
   discountPercent?: number;
-  images: string[];
+  images?: string[];
   averageRating: number;
   reviewCount: number;
+  sold: number;
 }
 
 export interface ProductDetail extends ProductListItem {
-  productCode: string;
+  productCode: string | null;
+  description: string | null;
+  isActive: boolean;
+  options: {
+    name: string;
+    values: string[];
+  }[];
+  defaultVariantId: string | null;
   categories: ProductCategory[];
-  productVariants: ProductVariant[];
+  variants: ProductVariant[];
   createdAt: string;
 }

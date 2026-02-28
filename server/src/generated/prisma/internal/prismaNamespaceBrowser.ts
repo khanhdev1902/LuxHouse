@@ -303,7 +303,6 @@ export const DiscountScalarFieldEnum = {
   startDate: 'startDate',
   endDate: 'endDate',
   userlimit: 'userlimit',
-  isPercentage: 'isPercentage',
   isActive: 'isActive',
   priority: 'priority',
   createdAt: 'createdAt',

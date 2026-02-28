@@ -264,7 +264,7 @@ export type DiscountProductVariantCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   discount: Prisma.DiscountCreateNestedOneWithoutDiscountProductsInput
-  productVariant: Prisma.ProductVariantCreateNestedOneWithoutDiscountProductVariantsInput
+  productVariant: Prisma.ProductVariantCreateNestedOneWithoutDiscountsInput
 }
 
 export type DiscountProductVariantUncheckedCreateInput = {
@@ -278,7 +278,7 @@ export type DiscountProductVariantUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   discount?: Prisma.DiscountUpdateOneRequiredWithoutDiscountProductsNestedInput
-  productVariant?: Prisma.ProductVariantUpdateOneRequiredWithoutDiscountProductVariantsNestedInput
+  productVariant?: Prisma.ProductVariantUpdateOneRequiredWithoutDiscountsNestedInput
 }
 
 export type DiscountProductVariantUncheckedUpdateInput = {
@@ -488,7 +488,7 @@ export type DiscountProductVariantScalarWhereInput = {
 export type DiscountProductVariantCreateWithoutDiscountInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  productVariant: Prisma.ProductVariantCreateNestedOneWithoutDiscountProductVariantsInput
+  productVariant: Prisma.ProductVariantCreateNestedOneWithoutDiscountsInput
 }
 
 export type DiscountProductVariantUncheckedCreateWithoutDiscountInput = {
@@ -556,7 +556,7 @@ export type DiscountProductVariantCreateManyDiscountInput = {
 export type DiscountProductVariantUpdateWithoutDiscountInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  productVariant?: Prisma.ProductVariantUpdateOneRequiredWithoutDiscountProductVariantsNestedInput
+  productVariant?: Prisma.ProductVariantUpdateOneRequiredWithoutDiscountsNestedInput
 }
 
 export type DiscountProductVariantUncheckedUpdateWithoutDiscountInput = {

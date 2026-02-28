@@ -57,26 +57,26 @@ export async function seedProducts(prisma: PrismaService) {
 
       // 3️⃣ Product images (product-level)
 
-      for (const image of item.images as {
-        url: string;
-        isMain?: boolean;
-      }[]) {
-        if (!image.url) continue;
-        await tx.productImage.upsert({
-          where: {
-            productId_url: {
-              url: image?.url,
-              productId: product.id,
-            },
-          },
-          update: {},
-          create: {
-            productId: product.id,
-            url: image.url,
-            isMain: image.isMain ?? false,
-          },
-        });
-      }
+      // for (const image of item.images as {
+      //   url: string;
+      //   isMain?: boolean;
+      // }[]) {
+      //   if (!image.url) continue;
+      //   await tx.productImage.upsert({
+      //     where: {
+      //       productId_url: {
+      //         url: image?.url,
+      //         productId: product.id,
+      //       },
+      //     },
+      //     update: {},
+      //     create: {
+      //       productId: product.id,
+      //       url: image.url,
+      //       isMain: image.isMain ?? false,
+      //     },
+      //   });
+      // }
 
       // 4️⃣ Attributes + AttributeValues
       const attributeMap: Record<
@@ -115,7 +115,7 @@ export async function seedProducts(prisma: PrismaService) {
         }
       }
 
-      // 5️⃣ Variants
+      // 5 Variants
       for (let i = 0; i < item.variants.length; i++) {
         const variant = item.variants[i];
 
@@ -127,6 +127,7 @@ export async function seedProducts(prisma: PrismaService) {
           update: {
             price: new Prisma.Decimal(variant.price),
             stock: variant.stock,
+            defaultVariant: variant.defaultVariant,
           },
           create: {
             productId: product.id,
@@ -135,6 +136,30 @@ export async function seedProducts(prisma: PrismaService) {
             stock: variant.stock,
           },
         });
+
+        // if (variant?.discount) {
+        //   // 1️ Tạo Discount trước
+        //   const createdDiscount = await tx.discount.create({
+        //     data: {
+        //       name: `${product.name} - ${sku}`,
+        //       type: 'percentage', // hoặc amount
+        //       value: new Prisma.Decimal(variant.discount.value),
+        //       discountType: variant.discount.discountType,
+        //       startDate: variant.discount.startDate,
+        //       endDate: variant.discount.endDate,
+        //       priority: variant.discount.priority,
+        //       isActive: true,
+        //     },
+        //   });
+
+        //   // 2️ Tạo pivot table
+        //   await tx.discountProductVariant.create({
+        //     data: {
+        //       discountId: createdDiscount.id,
+        //       productVariantId: createdVariant.id,
+        //     },
+        //   });
+        // }
 
         // 5.1 Map attribute combination
         const mappingData: Prisma.VariantAttributeValueCreateManyInput[] = [];
