@@ -1,0 +1,100 @@
+import React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import useClickOutside from "@/shared/hooks/use-click-outside";
+import useToggle from "@/shared/hooks/useToggle";
+import { useNavigate } from "react-router-dom";
+import { dataDropdownAccount } from "@/shared/constant/const-home";
+import { cn } from "@/lib/utils";
+import type { User } from "@/shared/types/user";
+import { FaRegUser } from "react-icons/fa6";
+import { ChevronDown } from "lucide-react";
+
+interface AccountProps {
+  className?: string;
+}
+
+export default function Account({ className }: AccountProps) {
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  const { value: isOpen, toggle, off } = useToggle();
+  useClickOutside(ref, off);
+  const navigation = useNavigate();
+  const user: User | null = null;
+  // const user: User | null = {
+  //   id: "1",
+  //   name: "Khanh Nguyễn Văn",
+  //   email: "khanhdev1902@gmail.com",
+  //   role: "CUSTOMMER",
+  // };
+  return (
+    <div
+      ref={ref}
+      onClick={toggle}
+      className={cn(className, " relative cursor-pointer select-none")}
+    >
+      {user ? (
+        <div className="flex gap-1 justify-center items-center">
+          <img src="/Logo_1.jpg" alt="" className="rounded-full size-10" />
+          <div className="xl:flex flex-col text-[#434343] gap-0 hidden">
+            <span>Tài khoản của</span>
+            <span className="font-semibold">
+              {user.name.trim().slice(0, 10)}
+              {user.name.length > 10 && "..."}
+            </span>
+          </div>
+        </div>
+      ) : (
+        <div
+          onClick={() => navigation("/login")}
+          className="flex flex-row justify-center items-center gap-2"
+        >
+          <FaRegUser className="size-6 text-[#434343]" />
+          <div>
+            <p className="text-sm font-medium text-[#434343]">Đăng nhập / Đăng ký</p>
+            <p className="text-sm font-medium text-[#434343] flex items-center gap-1">
+              Tài khoản của tôi
+              <ChevronDown size={16} className=" font-bold" />
+            </p>
+          </div>
+        </div>
+      )}
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, x: 20, y: -20 }}
+            animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, x: 20, y: -20 }}
+            transition={{
+              duration: 0.3,
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
+            className=" absolute top-full -right-14 z-10 mt-5 whitespace-nowrap flex flex-col bg-white border shadow-xl rounded-lg text-[#434343] w-max"
+          >
+            <div className=" absolute bottom-full translate-y-1/2 right-[26%] w-5 h-5 bg-white border-t border-l border-gray-200 rotate-45" />
+            <div className="flex gap-2 items-center px-4 py-3 border-b border-b-gray-200">
+              <img src="/Logo_1.jpg" alt="Avatar" className=" size-16 rounded-full shadow-xl" />
+              <div onClick={() => navigation("/account")} className="flex flex-col items-start">
+                <span className=" font-bold">{user.name}</span>
+                <span className=" font-medium">{user.email}</span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 px-4 py-3 font-medium">
+              {dataDropdownAccount.map((item, key) => (
+                <div
+                  key={key}
+                  onClick={() => navigation(item.path)}
+                  className="flex items-center gap-2"
+                >
+                  {item.icon}
+                  <span className=" font-medium">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
