@@ -582,7 +582,23 @@ export type DiscountProductVariantSelect<ExtArgs extends runtime.Types.Extension
   productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["discountProductVariant"]>
 
+export type DiscountProductVariantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  discountId?: boolean
+  productVariantId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  discount?: boolean | Prisma.DiscountDefaultArgs<ExtArgs>
+  productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["discountProductVariant"]>
 
+export type DiscountProductVariantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  discountId?: boolean
+  productVariantId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  discount?: boolean | Prisma.DiscountDefaultArgs<ExtArgs>
+  productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["discountProductVariant"]>
 
 export type DiscountProductVariantSelectScalar = {
   discountId?: boolean
@@ -593,6 +609,14 @@ export type DiscountProductVariantSelectScalar = {
 
 export type DiscountProductVariantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"discountId" | "productVariantId" | "createdAt" | "updatedAt", ExtArgs["result"]["discountProductVariant"]>
 export type DiscountProductVariantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  discount?: boolean | Prisma.DiscountDefaultArgs<ExtArgs>
+  productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
+}
+export type DiscountProductVariantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  discount?: boolean | Prisma.DiscountDefaultArgs<ExtArgs>
+  productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
+}
+export type DiscountProductVariantIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   discount?: boolean | Prisma.DiscountDefaultArgs<ExtArgs>
   productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
 }
@@ -726,6 +750,30 @@ export interface DiscountProductVariantDelegate<ExtArgs extends runtime.Types.Ex
   createMany<T extends DiscountProductVariantCreateManyArgs>(args?: Prisma.SelectSubset<T, DiscountProductVariantCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many DiscountProductVariants and returns the data saved in the database.
+   * @param {DiscountProductVariantCreateManyAndReturnArgs} args - Arguments to create many DiscountProductVariants.
+   * @example
+   * // Create many DiscountProductVariants
+   * const discountProductVariant = await prisma.discountProductVariant.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many DiscountProductVariants and only return the `discountId`
+   * const discountProductVariantWithDiscountIdOnly = await prisma.discountProductVariant.createManyAndReturn({
+   *   select: { discountId: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends DiscountProductVariantCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, DiscountProductVariantCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscountProductVariantPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a DiscountProductVariant.
    * @param {DiscountProductVariantDeleteArgs} args - Arguments to delete one DiscountProductVariant.
    * @example
@@ -788,6 +836,36 @@ export interface DiscountProductVariantDelegate<ExtArgs extends runtime.Types.Ex
    * 
    */
   updateMany<T extends DiscountProductVariantUpdateManyArgs>(args: Prisma.SelectSubset<T, DiscountProductVariantUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more DiscountProductVariants and returns the data updated in the database.
+   * @param {DiscountProductVariantUpdateManyAndReturnArgs} args - Arguments to update many DiscountProductVariants.
+   * @example
+   * // Update many DiscountProductVariants
+   * const discountProductVariant = await prisma.discountProductVariant.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more DiscountProductVariants and only return the `discountId`
+   * const discountProductVariantWithDiscountIdOnly = await prisma.discountProductVariant.updateManyAndReturn({
+   *   select: { discountId: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends DiscountProductVariantUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, DiscountProductVariantUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscountProductVariantPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one DiscountProductVariant.
@@ -1216,6 +1294,29 @@ export type DiscountProductVariantCreateManyArgs<ExtArgs extends runtime.Types.E
 }
 
 /**
+ * DiscountProductVariant createManyAndReturn
+ */
+export type DiscountProductVariantCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DiscountProductVariant
+   */
+  select?: Prisma.DiscountProductVariantSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the DiscountProductVariant
+   */
+  omit?: Prisma.DiscountProductVariantOmit<ExtArgs> | null
+  /**
+   * The data used to create many DiscountProductVariants.
+   */
+  data: Prisma.DiscountProductVariantCreateManyInput | Prisma.DiscountProductVariantCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DiscountProductVariantIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * DiscountProductVariant update
  */
 export type DiscountProductVariantUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1257,6 +1358,36 @@ export type DiscountProductVariantUpdateManyArgs<ExtArgs extends runtime.Types.E
    * Limit how many DiscountProductVariants to update.
    */
   limit?: number
+}
+
+/**
+ * DiscountProductVariant updateManyAndReturn
+ */
+export type DiscountProductVariantUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DiscountProductVariant
+   */
+  select?: Prisma.DiscountProductVariantSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the DiscountProductVariant
+   */
+  omit?: Prisma.DiscountProductVariantOmit<ExtArgs> | null
+  /**
+   * The data used to update DiscountProductVariants.
+   */
+  data: Prisma.XOR<Prisma.DiscountProductVariantUpdateManyMutationInput, Prisma.DiscountProductVariantUncheckedUpdateManyInput>
+  /**
+   * Filter which DiscountProductVariants to update
+   */
+  where?: Prisma.DiscountProductVariantWhereInput
+  /**
+   * Limit how many DiscountProductVariants to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DiscountProductVariantIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -511,7 +511,19 @@ export type ProductAttributeSelect<ExtArgs extends runtime.Types.Extensions.Inte
   attribute?: boolean | Prisma.AttributeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productAttribute"]>
 
+export type ProductAttributeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  productId?: boolean
+  attributeId?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  attribute?: boolean | Prisma.AttributeDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["productAttribute"]>
 
+export type ProductAttributeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  productId?: boolean
+  attributeId?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  attribute?: boolean | Prisma.AttributeDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["productAttribute"]>
 
 export type ProductAttributeSelectScalar = {
   productId?: boolean
@@ -520,6 +532,14 @@ export type ProductAttributeSelectScalar = {
 
 export type ProductAttributeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"productId" | "attributeId", ExtArgs["result"]["productAttribute"]>
 export type ProductAttributeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  attribute?: boolean | Prisma.AttributeDefaultArgs<ExtArgs>
+}
+export type ProductAttributeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  attribute?: boolean | Prisma.AttributeDefaultArgs<ExtArgs>
+}
+export type ProductAttributeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   attribute?: boolean | Prisma.AttributeDefaultArgs<ExtArgs>
 }
@@ -651,6 +671,30 @@ export interface ProductAttributeDelegate<ExtArgs extends runtime.Types.Extensio
   createMany<T extends ProductAttributeCreateManyArgs>(args?: Prisma.SelectSubset<T, ProductAttributeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ProductAttributes and returns the data saved in the database.
+   * @param {ProductAttributeCreateManyAndReturnArgs} args - Arguments to create many ProductAttributes.
+   * @example
+   * // Create many ProductAttributes
+   * const productAttribute = await prisma.productAttribute.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ProductAttributes and only return the `productId`
+   * const productAttributeWithProductIdOnly = await prisma.productAttribute.createManyAndReturn({
+   *   select: { productId: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ProductAttributeCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ProductAttributeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductAttributePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ProductAttribute.
    * @param {ProductAttributeDeleteArgs} args - Arguments to delete one ProductAttribute.
    * @example
@@ -713,6 +757,36 @@ export interface ProductAttributeDelegate<ExtArgs extends runtime.Types.Extensio
    * 
    */
   updateMany<T extends ProductAttributeUpdateManyArgs>(args: Prisma.SelectSubset<T, ProductAttributeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ProductAttributes and returns the data updated in the database.
+   * @param {ProductAttributeUpdateManyAndReturnArgs} args - Arguments to update many ProductAttributes.
+   * @example
+   * // Update many ProductAttributes
+   * const productAttribute = await prisma.productAttribute.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ProductAttributes and only return the `productId`
+   * const productAttributeWithProductIdOnly = await prisma.productAttribute.updateManyAndReturn({
+   *   select: { productId: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ProductAttributeUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ProductAttributeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductAttributePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ProductAttribute.
@@ -1139,6 +1213,29 @@ export type ProductAttributeCreateManyArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
+ * ProductAttribute createManyAndReturn
+ */
+export type ProductAttributeCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductAttribute
+   */
+  select?: Prisma.ProductAttributeSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductAttribute
+   */
+  omit?: Prisma.ProductAttributeOmit<ExtArgs> | null
+  /**
+   * The data used to create many ProductAttributes.
+   */
+  data: Prisma.ProductAttributeCreateManyInput | Prisma.ProductAttributeCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductAttributeIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * ProductAttribute update
  */
 export type ProductAttributeUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1180,6 +1277,36 @@ export type ProductAttributeUpdateManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many ProductAttributes to update.
    */
   limit?: number
+}
+
+/**
+ * ProductAttribute updateManyAndReturn
+ */
+export type ProductAttributeUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductAttribute
+   */
+  select?: Prisma.ProductAttributeSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductAttribute
+   */
+  omit?: Prisma.ProductAttributeOmit<ExtArgs> | null
+  /**
+   * The data used to update ProductAttributes.
+   */
+  data: Prisma.XOR<Prisma.ProductAttributeUpdateManyMutationInput, Prisma.ProductAttributeUncheckedUpdateManyInput>
+  /**
+   * Filter which ProductAttributes to update
+   */
+  where?: Prisma.ProductAttributeWhereInput
+  /**
+   * Limit how many ProductAttributes to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductAttributeIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

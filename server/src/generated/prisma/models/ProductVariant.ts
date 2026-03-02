@@ -275,7 +275,6 @@ export type ProductVariantOrderByWithRelationInput = {
   orderItems?: Prisma.OrderItemOrderByRelationAggregateInput
   discounts?: Prisma.DiscountProductVariantOrderByRelationAggregateInput
   product?: Prisma.ProductOrderByWithRelationInput
-  _relevance?: Prisma.ProductVariantOrderByRelevanceInput
 }
 
 export type ProductVariantWhereUniqueInput = Prisma.AtLeast<{
@@ -429,12 +428,6 @@ export type ProductVariantListRelationFilter = {
 
 export type ProductVariantOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type ProductVariantOrderByRelevanceInput = {
-  fields: Prisma.ProductVariantOrderByRelevanceFieldEnum | Prisma.ProductVariantOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type ProductVariantCountOrderByAggregateInput = {
@@ -1189,7 +1182,29 @@ export type ProductVariantSelect<ExtArgs extends runtime.Types.Extensions.Intern
   _count?: boolean | Prisma.ProductVariantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productVariant"]>
 
+export type ProductVariantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  productId?: boolean
+  sku?: boolean
+  price?: boolean
+  stock?: boolean
+  defaultVariant?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["productVariant"]>
 
+export type ProductVariantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  productId?: boolean
+  sku?: boolean
+  price?: boolean
+  stock?: boolean
+  defaultVariant?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["productVariant"]>
 
 export type ProductVariantSelectScalar = {
   id?: boolean
@@ -1211,6 +1226,12 @@ export type ProductVariantInclude<ExtArgs extends runtime.Types.Extensions.Inter
   discounts?: boolean | Prisma.ProductVariant$discountsArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ProductVariantCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ProductVariantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+}
+export type ProductVariantIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }
 
 export type $ProductVariantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1350,6 +1371,30 @@ export interface ProductVariantDelegate<ExtArgs extends runtime.Types.Extensions
   createMany<T extends ProductVariantCreateManyArgs>(args?: Prisma.SelectSubset<T, ProductVariantCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ProductVariants and returns the data saved in the database.
+   * @param {ProductVariantCreateManyAndReturnArgs} args - Arguments to create many ProductVariants.
+   * @example
+   * // Create many ProductVariants
+   * const productVariant = await prisma.productVariant.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ProductVariants and only return the `id`
+   * const productVariantWithIdOnly = await prisma.productVariant.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ProductVariantCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ProductVariantCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductVariantPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ProductVariant.
    * @param {ProductVariantDeleteArgs} args - Arguments to delete one ProductVariant.
    * @example
@@ -1412,6 +1457,36 @@ export interface ProductVariantDelegate<ExtArgs extends runtime.Types.Extensions
    * 
    */
   updateMany<T extends ProductVariantUpdateManyArgs>(args: Prisma.SelectSubset<T, ProductVariantUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ProductVariants and returns the data updated in the database.
+   * @param {ProductVariantUpdateManyAndReturnArgs} args - Arguments to update many ProductVariants.
+   * @example
+   * // Update many ProductVariants
+   * const productVariant = await prisma.productVariant.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ProductVariants and only return the `id`
+   * const productVariantWithIdOnly = await prisma.productVariant.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ProductVariantUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ProductVariantUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductVariantPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ProductVariant.
@@ -1848,6 +1923,29 @@ export type ProductVariantCreateManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
+ * ProductVariant createManyAndReturn
+ */
+export type ProductVariantCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductVariant
+   */
+  select?: Prisma.ProductVariantSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductVariant
+   */
+  omit?: Prisma.ProductVariantOmit<ExtArgs> | null
+  /**
+   * The data used to create many ProductVariants.
+   */
+  data: Prisma.ProductVariantCreateManyInput | Prisma.ProductVariantCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductVariantIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * ProductVariant update
  */
 export type ProductVariantUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1889,6 +1987,36 @@ export type ProductVariantUpdateManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many ProductVariants to update.
    */
   limit?: number
+}
+
+/**
+ * ProductVariant updateManyAndReturn
+ */
+export type ProductVariantUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductVariant
+   */
+  select?: Prisma.ProductVariantSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductVariant
+   */
+  omit?: Prisma.ProductVariantOmit<ExtArgs> | null
+  /**
+   * The data used to update ProductVariants.
+   */
+  data: Prisma.XOR<Prisma.ProductVariantUpdateManyMutationInput, Prisma.ProductVariantUncheckedUpdateManyInput>
+  /**
+   * Filter which ProductVariants to update
+   */
+  where?: Prisma.ProductVariantWhereInput
+  /**
+   * Limit how many ProductVariants to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductVariantIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

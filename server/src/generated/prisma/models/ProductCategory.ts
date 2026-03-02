@@ -511,7 +511,19 @@ export type ProductCategorySelect<ExtArgs extends runtime.Types.Extensions.Inter
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productCategory"]>
 
+export type ProductCategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  productId?: boolean
+  categoryId?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["productCategory"]>
 
+export type ProductCategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  productId?: boolean
+  categoryId?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["productCategory"]>
 
 export type ProductCategorySelectScalar = {
   productId?: boolean
@@ -520,6 +532,14 @@ export type ProductCategorySelectScalar = {
 
 export type ProductCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"productId" | "categoryId", ExtArgs["result"]["productCategory"]>
 export type ProductCategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}
+export type ProductCategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}
+export type ProductCategoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
 }
@@ -651,6 +671,30 @@ export interface ProductCategoryDelegate<ExtArgs extends runtime.Types.Extension
   createMany<T extends ProductCategoryCreateManyArgs>(args?: Prisma.SelectSubset<T, ProductCategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ProductCategories and returns the data saved in the database.
+   * @param {ProductCategoryCreateManyAndReturnArgs} args - Arguments to create many ProductCategories.
+   * @example
+   * // Create many ProductCategories
+   * const productCategory = await prisma.productCategory.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ProductCategories and only return the `productId`
+   * const productCategoryWithProductIdOnly = await prisma.productCategory.createManyAndReturn({
+   *   select: { productId: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ProductCategoryCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ProductCategoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductCategoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ProductCategory.
    * @param {ProductCategoryDeleteArgs} args - Arguments to delete one ProductCategory.
    * @example
@@ -713,6 +757,36 @@ export interface ProductCategoryDelegate<ExtArgs extends runtime.Types.Extension
    * 
    */
   updateMany<T extends ProductCategoryUpdateManyArgs>(args: Prisma.SelectSubset<T, ProductCategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ProductCategories and returns the data updated in the database.
+   * @param {ProductCategoryUpdateManyAndReturnArgs} args - Arguments to update many ProductCategories.
+   * @example
+   * // Update many ProductCategories
+   * const productCategory = await prisma.productCategory.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ProductCategories and only return the `productId`
+   * const productCategoryWithProductIdOnly = await prisma.productCategory.updateManyAndReturn({
+   *   select: { productId: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ProductCategoryUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ProductCategoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductCategoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ProductCategory.
@@ -1139,6 +1213,29 @@ export type ProductCategoryCreateManyArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
+ * ProductCategory createManyAndReturn
+ */
+export type ProductCategoryCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductCategory
+   */
+  select?: Prisma.ProductCategorySelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductCategory
+   */
+  omit?: Prisma.ProductCategoryOmit<ExtArgs> | null
+  /**
+   * The data used to create many ProductCategories.
+   */
+  data: Prisma.ProductCategoryCreateManyInput | Prisma.ProductCategoryCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductCategoryIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * ProductCategory update
  */
 export type ProductCategoryUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1180,6 +1277,36 @@ export type ProductCategoryUpdateManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many ProductCategories to update.
    */
   limit?: number
+}
+
+/**
+ * ProductCategory updateManyAndReturn
+ */
+export type ProductCategoryUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductCategory
+   */
+  select?: Prisma.ProductCategorySelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductCategory
+   */
+  omit?: Prisma.ProductCategoryOmit<ExtArgs> | null
+  /**
+   * The data used to update ProductCategories.
+   */
+  data: Prisma.XOR<Prisma.ProductCategoryUpdateManyMutationInput, Prisma.ProductCategoryUncheckedUpdateManyInput>
+  /**
+   * Filter which ProductCategories to update
+   */
+  where?: Prisma.ProductCategoryWhereInput
+  /**
+   * Limit how many ProductCategories to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductCategoryIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

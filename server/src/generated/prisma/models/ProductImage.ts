@@ -254,7 +254,6 @@ export type ProductImageOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   product?: Prisma.ProductOrderByWithRelationInput
   productVariant?: Prisma.ProductVariantOrderByWithRelationInput
-  _relevance?: Prisma.ProductImageOrderByRelevanceInput
 }
 
 export type ProductImageWhereUniqueInput = Prisma.AtLeast<{
@@ -375,12 +374,6 @@ export type ProductImageListRelationFilter = {
 
 export type ProductImageOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type ProductImageOrderByRelevanceInput = {
-  fields: Prisma.ProductImageOrderByRelevanceFieldEnum | Prisma.ProductImageOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type ProductImageProductIdUrlCompoundUniqueInput = {
@@ -710,7 +703,29 @@ export type ProductImageSelect<ExtArgs extends runtime.Types.Extensions.Internal
   productVariant?: boolean | Prisma.ProductImage$productVariantArgs<ExtArgs>
 }, ExtArgs["result"]["productImage"]>
 
+export type ProductImageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  url?: boolean
+  isMain?: boolean
+  productId?: boolean
+  productVariantId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  productVariant?: boolean | Prisma.ProductImage$productVariantArgs<ExtArgs>
+}, ExtArgs["result"]["productImage"]>
 
+export type ProductImageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  url?: boolean
+  isMain?: boolean
+  productId?: boolean
+  productVariantId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  productVariant?: boolean | Prisma.ProductImage$productVariantArgs<ExtArgs>
+}, ExtArgs["result"]["productImage"]>
 
 export type ProductImageSelectScalar = {
   id?: boolean
@@ -724,6 +739,14 @@ export type ProductImageSelectScalar = {
 
 export type ProductImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "url" | "isMain" | "productId" | "productVariantId" | "createdAt" | "updatedAt", ExtArgs["result"]["productImage"]>
 export type ProductImageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  productVariant?: boolean | Prisma.ProductImage$productVariantArgs<ExtArgs>
+}
+export type ProductImageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  productVariant?: boolean | Prisma.ProductImage$productVariantArgs<ExtArgs>
+}
+export type ProductImageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   productVariant?: boolean | Prisma.ProductImage$productVariantArgs<ExtArgs>
 }
@@ -860,6 +883,30 @@ export interface ProductImageDelegate<ExtArgs extends runtime.Types.Extensions.I
   createMany<T extends ProductImageCreateManyArgs>(args?: Prisma.SelectSubset<T, ProductImageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ProductImages and returns the data saved in the database.
+   * @param {ProductImageCreateManyAndReturnArgs} args - Arguments to create many ProductImages.
+   * @example
+   * // Create many ProductImages
+   * const productImage = await prisma.productImage.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ProductImages and only return the `id`
+   * const productImageWithIdOnly = await prisma.productImage.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ProductImageCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ProductImageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductImagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ProductImage.
    * @param {ProductImageDeleteArgs} args - Arguments to delete one ProductImage.
    * @example
@@ -922,6 +969,36 @@ export interface ProductImageDelegate<ExtArgs extends runtime.Types.Extensions.I
    * 
    */
   updateMany<T extends ProductImageUpdateManyArgs>(args: Prisma.SelectSubset<T, ProductImageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ProductImages and returns the data updated in the database.
+   * @param {ProductImageUpdateManyAndReturnArgs} args - Arguments to update many ProductImages.
+   * @example
+   * // Update many ProductImages
+   * const productImage = await prisma.productImage.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ProductImages and only return the `id`
+   * const productImageWithIdOnly = await prisma.productImage.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ProductImageUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ProductImageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductImagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ProductImage.
@@ -1353,6 +1430,29 @@ export type ProductImageCreateManyArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
+ * ProductImage createManyAndReturn
+ */
+export type ProductImageCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductImage
+   */
+  select?: Prisma.ProductImageSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductImage
+   */
+  omit?: Prisma.ProductImageOmit<ExtArgs> | null
+  /**
+   * The data used to create many ProductImages.
+   */
+  data: Prisma.ProductImageCreateManyInput | Prisma.ProductImageCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductImageIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * ProductImage update
  */
 export type ProductImageUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1394,6 +1494,36 @@ export type ProductImageUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many ProductImages to update.
    */
   limit?: number
+}
+
+/**
+ * ProductImage updateManyAndReturn
+ */
+export type ProductImageUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductImage
+   */
+  select?: Prisma.ProductImageSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductImage
+   */
+  omit?: Prisma.ProductImageOmit<ExtArgs> | null
+  /**
+   * The data used to update ProductImages.
+   */
+  data: Prisma.XOR<Prisma.ProductImageUpdateManyMutationInput, Prisma.ProductImageUncheckedUpdateManyInput>
+  /**
+   * Filter which ProductImages to update
+   */
+  where?: Prisma.ProductImageWhereInput
+  /**
+   * Limit how many ProductImages to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductImageIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -1,10 +1,23 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ValidationPipe } from 'src/common/pipes/vadilation.pipe';
-import { AuthRequestDto } from './auth.request.dto';
-import { ApiResponse, ApiResponseType } from 'src/common/base/api-response';
+import { AuthRequestDto, RegisterRequestDto } from './auth.request.dto';
+import {
+  ApiResponse,
+  type ApiResponseType,
+} from 'src/common/base/api-response';
 import { ILoginResponse } from './auth.interface';
 import type { Response } from 'express';
+import type { AuthRequest } from 'src/common/interfaces/auth-request.interface';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -30,10 +43,17 @@ export class AuthController {
   }
   @Post('register')
   async register(
-    @Body(new ValidationPipe()) request: AuthRequestDto,
+    @Body(new ValidationPipe()) request: RegisterRequestDto,
   ): Promise<ApiResponseType<string>> {
     console.log(request);
     const result = await this.authService.register(request);
     return ApiResponse.message(result, 201);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  getMe(@Req() req: AuthRequest): ApiResponseType<unknown> {
+    console.log(req);
+    return ApiResponse.ok(req.user, 'lấy dữ liệu user thành công!', 200);
   }
 }

@@ -219,7 +219,6 @@ export type AttributeOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   values?: Prisma.AttributeValueOrderByRelationAggregateInput
   products?: Prisma.ProductAttributeOrderByRelationAggregateInput
-  _relevance?: Prisma.AttributeOrderByRelevanceInput
 }
 
 export type AttributeWhereUniqueInput = Prisma.AtLeast<{
@@ -308,12 +307,6 @@ export type AttributeUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type AttributeOrderByRelevanceInput = {
-  fields: Prisma.AttributeOrderByRelevanceFieldEnum | Prisma.AttributeOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type AttributeCountOrderByAggregateInput = {
@@ -520,7 +513,19 @@ export type AttributeSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   _count?: boolean | Prisma.AttributeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["attribute"]>
 
+export type AttributeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["attribute"]>
 
+export type AttributeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["attribute"]>
 
 export type AttributeSelectScalar = {
   id?: boolean
@@ -535,6 +540,8 @@ export type AttributeInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   products?: boolean | Prisma.Attribute$productsArgs<ExtArgs>
   _count?: boolean | Prisma.AttributeCountOutputTypeDefaultArgs<ExtArgs>
 }
+export type AttributeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type AttributeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $AttributePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Attribute"
@@ -665,6 +672,30 @@ export interface AttributeDelegate<ExtArgs extends runtime.Types.Extensions.Inte
   createMany<T extends AttributeCreateManyArgs>(args?: Prisma.SelectSubset<T, AttributeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Attributes and returns the data saved in the database.
+   * @param {AttributeCreateManyAndReturnArgs} args - Arguments to create many Attributes.
+   * @example
+   * // Create many Attributes
+   * const attribute = await prisma.attribute.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Attributes and only return the `id`
+   * const attributeWithIdOnly = await prisma.attribute.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends AttributeCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, AttributeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Attribute.
    * @param {AttributeDeleteArgs} args - Arguments to delete one Attribute.
    * @example
@@ -727,6 +758,36 @@ export interface AttributeDelegate<ExtArgs extends runtime.Types.Extensions.Inte
    * 
    */
   updateMany<T extends AttributeUpdateManyArgs>(args: Prisma.SelectSubset<T, AttributeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Attributes and returns the data updated in the database.
+   * @param {AttributeUpdateManyAndReturnArgs} args - Arguments to update many Attributes.
+   * @example
+   * // Update many Attributes
+   * const attribute = await prisma.attribute.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Attributes and only return the `id`
+   * const attributeWithIdOnly = await prisma.attribute.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends AttributeUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, AttributeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Attribute.
@@ -1155,6 +1216,25 @@ export type AttributeCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * Attribute createManyAndReturn
+ */
+export type AttributeCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Attribute
+   */
+  select?: Prisma.AttributeSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Attribute
+   */
+  omit?: Prisma.AttributeOmit<ExtArgs> | null
+  /**
+   * The data used to create many Attributes.
+   */
+  data: Prisma.AttributeCreateManyInput | Prisma.AttributeCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
  * Attribute update
  */
 export type AttributeUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1184,6 +1264,32 @@ export type AttributeUpdateArgs<ExtArgs extends runtime.Types.Extensions.Interna
  * Attribute updateMany
  */
 export type AttributeUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Attributes.
+   */
+  data: Prisma.XOR<Prisma.AttributeUpdateManyMutationInput, Prisma.AttributeUncheckedUpdateManyInput>
+  /**
+   * Filter which Attributes to update
+   */
+  where?: Prisma.AttributeWhereInput
+  /**
+   * Limit how many Attributes to update.
+   */
+  limit?: number
+}
+
+/**
+ * Attribute updateManyAndReturn
+ */
+export type AttributeUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Attribute
+   */
+  select?: Prisma.AttributeSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Attribute
+   */
+  omit?: Prisma.AttributeOmit<ExtArgs> | null
   /**
    * The data used to update Attributes.
    */

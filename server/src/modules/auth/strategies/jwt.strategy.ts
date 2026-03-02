@@ -28,6 +28,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // return cai gi cai do thanh req.user
     return {
       userId: user.id,
+      name: user.name,
       email: user.email,
       role: user.role,
     };

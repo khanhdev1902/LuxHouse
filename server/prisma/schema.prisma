@@ -5,7 +5,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
+  // provider = "mysql"
 }
 
 enum OrderStatus {
@@ -258,7 +259,7 @@ model Payment {
 
 model Discount {
   id          Int      @id @default(autoincrement())
-  name        String?
+  name        String?  @unique
   type        String   @default("percentage")// "amount" or "percentage"
   value       Decimal  @db.Decimal(12, 2)
   discountType String  // (FLASH_SALE | VOUCHER | MANUAL | VARIANT)

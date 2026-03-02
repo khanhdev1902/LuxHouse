@@ -4,7 +4,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthRequestDto } from './auth.request.dto';
+import { AuthRequestDto, RegisterRequestDto } from './auth.request.dto';
 import { PrismaService } from 'src/prisma.service';
 import bcrypt from 'bcryptjs';
 import { IAuth } from './auth.interface';
@@ -22,7 +22,7 @@ export class AuthService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  async register(request: AuthRequestDto): Promise<string> {
+  async register(request: RegisterRequestDto): Promise<string> {
     const { name, email, password } = request;
     const existingUser = await this.prismaService.user.findUnique({
       where: { email },

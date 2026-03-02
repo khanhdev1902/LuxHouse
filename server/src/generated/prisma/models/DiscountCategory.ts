@@ -582,7 +582,23 @@ export type DiscountCategorySelect<ExtArgs extends runtime.Types.Extensions.Inte
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["discountCategory"]>
 
+export type DiscountCategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  discountId?: boolean
+  categoryId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  discount?: boolean | Prisma.DiscountDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["discountCategory"]>
 
+export type DiscountCategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  discountId?: boolean
+  categoryId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  discount?: boolean | Prisma.DiscountDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["discountCategory"]>
 
 export type DiscountCategorySelectScalar = {
   discountId?: boolean
@@ -593,6 +609,14 @@ export type DiscountCategorySelectScalar = {
 
 export type DiscountCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"discountId" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["discountCategory"]>
 export type DiscountCategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  discount?: boolean | Prisma.DiscountDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}
+export type DiscountCategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  discount?: boolean | Prisma.DiscountDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}
+export type DiscountCategoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   discount?: boolean | Prisma.DiscountDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
 }
@@ -726,6 +750,30 @@ export interface DiscountCategoryDelegate<ExtArgs extends runtime.Types.Extensio
   createMany<T extends DiscountCategoryCreateManyArgs>(args?: Prisma.SelectSubset<T, DiscountCategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many DiscountCategories and returns the data saved in the database.
+   * @param {DiscountCategoryCreateManyAndReturnArgs} args - Arguments to create many DiscountCategories.
+   * @example
+   * // Create many DiscountCategories
+   * const discountCategory = await prisma.discountCategory.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many DiscountCategories and only return the `discountId`
+   * const discountCategoryWithDiscountIdOnly = await prisma.discountCategory.createManyAndReturn({
+   *   select: { discountId: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends DiscountCategoryCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, DiscountCategoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscountCategoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a DiscountCategory.
    * @param {DiscountCategoryDeleteArgs} args - Arguments to delete one DiscountCategory.
    * @example
@@ -788,6 +836,36 @@ export interface DiscountCategoryDelegate<ExtArgs extends runtime.Types.Extensio
    * 
    */
   updateMany<T extends DiscountCategoryUpdateManyArgs>(args: Prisma.SelectSubset<T, DiscountCategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more DiscountCategories and returns the data updated in the database.
+   * @param {DiscountCategoryUpdateManyAndReturnArgs} args - Arguments to update many DiscountCategories.
+   * @example
+   * // Update many DiscountCategories
+   * const discountCategory = await prisma.discountCategory.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more DiscountCategories and only return the `discountId`
+   * const discountCategoryWithDiscountIdOnly = await prisma.discountCategory.updateManyAndReturn({
+   *   select: { discountId: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends DiscountCategoryUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, DiscountCategoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscountCategoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one DiscountCategory.
@@ -1216,6 +1294,29 @@ export type DiscountCategoryCreateManyArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
+ * DiscountCategory createManyAndReturn
+ */
+export type DiscountCategoryCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DiscountCategory
+   */
+  select?: Prisma.DiscountCategorySelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the DiscountCategory
+   */
+  omit?: Prisma.DiscountCategoryOmit<ExtArgs> | null
+  /**
+   * The data used to create many DiscountCategories.
+   */
+  data: Prisma.DiscountCategoryCreateManyInput | Prisma.DiscountCategoryCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DiscountCategoryIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * DiscountCategory update
  */
 export type DiscountCategoryUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1257,6 +1358,36 @@ export type DiscountCategoryUpdateManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many DiscountCategories to update.
    */
   limit?: number
+}
+
+/**
+ * DiscountCategory updateManyAndReturn
+ */
+export type DiscountCategoryUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DiscountCategory
+   */
+  select?: Prisma.DiscountCategorySelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the DiscountCategory
+   */
+  omit?: Prisma.DiscountCategoryOmit<ExtArgs> | null
+  /**
+   * The data used to update DiscountCategories.
+   */
+  data: Prisma.XOR<Prisma.DiscountCategoryUpdateManyMutationInput, Prisma.DiscountCategoryUncheckedUpdateManyInput>
+  /**
+   * Filter which DiscountCategories to update
+   */
+  where?: Prisma.DiscountCategoryWhereInput
+  /**
+   * Limit how many DiscountCategories to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DiscountCategoryIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

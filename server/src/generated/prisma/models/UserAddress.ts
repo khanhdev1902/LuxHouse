@@ -266,7 +266,6 @@ export type UserAddressOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  _relevance?: Prisma.UserAddressOrderByRelevanceInput
 }
 
 export type UserAddressWhereUniqueInput = Prisma.AtLeast<{
@@ -405,12 +404,6 @@ export type UserAddressListRelationFilter = {
 
 export type UserAddressOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type UserAddressOrderByRelevanceInput = {
-  fields: Prisma.UserAddressOrderByRelevanceFieldEnum | Prisma.UserAddressOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type UserAddressCountOrderByAggregateInput = {
@@ -621,7 +614,31 @@ export type UserAddressSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userAddress"]>
 
+export type UserAddressSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  address?: boolean
+  city?: boolean
+  state?: boolean
+  zipCode?: boolean
+  country?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["userAddress"]>
 
+export type UserAddressSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  address?: boolean
+  city?: boolean
+  state?: boolean
+  zipCode?: boolean
+  country?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["userAddress"]>
 
 export type UserAddressSelectScalar = {
   id?: boolean
@@ -637,6 +654,12 @@ export type UserAddressSelectScalar = {
 
 export type UserAddressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "address" | "city" | "state" | "zipCode" | "country" | "createdAt" | "updatedAt", ExtArgs["result"]["userAddress"]>
 export type UserAddressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type UserAddressIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type UserAddressIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
@@ -773,6 +796,30 @@ export interface UserAddressDelegate<ExtArgs extends runtime.Types.Extensions.In
   createMany<T extends UserAddressCreateManyArgs>(args?: Prisma.SelectSubset<T, UserAddressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many UserAddresses and returns the data saved in the database.
+   * @param {UserAddressCreateManyAndReturnArgs} args - Arguments to create many UserAddresses.
+   * @example
+   * // Create many UserAddresses
+   * const userAddress = await prisma.userAddress.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many UserAddresses and only return the `id`
+   * const userAddressWithIdOnly = await prisma.userAddress.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends UserAddressCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, UserAddressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserAddressPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a UserAddress.
    * @param {UserAddressDeleteArgs} args - Arguments to delete one UserAddress.
    * @example
@@ -835,6 +882,36 @@ export interface UserAddressDelegate<ExtArgs extends runtime.Types.Extensions.In
    * 
    */
   updateMany<T extends UserAddressUpdateManyArgs>(args: Prisma.SelectSubset<T, UserAddressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more UserAddresses and returns the data updated in the database.
+   * @param {UserAddressUpdateManyAndReturnArgs} args - Arguments to update many UserAddresses.
+   * @example
+   * // Update many UserAddresses
+   * const userAddress = await prisma.userAddress.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more UserAddresses and only return the `id`
+   * const userAddressWithIdOnly = await prisma.userAddress.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends UserAddressUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, UserAddressUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserAddressPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one UserAddress.
@@ -1267,6 +1344,29 @@ export type UserAddressCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
+ * UserAddress createManyAndReturn
+ */
+export type UserAddressCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserAddress
+   */
+  select?: Prisma.UserAddressSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserAddress
+   */
+  omit?: Prisma.UserAddressOmit<ExtArgs> | null
+  /**
+   * The data used to create many UserAddresses.
+   */
+  data: Prisma.UserAddressCreateManyInput | Prisma.UserAddressCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAddressIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * UserAddress update
  */
 export type UserAddressUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1308,6 +1408,36 @@ export type UserAddressUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many UserAddresses to update.
    */
   limit?: number
+}
+
+/**
+ * UserAddress updateManyAndReturn
+ */
+export type UserAddressUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserAddress
+   */
+  select?: Prisma.UserAddressSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserAddress
+   */
+  omit?: Prisma.UserAddressOmit<ExtArgs> | null
+  /**
+   * The data used to update UserAddresses.
+   */
+  data: Prisma.XOR<Prisma.UserAddressUpdateManyMutationInput, Prisma.UserAddressUncheckedUpdateManyInput>
+  /**
+   * Filter which UserAddresses to update
+   */
+  where?: Prisma.UserAddressWhereInput
+  /**
+   * Limit how many UserAddresses to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAddressIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

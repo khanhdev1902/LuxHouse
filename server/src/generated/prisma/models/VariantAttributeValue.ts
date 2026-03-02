@@ -582,7 +582,23 @@ export type VariantAttributeValueSelect<ExtArgs extends runtime.Types.Extensions
   attributeValue?: boolean | Prisma.AttributeValueDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["variantAttributeValue"]>
 
+export type VariantAttributeValueSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  productVariantId?: boolean
+  attributeValueId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
+  attributeValue?: boolean | Prisma.AttributeValueDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["variantAttributeValue"]>
 
+export type VariantAttributeValueSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  productVariantId?: boolean
+  attributeValueId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
+  attributeValue?: boolean | Prisma.AttributeValueDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["variantAttributeValue"]>
 
 export type VariantAttributeValueSelectScalar = {
   productVariantId?: boolean
@@ -593,6 +609,14 @@ export type VariantAttributeValueSelectScalar = {
 
 export type VariantAttributeValueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"productVariantId" | "attributeValueId" | "createdAt" | "updatedAt", ExtArgs["result"]["variantAttributeValue"]>
 export type VariantAttributeValueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
+  attributeValue?: boolean | Prisma.AttributeValueDefaultArgs<ExtArgs>
+}
+export type VariantAttributeValueIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
+  attributeValue?: boolean | Prisma.AttributeValueDefaultArgs<ExtArgs>
+}
+export type VariantAttributeValueIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   productVariant?: boolean | Prisma.ProductVariantDefaultArgs<ExtArgs>
   attributeValue?: boolean | Prisma.AttributeValueDefaultArgs<ExtArgs>
 }
@@ -726,6 +750,30 @@ export interface VariantAttributeValueDelegate<ExtArgs extends runtime.Types.Ext
   createMany<T extends VariantAttributeValueCreateManyArgs>(args?: Prisma.SelectSubset<T, VariantAttributeValueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many VariantAttributeValues and returns the data saved in the database.
+   * @param {VariantAttributeValueCreateManyAndReturnArgs} args - Arguments to create many VariantAttributeValues.
+   * @example
+   * // Create many VariantAttributeValues
+   * const variantAttributeValue = await prisma.variantAttributeValue.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many VariantAttributeValues and only return the `productVariantId`
+   * const variantAttributeValueWithProductVariantIdOnly = await prisma.variantAttributeValue.createManyAndReturn({
+   *   select: { productVariantId: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends VariantAttributeValueCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, VariantAttributeValueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VariantAttributeValuePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a VariantAttributeValue.
    * @param {VariantAttributeValueDeleteArgs} args - Arguments to delete one VariantAttributeValue.
    * @example
@@ -788,6 +836,36 @@ export interface VariantAttributeValueDelegate<ExtArgs extends runtime.Types.Ext
    * 
    */
   updateMany<T extends VariantAttributeValueUpdateManyArgs>(args: Prisma.SelectSubset<T, VariantAttributeValueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more VariantAttributeValues and returns the data updated in the database.
+   * @param {VariantAttributeValueUpdateManyAndReturnArgs} args - Arguments to update many VariantAttributeValues.
+   * @example
+   * // Update many VariantAttributeValues
+   * const variantAttributeValue = await prisma.variantAttributeValue.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more VariantAttributeValues and only return the `productVariantId`
+   * const variantAttributeValueWithProductVariantIdOnly = await prisma.variantAttributeValue.updateManyAndReturn({
+   *   select: { productVariantId: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends VariantAttributeValueUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, VariantAttributeValueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VariantAttributeValuePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one VariantAttributeValue.
@@ -1216,6 +1294,29 @@ export type VariantAttributeValueCreateManyArgs<ExtArgs extends runtime.Types.Ex
 }
 
 /**
+ * VariantAttributeValue createManyAndReturn
+ */
+export type VariantAttributeValueCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VariantAttributeValue
+   */
+  select?: Prisma.VariantAttributeValueSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the VariantAttributeValue
+   */
+  omit?: Prisma.VariantAttributeValueOmit<ExtArgs> | null
+  /**
+   * The data used to create many VariantAttributeValues.
+   */
+  data: Prisma.VariantAttributeValueCreateManyInput | Prisma.VariantAttributeValueCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VariantAttributeValueIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * VariantAttributeValue update
  */
 export type VariantAttributeValueUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1257,6 +1358,36 @@ export type VariantAttributeValueUpdateManyArgs<ExtArgs extends runtime.Types.Ex
    * Limit how many VariantAttributeValues to update.
    */
   limit?: number
+}
+
+/**
+ * VariantAttributeValue updateManyAndReturn
+ */
+export type VariantAttributeValueUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VariantAttributeValue
+   */
+  select?: Prisma.VariantAttributeValueSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the VariantAttributeValue
+   */
+  omit?: Prisma.VariantAttributeValueOmit<ExtArgs> | null
+  /**
+   * The data used to update VariantAttributeValues.
+   */
+  data: Prisma.XOR<Prisma.VariantAttributeValueUpdateManyMutationInput, Prisma.VariantAttributeValueUncheckedUpdateManyInput>
+  /**
+   * Filter which VariantAttributeValues to update
+   */
+  where?: Prisma.VariantAttributeValueWhereInput
+  /**
+   * Limit how many VariantAttributeValues to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VariantAttributeValueIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

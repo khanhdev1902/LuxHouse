@@ -11,6 +11,7 @@ import { createKeyv } from '@keyv/redis';
 import { Keyv } from 'keyv';
 import { CacheableMemory } from 'cacheable';
 import { CartModule } from './modules/cart/cart.module';
+import { GeminiModule } from './modules/gemini/gemini.module';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { CartModule } from './modules/cart/cart.module';
       throttlers: [
         {
           ttl: 60000, // milliseconds
-          limit: 5,
+          limit: 10,
         },
       ],
     }),
@@ -40,6 +41,7 @@ import { CartModule } from './modules/cart/cart.module';
     AuthModule,
     ProductModule,
     CartModule,
+    GeminiModule,
   ],
   controllers: [AppController],
   providers: [

@@ -303,15 +303,14 @@ export type DiscountOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   discountCategories?: Prisma.DiscountCategoryOrderByRelationAggregateInput
   discountProducts?: Prisma.DiscountProductVariantOrderByRelationAggregateInput
-  _relevance?: Prisma.DiscountOrderByRelevanceInput
 }
 
 export type DiscountWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  name?: string
   AND?: Prisma.DiscountWhereInput | Prisma.DiscountWhereInput[]
   OR?: Prisma.DiscountWhereInput[]
   NOT?: Prisma.DiscountWhereInput | Prisma.DiscountWhereInput[]
-  name?: Prisma.StringNullableFilter<"Discount"> | string | null
   type?: Prisma.StringFilter<"Discount"> | string
   value?: Prisma.DecimalFilter<"Discount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   discountType?: Prisma.StringFilter<"Discount"> | string
@@ -324,7 +323,7 @@ export type DiscountWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Discount"> | Date | string
   discountCategories?: Prisma.DiscountCategoryListRelationFilter
   discountProducts?: Prisma.DiscountProductVariantListRelationFilter
-}, "id">
+}, "id" | "name">
 
 export type DiscountOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -472,12 +471,6 @@ export type DiscountUncheckedUpdateManyInput = {
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type DiscountOrderByRelevanceInput = {
-  fields: Prisma.DiscountOrderByRelevanceFieldEnum | Prisma.DiscountOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type DiscountCountOrderByAggregateInput = {
@@ -786,7 +779,35 @@ export type DiscountSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   _count?: boolean | Prisma.DiscountCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["discount"]>
 
+export type DiscountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name?: boolean
+  type?: boolean
+  value?: boolean
+  discountType?: boolean
+  startDate?: boolean
+  endDate?: boolean
+  userlimit?: boolean
+  isActive?: boolean
+  priority?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["discount"]>
 
+export type DiscountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name?: boolean
+  type?: boolean
+  value?: boolean
+  discountType?: boolean
+  startDate?: boolean
+  endDate?: boolean
+  userlimit?: boolean
+  isActive?: boolean
+  priority?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["discount"]>
 
 export type DiscountSelectScalar = {
   id?: boolean
@@ -809,6 +830,8 @@ export type DiscountInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   discountProducts?: boolean | Prisma.Discount$discountProductsArgs<ExtArgs>
   _count?: boolean | Prisma.DiscountCountOutputTypeDefaultArgs<ExtArgs>
 }
+export type DiscountIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type DiscountIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $DiscountPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Discount"
@@ -947,6 +970,30 @@ export interface DiscountDelegate<ExtArgs extends runtime.Types.Extensions.Inter
   createMany<T extends DiscountCreateManyArgs>(args?: Prisma.SelectSubset<T, DiscountCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Discounts and returns the data saved in the database.
+   * @param {DiscountCreateManyAndReturnArgs} args - Arguments to create many Discounts.
+   * @example
+   * // Create many Discounts
+   * const discount = await prisma.discount.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Discounts and only return the `id`
+   * const discountWithIdOnly = await prisma.discount.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends DiscountCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, DiscountCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscountPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Discount.
    * @param {DiscountDeleteArgs} args - Arguments to delete one Discount.
    * @example
@@ -1009,6 +1056,36 @@ export interface DiscountDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * 
    */
   updateMany<T extends DiscountUpdateManyArgs>(args: Prisma.SelectSubset<T, DiscountUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Discounts and returns the data updated in the database.
+   * @param {DiscountUpdateManyAndReturnArgs} args - Arguments to update many Discounts.
+   * @example
+   * // Update many Discounts
+   * const discount = await prisma.discount.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Discounts and only return the `id`
+   * const discountWithIdOnly = await prisma.discount.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends DiscountUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, DiscountUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscountPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Discount.
@@ -1445,6 +1522,25 @@ export type DiscountCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Discount createManyAndReturn
+ */
+export type DiscountCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Discount
+   */
+  select?: Prisma.DiscountSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Discount
+   */
+  omit?: Prisma.DiscountOmit<ExtArgs> | null
+  /**
+   * The data used to create many Discounts.
+   */
+  data: Prisma.DiscountCreateManyInput | Prisma.DiscountCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
  * Discount update
  */
 export type DiscountUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1474,6 +1570,32 @@ export type DiscountUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
  * Discount updateMany
  */
 export type DiscountUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Discounts.
+   */
+  data: Prisma.XOR<Prisma.DiscountUpdateManyMutationInput, Prisma.DiscountUncheckedUpdateManyInput>
+  /**
+   * Filter which Discounts to update
+   */
+  where?: Prisma.DiscountWhereInput
+  /**
+   * Limit how many Discounts to update.
+   */
+  limit?: number
+}
+
+/**
+ * Discount updateManyAndReturn
+ */
+export type DiscountUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Discount
+   */
+  select?: Prisma.DiscountSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Discount
+   */
+  omit?: Prisma.DiscountOmit<ExtArgs> | null
   /**
    * The data used to update Discounts.
    */
