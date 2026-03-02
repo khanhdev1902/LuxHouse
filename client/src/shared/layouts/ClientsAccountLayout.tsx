@@ -1,4 +1,4 @@
-import SideBar from "@/shared/components/clients/sidebar";
+import SideBar from "@/shared/components/sidebar";
 import Container from "@/shared/components/ui/Container";
 import { Outlet } from "react-router-dom";
 

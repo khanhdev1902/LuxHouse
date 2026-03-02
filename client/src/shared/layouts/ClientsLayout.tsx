@@ -1,6 +1,7 @@
 import ChatBot from "@/features/chatbot";
-import Footer from "@/shared/components/clients/footer";
-import Header from "@/shared/components/clients/header";
+import Footer from "@/shared/components/footer";
+import Header from "@/shared/components/header";
+
 import React from "react";
 import { Outlet } from "react-router-dom";
 

@@ -51,7 +51,7 @@ export default function ChatToggle({ toggle, isOpen }: ToggleProps) {
       <motion.div
         onClick={toggle}
         className={cn(
-          " p-4 rounded-full cursor-pointer bg-gradient-to-tr from-red-500 to-purple-500 shadow-xl",
+          " p-4 rounded-full cursor-pointer bg-gradient-to-tr from-red-300 to-orange-800 shadow-xl",
           !isOpen && "animate-bounce duration-2000 ease-in-out"
         )}
         initial={{ x: 150, opacity: 0 }}

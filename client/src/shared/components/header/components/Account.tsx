@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import type { User } from "@/shared/types/user";
 import { FaRegUser } from "react-icons/fa6";
 import { ChevronDown } from "lucide-react";
+import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
 
 interface AccountProps {
   className?: string;
@@ -18,7 +19,10 @@ export default function Account({ className }: AccountProps) {
   const { value: isOpen, toggle, off } = useToggle();
   useClickOutside(ref, off);
   const navigation = useNavigate();
-  const user: User | null = null;
+  let user: User | null = null;
+  const { data: userData } = useCurrentUser();
+  console.log("user", user);
+  if (userData) user = userData;
   // const user: User | null = {
   //   id: "1",
   //   name: "Khanh Nguyễn Văn",
@@ -48,7 +52,7 @@ export default function Account({ className }: AccountProps) {
           className="flex flex-row justify-center items-center gap-2"
         >
           <FaRegUser className="size-6 text-[#434343]" />
-          <div>
+          <div className="hidden xl:block">
             <p className="text-sm font-medium text-[#434343]">Đăng nhập / Đăng ký</p>
             <p className="text-sm font-medium text-[#434343] flex items-center gap-1">
               Tài khoản của tôi
@@ -76,15 +80,18 @@ export default function Account({ className }: AccountProps) {
             <div className="flex gap-2 items-center px-4 py-3 border-b border-b-gray-200">
               <img src="/Logo_1.jpg" alt="Avatar" className=" size-16 rounded-full shadow-xl" />
               <div onClick={() => navigation("/account")} className="flex flex-col items-start">
-                <span className=" font-bold">{user.name}</span>
-                <span className=" font-medium">{user.email}</span>
+                <span className=" font-bold">{user?.name}</span>
+                <span className=" font-medium">{user?.email}</span>
               </div>
             </div>
             <div className="flex flex-col gap-3 px-4 py-3 font-medium">
               {dataDropdownAccount.map((item, key) => (
                 <div
                   key={key}
-                  onClick={() => navigation(item.path)}
+                  onClick={() => {
+                    if (item.name === "Đăng xuất") alert("Mày thật sự muốn cút ko:))?");
+                    navigation(item.path);
+                  }}
                   className="flex items-center gap-2"
                 >
                   {item.icon}

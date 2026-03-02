@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@/shared/components/ui/BreadCrumb";
 import Container from "@/shared/components/ui/Container";
 import type { Cart } from "@/shared/types/cart";
 import { formatCurrency } from "@/utils/formatCurrency";
-import CartItem from "@/shared/components/clients/cart/CartItem";
+import CartItem from "@/shared/components/cart/CartItem";
 import { cart } from "@/shared/constant/const-home";
 
 const policies: React.ReactNode[] = [

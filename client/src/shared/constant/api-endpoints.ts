@@ -4,6 +4,7 @@ export const API_ENDPOINTS = {
   CATEGORY: "/categories",
   AUTH: "/auth",
   LOGIN: "/auth/login",
-  PROFILE: "/auth/me",
+  REGISTER: "/auth/register",
+  ME: "/auth/me",
   CART: "/cart",
 } as const;

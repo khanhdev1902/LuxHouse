@@ -22,15 +22,16 @@ export default function ProductCard({ className, product }: ProductCardProps) {
           {`-${product?.discountPercent ?? 0}%`}
         </span>
       )}
-      <img src={product?.images[0]} alt={product?.name || "Product Card"} />
-      <motion.img
-        src={product?.images[1]}
-        alt={product?.name || "Product Card"}
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
-        className=" absolute top-0 left-0 z-10"
-      />
+      {product?.images?.[0] && <img src={product.images[0]} alt={product.name} />}
+
+      {product?.images?.[1] && (
+        <motion.img
+          src={product.images[1]}
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          className="absolute top-0 left-0 z-10"
+        />
+      )}
       <div className=" py-1 space-y-2">
         <p className=" font-semibold line-clamp-2 min-h-[3em] leading-snug">{product?.name}</p>
         <div className="flex flex-row gap-2 text-xs sm:text-sm">

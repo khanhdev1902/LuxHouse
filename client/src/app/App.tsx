@@ -1,15 +1,21 @@
 // import { ThemeProvider } from "@/components/providers/theme"
-// import { Toaster } from "@/components/ui/toaster"
-// import { AuthProvider } from "@/context/AuthContext"
+import { Toaster } from "@/shared/components/ui/sonner";
 import AppRouter from "@/app/routes";
 
 export default function App() {
   return (
-    // <AuthProvider>
     // <ThemeProvider>
+    <>
       <AppRouter />
-    // <Toaster />
+      <Toaster
+        theme="light"
+        position="top-right"
+        richColors
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
+    </>
     // </ThemeProvider>
-    // </AuthProvider>
   );
 }

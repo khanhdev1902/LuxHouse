@@ -1,121 +1,176 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
-import { SiDependabot } from "react-icons/si";
-import { FaMicrophone } from "react-icons/fa";
-import { FaFileImage } from "react-icons/fa6";
-import { BsEmojiSmileFill } from "react-icons/bs";
-import { MdGifBox } from "react-icons/md";
-import { BsSendFill } from "react-icons/bs";
+import { HiOutlineArrowRight } from "react-icons/hi2";
+import { RiCompass3Line, RiLayoutMasonryLine } from "react-icons/ri";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
-import "./ChatBox.css";
 import React from "react";
-import useChat from "@/shared/hooks/use-chat";
-import useAutoScroll from "@/shared/hooks/use-auto-scroll";
+import ReactMarkdown from "react-markdown";
+import { useAutoScroll } from "@/shared/hooks/use-auto-scroll";
 import { cn } from "@/lib/utils";
-type Toggle = () => void;
-interface ChatBoxProps {
-  toggle: Toggle;
-  isOpen: boolean;
-}
-export default function ChatBox({ toggle, isOpen }: ChatBoxProps) {
-  const { message, setMessage, historyChat, handleSend } = useChat();
+import { useChat } from "../hooks/useChat";
+
+export default function ChatBox({ toggle, isOpen }: { toggle: () => void; isOpen: boolean }) {
+  const { historyChat, content, setContent, isSending, sendGemini } = useChat();
   const chatRef = React.useRef<HTMLDivElement>(null);
   const { isAtBottom, scrollToEdge } = useAutoScroll(chatRef, [historyChat], true);
+
+  // Câu hỏi gợi ý cho khách hàng nội thất
+  const suggestions = [
+    "Tư vấn phối màu phòng khách",
+    "Mẫu sofa phong cách tối giản",
+    "Xu hướng nội thất 2024",
+  ];
+
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
           className={cn(
-            "fixed bottom-16 top-0 right-0 left-0 z-[60] bg-white w-auto h-auto flex flex-col rounded-lg shadow-xl",
-            "sm:top-auto sm:left-auto sm:right-8 sm:w-[600px] sm:h-[600px]"
+            "fixed bottom-0 right-0 left-0 z-[60] flex flex-col overflow-hidden border border-[#E5E1DA] bg-[#FCFBF9] shadow-[0_32px_64px_-16px_rgba(139,69,19,0.2)]",
+            "sm:bottom-10 sm:right-12 sm:left-auto sm:w-[440px] sm:h-[680px] sm:rounded-[2rem]"
           )}
-          initial={{ x: 50, y: 10, scale: 0.8, opacity: 0 }}
-          animate={{ x: 0, y: 0, scale: 1, opacity: 1 }}
-          exit={{ x: 50, y: 10, scale: 0.8, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          initial={{ opacity: 0, scale: 0.9, y: 40 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 40 }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
         >
-          <header className=" flex flex-row justify-between items-center py-2 px-5 shadow-md bg-gradient-to-tr from-[#744ea6] to-[#66a6ff] rounded-t-lg text-white">
-            <div className="flex flex-row gap-4 justify-center items-center">
-              <div className="relative flex justify-center items-center size-12">
-                <SiDependabot className="size-10 z-10 bg-[#ffffff7e] rounded-full p-2" />
-                <div className="circle"></div>
-                <div className="circle"></div>
-                <div className="circle"></div>
-              </div>
+        
+          <header className="relative p-4 bg-[#7c3a19] text-[#F5F5DC] overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-full bg-[#8B4513]/10 skew-x-[-20deg] translate-x-10" />
 
-              <div className="flex flex-col justify-center items-start">
-                <span className="text-xl font-bold">Trợ lý ảo Lux</span>
-                <span className=" flex flex-row gap-2 justify-center items-center text-xs font-medium">
-                  <span className="w-2 h-2 bg-green-300 rounded-full"></span>
-                  Đang hoạt động
-                </span>
+            <div className="relative flex justify-between items-start z-10">
+              <div className="flex gap-4">
+                <div className="relative">
+                  <div className="size-14 rounded-full border border-amber-200/30 p-1">
+                    <img
+                      src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=100"
+                      className="size-full rounded-full object-cover grayscale-[30%]"
+                      alt="AI Assistant"
+                    />
+                  </div>
+                  <span className="absolute bottom-0 right-0 size-3.5 bg-green-500 border-2 border-[#2C2420] rounded-full" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-xl font-medium tracking-tight">Lux Design AI</h3>
+                  <p className="text-[11px] text-amber-100/50 uppercase tracking-[0.2em] font-light mt-1">
+                    Chuyên gia tư vấn không gian
+                  </p>
+                </div>
               </div>
+              <button
+                onClick={toggle}
+                className="p-1 hover:rotate-90 transition-transform duration-300 opacity-70 hover:opacity-100"
+              >
+                <IoMdClose size={24} />
+              </button>
             </div>
-            <IoMdClose
-              onClick={toggle}
-              className="size-9 cursor-pointer bg-[#ffffff2b] rounded-full p-2"
-            />
           </header>
-          <main ref={chatRef} className=" flex-grow overflow-y-auto p-2 flex flex-col gap-2">
-            {!isAtBottom && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 0.5, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className=" absolute z-10 bottom-24 right-20 p-1 bg-white shadow-lg border border-gray-200 rounded-full text-4xl text-slate-600 cursor-pointer select-none"
-                onClick={scrollToEdge}
-              >
-                <MdKeyboardDoubleArrowDown />
-              </motion.div>
+
+          {/* CHAT BODY */}
+          <main ref={chatRef} className="flex-grow overflow-y-auto p-6 space-y-8 bg-[#FCFBF9]">
+            {/* Tin nhắn chào mừng mặc định nếu chưa có chat */}
+            {historyChat.length === 0 && (
+              <div className="text-center py-10 space-y-4">
+                <RiLayoutMasonryLine className="mx-auto size-8 text-[#D2691E]/30" />
+                <p className="text-[#4A2F1B]/60 text-sm font-light italic px-10">
+                  "Ngôi nhà là nơi câu chuyện của bạn bắt đầu. Tôi có thể giúp gì cho không gian của
+                  bạn hôm nay?"
+                </p>
+                <div className="flex flex-wrap gap-2 justify-center pt-2">
+                  {suggestions.map((text) => (
+                    <button
+                      key={text}
+                      onClick={() => setContent(text)}
+                      className="text-[12px] px-3 py-1.5 rounded-full border border-[#D2691E]/20 text-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-all"
+                    >
+                      {text}
+                    </button>
+                  ))}
+                </div>
+              </div>
             )}
-            {historyChat.map((message, key) => (
-              <div
-                key={key}
-                className={cn("flex items-center", message.sender === "user" && "justify-end")}
-              >
-                <motion.span
-                  initial={{ x: 0, y: 0, opacity: 0 }}
-                  animate={{ x: 0, y: 0, opacity: 1, scaleX: 1 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className=" rounded-full border border-slate-100 shadow-sm px-2 py-1"
+
+            {historyChat.map((msg, i) => {
+              const isUser = msg.sender === "User";
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: isUser ? 20 : -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className={cn("flex w-full", isUser ? "justify-end" : "justify-start")}
                 >
-                  {message.content}
-                </motion.span>
+                  <div
+                    className={cn(
+                      "max-w-[85%] px-5 py-4 relative",
+                      isUser
+                        ? "bg-[#8B4513] text-white rounded-[20px] rounded-tr-[2px]"
+                        : "bg-white border border-[#E5E1DA] text-[#2C2420] rounded-[20px] rounded-tl-[2px] shadow-sm"
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "text-[14.5px] leading-relaxed prose prose-stone",
+                        isUser ? "prose-invert" : ""
+                      )}
+                    >
+                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+
+            {isSending && (
+              <div className="flex justify-start">
+                <div className="flex items-center gap-2 px-4 py-2 bg-stone-100 rounded-full">
+                  <div className="size-1.5 bg-[#D2691E] rounded-full animate-bounce" />
+                  <div className="size-1.5 bg-[#D2691E] rounded-full animate-bounce [animation-delay:0.2s]" />
+                  <div className="size-1.5 bg-[#D2691E] rounded-full animate-bounce [animation-delay:0.4s]" />
+                </div>
               </div>
-            ))}
+            )}
           </main>
-          <footer className="border-t border-t-slate-200 shadow-lg ">
-            <nav className="flex flex-row justify-center items-center gap-3 py-3 px-5 text-slate-700">
-              <div className="flex flex-row justify-center items-center gap-4 ">
-                <FaMicrophone className="size-5" />
-                <FaFileImage className="size-5" />
-                <MdGifBox className="size-7" />
-              </div>
-              <div className="flex flex-grow flex-row justify-between items-center border border-gray-200 rounded-full">
-                <input
-                  type="text"
-                  placeholder="Aa"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && message.length > 0 && handleSend()}
-                  className=" w-full border-none focus:outline-none rounded-full px-5 py-2"
-                />
-                <BsEmojiSmileFill className="mr-2 size-6 cursor-pointer" />
-              </div>
-              <motion.button
-                className="text-2xl select-none cursor-pointer size-fit p-1"
-                whileTap={{ scale: 0.9 }}
-                whileHover={{ scale: 1.1 }}
-              >
-                {message.length > 0 ? (
-                  <BsSendFill className="text-[#764ba2] size-7" onClick={() => handleSend()} />
-                ) : (
-                  <span onClick={() => handleSend("😎")}>😎</span>
+
+          {/* FOOTER */}
+          <footer className="p-6 bg-white shadow-[0_-10px_25px_rgba(0,0,0,0.02)]">
+            <div className="relative flex items-center bg-[#F5F2ED] rounded-2xl border border-transparent focus-within:border-[#D2691E]/30 transition-all">
+              <input
+                type="text"
+                placeholder="Hỏi về chất liệu, phong cách..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && content.trim() && sendGemini()}
+                className="w-full bg-transparent py-4 pl-5 pr-14 text-[14px] outline-none text-[#2C2420] placeholder:text-stone-400"
+              />
+              <button
+                onClick={() => content.trim() && sendGemini()}
+                className={cn(
+                  "absolute right-2 size-10 rounded-xl flex items-center justify-center transition-all",
+                  content.trim() ? "bg-[#2C2420] text-white" : "text-stone-300"
                 )}
-              </motion.button>
-            </nav>
+              >
+                <HiOutlineArrowRight size={20} />
+              </button>
+            </div>
+            <div className="flex justify-between items-center mt-4 px-1">
+              <span className="text-[10px] text-stone-400 uppercase tracking-widest font-medium">
+                Premium Service
+              </span>
+              <RiCompass3Line className="text-stone-300 size-4" />
+            </div>
           </footer>
+
+          {/* Scroll Button */}
+          {!isAtBottom && (
+            <motion.button
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              onClick={scrollToEdge}
+              className="absolute bottom-28 right-8 size-10 bg-[#2C2420] text-white shadow-2xl rounded-full flex items-center justify-center z-20"
+            >
+              <MdKeyboardDoubleArrowDown size={20} />
+            </motion.button>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

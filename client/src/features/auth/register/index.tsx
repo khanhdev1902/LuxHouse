@@ -1,18 +1,29 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Mail, Lock, User, ArrowRight } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF, FaApple } from "react-icons/fa";
+import { useRegister } from "../hooks/useRegister";
+import type { RegisterRequest } from "../types/auth-request.type";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [focused, setFocused] = useState("");
+  const { mutate } = useRegister();
 
   const brandColor = "#C05621";
   const darkStone = "#1C1917";
-
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData: RegisterRequest = {
+      name,
+      email,
+      password: pass,
+    };
+    mutate(formData);
+  };
   return (
     <div
       className="h-screen w-full flex items-center justify-center bg-[#FDFCFB] relative overflow-hidden px-4"
@@ -153,6 +164,7 @@ export default function Register() {
                 style={{ backgroundColor: darkStone }}
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = brandColor)}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = darkStone)}
+                onClick={handleSubmit}
               >
                 Đăng ký <ArrowRight size={14} />
               </motion.button>

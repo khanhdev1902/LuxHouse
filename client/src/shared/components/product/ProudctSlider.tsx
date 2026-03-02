@@ -5,12 +5,12 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import useToggle from "@/shared/hooks/useToggle";
 import { TbArrowMoveLeft, TbArrowMoveRight } from "react-icons/tb";
-import type { ListProduct } from "@/shared/types/product";
+import type { ProductListItem } from "@/shared/types/product";
 import ProductCard from "./ProductCard";
 
 interface ProductSliderProps {
   title?: string;
-  products: ListProduct[];
+  products: ProductListItem[];
   slidesPerView?: number;
   className?: string;
 }

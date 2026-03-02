@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Mail, Lock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Mail, Lock, LockKeyholeOpen } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF, FaApple } from "react-icons/fa";
 import { useLogin } from "../hooks/useLogin";
-import type { LoginRequest } from "../types/login-request.type";
+import type { LoginRequest } from "../types/auth-request.type";
 
 export default function Login() {
   const brandColor = "#C05621";
@@ -12,6 +12,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
   const [focused, setFocused] = useState("");
   const { mutate, isPending, error } = useLogin();
 
@@ -20,7 +21,7 @@ export default function Login() {
     const formData: LoginRequest = { email: email, password: pass };
     console.log("called handleSubmit", `isPending: ${isPending}`);
     mutate(formData);
-    console.log("called handleSubmit", `Error: ${error}`);
+    console.log("error outside:", (error as any)?.error);
     console.log("called handleSubmit", `isPending: ${isPending}`);
   };
 
@@ -153,18 +154,28 @@ export default function Login() {
                 }`}
               >
                 <input
-                  type="password"
+                  type={isShowPassword ? "text" : "password"}
                   value={pass}
                   onChange={(e) => setPass(e.target.value)}
                   onFocus={() => setFocused("pass")}
                   onBlur={() => setFocused("")}
                   className="w-full bg-transparent outline-none text-stone-800 text-sm py-1"
                 />
-                <Lock
-                  size={16}
-                  className="opacity-40"
-                  style={{ color: focused === "pass" ? brandColor : "" }}
-                />
+                {isShowPassword ? (
+                  <LockKeyholeOpen
+                    size={16}
+                    className=" cursor-pointer opacity-40"
+                    style={{ color: focused === "pass" ? brandColor : "" }}
+                    onClick={() => setIsShowPassword(!isShowPassword)}
+                  />
+                ) : (
+                  <Lock
+                    size={16}
+                    className=" cursor-pointer opacity-40"
+                    style={{ color: focused === "pass" ? brandColor : "" }}
+                    onClick={() => setIsShowPassword(!isShowPassword)}
+                  />
+                )}
               </div>
               <a
                 href="#"

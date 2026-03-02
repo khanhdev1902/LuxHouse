@@ -292,7 +292,7 @@ export const dataDropdownAccount = [
     name: "Cài đặt",
   },
   {
-    path: "",
+    path: "/login",
     icon: <TbLogout className="size-6 text-[#434343]" />,
     name: "Đăng xuất",
   },

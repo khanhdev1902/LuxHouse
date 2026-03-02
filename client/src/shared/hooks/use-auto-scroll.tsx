@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function useAutoScroll<T extends HTMLElement | null>(
+export function useAutoScroll<T extends HTMLElement | null>(
   ref: React.RefObject<T>,
   deps: any[],
   toBottom: boolean = false,
