@@ -13,6 +13,7 @@ import { randomBytes } from 'crypto';
 import { JwtConstants } from './auth.constant';
 import { UserWithoutPassword } from '../users/user.interface';
 import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
+import 'dotenv/config';
 
 @Injectable()
 export class AuthService {
@@ -64,6 +65,7 @@ export class AuthService {
       userId: user.id,
       expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
     };
+    console.log('redisUrl:', process.env.REDIS_URL);
     const caching = await this.cacheManager.set(
       `refreshToken:${refreshToken}`,
       refreshTokenCacheData,

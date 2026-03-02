@@ -12,9 +12,13 @@ import { Keyv } from 'keyv';
 import { CacheableMemory } from 'cacheable';
 import { CartModule } from './modules/cart/cart.module';
 import { GeminiModule } from './modules/gemini/gemini.module';
-
+// import { ConfigModule } from '@nestjs/config';
+import 'dotenv/config';
 @Module({
   imports: [
+    // ConfigModule.forRoot({
+    //   isGlobal: true,
+    // }),
     ThrottlerModule.forRoot({
       throttlers: [
         {
@@ -34,7 +38,10 @@ import { GeminiModule } from './modules/gemini/gemini.module';
             }),
             namespace: 'luxhouse-memory-cache',
           }),
-          createKeyv('redis://localhost:6379', { namespace: 'luxhouse' }),
+          createKeyv(
+            (process.env.REDIS_URL as string) || 'redis://localhost:6379',
+            { namespace: 'luxhouse' },
+          ),
         ],
       }),
     }),
