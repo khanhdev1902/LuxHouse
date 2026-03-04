@@ -21,7 +21,7 @@ export class ApiResponse {
   private static getTimestamp(): string {
     return new Date().toISOString();
   }
-  static ok<T, M = unknown>(
+  static success<T, M = unknown>(
     data: T,
     message: string = '',
     statusCode: HttpStatus = HttpStatus.OK,

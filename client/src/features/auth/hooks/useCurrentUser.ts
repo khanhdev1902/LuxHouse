@@ -1,20 +1,20 @@
 // features/auth/hooks/useCurrentUser.ts
 import { useQuery } from "@tanstack/react-query";
 import { authApi } from "../apis/auth.api";
-import { tokenManager } from "@/lib/tokenManager";
+// import { tokenManager } from "@/lib/tokenManager";
 
 export function useCurrentUser() {
   console.log("called useCurrentUser");
-  const accessToken = tokenManager.getAccessToken();
+  // const accessToken = tokenManager.getAccessToken();
   return useQuery({
     queryKey: ["currentUser"],
     queryFn: authApi.getMe,
-    enabled: !!accessToken,
+    // enabled: !!accessToken,
     staleTime: 5 * 60 * 1000,
-    retry: false,
+    // retry: false,
     select: (res) => {
-      console.log("API response:", res);
-      return res?.data.data;
+      console.log("API response useCurrentUser:", res);
+      return res.data;
     },
   });
 }

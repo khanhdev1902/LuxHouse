@@ -2088,7 +2088,6 @@ export const CartItemScalarFieldEnum = {
   cartId: 'cartId',
   productVariantId: 'productVariantId',
   quantity: 'quantity',
-  price: 'price',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

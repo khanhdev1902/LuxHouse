@@ -1,16 +1,7 @@
-import { Prisma } from 'src/generated/prisma/client';
-import { productDetailSelect, productListSelect } from './product.select';
+import { ProductDetailDbType, ProductListDbType } from './product.select';
 import { buildOptions } from './product.utils';
 
-export type ProductListDb = Prisma.ProductGetPayload<{
-  select: typeof productListSelect;
-}>;
-
-export type ProductDetailDb = Prisma.ProductGetPayload<{
-  select: typeof productDetailSelect;
-}>;
-
-export const mapProductListItem = (product: ProductListDb) => {
+export const mapProductListItem = (product: ProductListDbType) => {
   if (!product.variants.length) {
     return {
       id: product.id.toString(),
@@ -58,7 +49,7 @@ export const mapProductListItem = (product: ProductListDb) => {
     sold: product.sold ?? 0,
   };
 };
-export const normalizeVariants = (product: ProductDetailDb) =>
+export const normalizeVariants = (product: ProductDetailDbType) =>
   product.variants.map((v) => ({
     id: v.id.toString(),
     sku: v.sku,
@@ -76,11 +67,10 @@ export const normalizeVariants = (product: ProductDetailDb) =>
       isMain: i.isMain,
     })),
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     discount: v.discounts[0]?.discount,
   }));
 
-export const mapProductDetail = (product: ProductDetailDb) => {
+export const mapProductDetail = (product: ProductDetailDbType) => {
   const nomalizedVariants = normalizeVariants(product);
   return {
     id: product.id.toString(),

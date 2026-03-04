@@ -3,7 +3,7 @@ import Container from "@/shared/components/ui/Container";
 import type { Cart } from "@/shared/types/cart";
 import { formatCurrency } from "@/utils/formatCurrency";
 import CartItem from "@/shared/components/cart/CartItem";
-import { cart } from "@/shared/constant/const-home";
+import { useCart } from "./hooks/useCart";
 
 const policies: React.ReactNode[] = [
   <>
@@ -31,7 +31,19 @@ const policies: React.ReactNode[] = [
 ];
 
 export default function Cart() {
-  const totalAmount = cart.cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
+  const { data: cart, isLoading } = useCart();
+
+  if (isLoading) {
+    return (
+      <Container className="flex items-center justify-center w-full h-full">
+        <div className="text-xl">Đang tải giỏ hàng...</div>
+      </Container>
+    );
+  }
+  const totalAmount = cart?.cartItems.reduce(
+    (total, item) => total + item.quantity * item.price,
+    0
+  );
   return (
     <>
       <Breadcrumbs />
@@ -39,7 +51,7 @@ export default function Cart() {
         <h1 className="w-full text-center font-bold text-3xl my-10">Giỏ hàng của bạn</h1>
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-8">
           <div className="lg:col-span-7 flex flex-col gap-2">
-            {cart.cartItems.length > 0 ? (
+            {cart?.cartItems.length && cart.cartItems.length > 0 ? (
               <div className="flex flex-col">
                 <div className="bg-gray-100 p-3 mb-3 rounded text-sm text-gray-700">
                   Có <strong>{cart.cartItems.length} sản phẩm</strong> trong giỏ hàng của bạn!
@@ -61,7 +73,7 @@ export default function Cart() {
               <h1 className="border-b py-3">Thông tin đơn hàng</h1>
               <div className="flex flex-row justify-between border-b py-3">
                 <span>Tổng tiền:</span>
-                <span className="text-[#ef683a] text-xl">{formatCurrency(totalAmount)}</span>
+                <span className="text-[#ef683a] text-xl">{formatCurrency(totalAmount ?? 0)}</span>
               </div>
               <button className="my-3 border rounded-xl w-full py-2 mx-2 bg-red-500 text-white">
                 THANH TOÁN

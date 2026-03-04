@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Post,
   Req,
   Res,
@@ -39,8 +41,22 @@ export class AuthController {
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { refreshToken, ...result } = auth;
-    return ApiResponse.ok(result, 'Login thành công!', 200);
+    return ApiResponse.success(result, 'Login thành công!', 200);
   }
+
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      path: '/',
+    });
+
+    return { message: 'Logout thành công' };
+  }
+
   @Post('register')
   async register(
     @Body(new ValidationPipe()) request: RegisterRequestDto,
@@ -54,6 +70,27 @@ export class AuthController {
   @Get('me')
   getMe(@Req() req: AuthRequest): ApiResponseType<unknown> {
     console.log(req);
-    return ApiResponse.ok(req.user, 'lấy dữ liệu user thành công!', 200);
+    return ApiResponse.success(req.user, 'lấy dữ liệu user thành công!', 200);
+  }
+
+  @Post('refresh')
+  async refreshToken(
+    @Req() req: AuthRequest,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<ApiResponseType<ILoginResponse | string>> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
+      return ApiResponse.message('Refresh token không tồn tại', 401);
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    const result = await this.authService.refreshToken(refreshToken);
+    res.cookie('refreshToken', result.refreshToken, {
+      httpOnly: true,
+      secure: false, // production: true
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày (milliseconds)
+    });
+    return ApiResponse.success(result, 'Refresh token thành công!', 200);
   }
 }

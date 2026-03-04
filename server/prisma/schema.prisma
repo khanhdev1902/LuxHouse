@@ -180,7 +180,7 @@ model VariantAttributeValue {
 
 model Cart {
   id        Int      @id @default(autoincrement())
-  userId    Int
+  userId    Int      @unique
   cartItems CartItem[]
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
@@ -194,12 +194,13 @@ model CartItem {
   cartId          Int
   productVariantId Int
   quantity        Int
-  price           Decimal         @db.Decimal(12, 2)
+
   cart            Cart            @relation(fields: [cartId], references: [id], onDelete: Cascade)
   productVariant   ProductVariant @relation(fields: [productVariantId], references: [id], onDelete: Cascade)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
 
+  @@unique([cartId, productVariantId])
   @@map("cart_items")
 }
 

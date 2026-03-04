@@ -104,12 +104,17 @@ export class ProductService {
     ]);
 
     const items = products.map(mapProductListItem);
-    return ApiResponse.ok(items, 'Lấy danh sách sản phẩm thành công', 200, {
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    });
+    return ApiResponse.success(
+      items,
+      'Lấy danh sách sản phẩm thành công',
+      200,
+      {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    );
   }
 
   async getProductBySlug(
@@ -123,6 +128,6 @@ export class ProductService {
       return ApiResponse.error(null, 'Không tìm thấy sản phẩm', 404);
     }
     const result = mapProductDetail(product);
-    return ApiResponse.ok(result, 'Lấy sản phẩm thành công', 200);
+    return ApiResponse.success(result, 'Lấy sản phẩm thành công', 200);
   }
 }

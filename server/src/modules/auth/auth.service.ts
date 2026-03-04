@@ -53,7 +53,7 @@ export class AuthService {
     console.log('authenticate called');
     const user = await this.validateUser(request.email, request.password);
     if (!user) {
-      throw new UnauthorizedException('Email hoặc mật khẩu không đúng!');
+      throw new BadRequestException('Email hoặc mật khẩu không đúng!');
     }
 
     const payload = { userId: user.id, email: user.email };
@@ -105,5 +105,48 @@ export class AuthService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _pw, ...result } = user;
     return result;
+  }
+
+  async refreshToken(refreshToken: string): Promise<{
+    accessToken: string;
+    refreshToken: string;
+    crsfToken: string;
+    expiresAt: number;
+    tokenType: string;
+  }> {
+    console.log('refreshToken called');
+    console.log('Received refresh token:', refreshToken);
+    const cacheKey = `refreshToken:${refreshToken}`;
+    const cachedData:
+      | { userId: number; expiresAt: number; expires: number }
+      | undefined = await this.cacheManager.get(cacheKey);
+    console.log('Cached data for refresh token:', cachedData);
+    if (!cachedData) {
+      throw new UnauthorizedException(
+        'Refresh token không hợp lệ hoặc đã hết hạn',
+      );
+    }
+
+    const user = await this.prismaService.user.findUnique({
+      where: { id: cachedData.userId },
+    });
+    if (!user) {
+      throw new UnauthorizedException('Người dùng không tồn tại');
+    }
+
+    const payload = { userId: user.id, email: user.email };
+    const accessToken = await this.jwtService.signAsync(payload);
+    const newRefreshToken = randomBytes(32).toString('hex');
+    const crsfToken = randomBytes(32).toString('hex');
+    const refreshTokenCacheData: { userId: number; expiresAt: number } = {
+      userId: user.id,
+      expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    };
+    await this.cacheManager.set(
+      `refreshToken:${newRefreshToken}`,
+      refreshTokenCacheData,
+      7 * 24 * 60 * 60 * 1000,
+    );
+    return this.authResponse(accessToken, newRefreshToken, crsfToken);
   }
 }

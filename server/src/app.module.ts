@@ -22,8 +22,8 @@ import 'dotenv/config';
     ThrottlerModule.forRoot({
       throttlers: [
         {
-          ttl: 60000, // milliseconds
-          limit: 10,
+          ttl: 10000, // milliseconds
+          limit: 20,
         },
       ],
     }),

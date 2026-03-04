@@ -5,10 +5,10 @@ import useToggle from "@/shared/hooks/useToggle";
 import { useNavigate } from "react-router-dom";
 import { dataDropdownAccount } from "@/shared/constant/const-home";
 import { cn } from "@/lib/utils";
-import type { User } from "@/shared/types/user";
 import { FaRegUser } from "react-icons/fa6";
 import { ChevronDown } from "lucide-react";
 import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
+import { logout } from "@/features/auth/apis/auth.api";
 
 interface AccountProps {
   className?: string;
@@ -19,16 +19,8 @@ export default function Account({ className }: AccountProps) {
   const { value: isOpen, toggle, off } = useToggle();
   useClickOutside(ref, off);
   const navigation = useNavigate();
-  let user: User | null = null;
-  const { data: userData } = useCurrentUser();
-  console.log("user", user);
-  if (userData) user = userData;
-  // const user: User | null = {
-  //   id: "1",
-  //   name: "Khanh Nguyễn Văn",
-  //   email: "khanhdev1902@gmail.com",
-  //   role: "CUSTOMMER",
-  // };
+  const { data: user } = useCurrentUser();
+  console.log("User data in Account component:", user);
   return (
     <div
       ref={ref}
@@ -89,7 +81,10 @@ export default function Account({ className }: AccountProps) {
                 <div
                   key={key}
                   onClick={() => {
-                    if (item.name === "Đăng xuất") alert("Mày thật sự muốn cút ko:))?");
+                    if (item.name === "Đăng xuất") {
+                      alert("Mày thật sự muốn cút ko:))?");
+                      logout();
+                    }
                     navigation(item.path);
                   }}
                   className="flex items-center gap-2"

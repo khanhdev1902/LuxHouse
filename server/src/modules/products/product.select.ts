@@ -1,5 +1,4 @@
 import { Prisma } from 'src/generated/prisma/client';
-// const now = new Date();
 
 export const productListSelect = {
   id: true,
@@ -108,3 +107,11 @@ export const productDetailSelect = {
     },
   },
 } satisfies Prisma.ProductSelect;
+
+export type ProductListDbType = Prisma.ProductGetPayload<{
+  select: typeof productListSelect;
+}>;
+
+export type ProductDetailDbType = Prisma.ProductGetPayload<{
+  select: typeof productDetailSelect;
+}>;

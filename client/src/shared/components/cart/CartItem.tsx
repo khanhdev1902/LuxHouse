@@ -1,9 +1,9 @@
 import { QuantitySelector } from "@/shared/components/ui/QuantitySelecter";
 import { HiOutlineX } from "react-icons/hi";
-import type { CartItem } from "@/shared/types/cart";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import type { CartItem } from "@/features/cart/types/cart.type";
 type CartItemProps = {
   data: CartItem;
   mode?: "small" | "large";
@@ -20,7 +20,7 @@ export default function CartItem({ data, mode = "large" }: CartItemProps) {
     >
       <div className="col-span-2 flex justify-center items-center">
         <img
-          src={data.image}
+          src={data.imageUrl}
           alt={data.name}
           className={cn("object-cover", mode === "small" ? "size-22" : "size-28")}
         />
@@ -33,9 +33,9 @@ export default function CartItem({ data, mode = "large" }: CartItemProps) {
         <div>
           <span>{formatCurrency(data.price ?? 0)}</span>
           {" - "}
-          <span className="line-through">{formatCurrency(data.originPrice)}</span>
+          <span className="line-through">{formatCurrency(data.originalPrice)}</span>
         </div>
-        <div>{data.attribute}</div>
+        <div>{data.attributes}</div>
         <div className="flex flex-row justify-between">
           <div className={cn(mode === "small" ? "max-w-28" : "max-w-40")}>
             <QuantitySelector value={quantity} onChange={setQuantity} />
