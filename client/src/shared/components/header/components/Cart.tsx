@@ -1,80 +1,125 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { BsBagPlus } from "react-icons/bs";
+import { BsBag } from "react-icons/bs"; // Đổi sang BsBag nhìn thanh thoát hơn
 import useToggle from "@/shared/hooks/useToggle";
 import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import CartItem from "../../cart/CartItem";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useCart } from "@/features/cart/hooks/useCart";
+
 export default function Cart() {
   const { value: isOpen, toggle, off } = useToggle(false);
   const navigate = useNavigate();
   const { data: cart } = useCart();
-  const totalAmount = cart?.cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
+
+  const totalAmount = cart?.cartItems.reduce(
+    (total, item) => total + item.quantity * item.price,
+    0
+  );
+
   return (
-    <div>
-      {/* Icon cart on header */}
-      <div
-        onClick={toggle}
-        className="flex flex-row items-center justify-between gap-2 cursor-pointer"
-      >
+    <div className="relative">
+      {/* Icon Cart - Tinh chỉnh để đồng bộ với Account Trigger */}
+      <div onClick={toggle} className="flex items-center gap-2.5 cursor-pointer group">
         <div className="relative">
-          <BsBagPlus className="size-6 text-[#434343]" />
-          <span className="absolute -top-3 -right-3 bg-[#F04D4C] h-6 w-6 flex justify-center items-center rounded-full text-white font-bold text-xs text-center select-none">
+          <BsBag className="size-5 text-[#2D2D2D] group-hover:text-[#A6894B] transition-colors" />
+          <span className="absolute -top-2 -right-2 bg-[#A6894B] h-4 min-w-4 px-1 flex justify-center items-center rounded-full text-white font-bold text-[9px] leading-none shadow-sm">
             {cart?.cartItems.length ?? 0}
           </span>
         </div>
-        <span className=" whitespace-nowrap hidden xl:block">Giỏ hàng</span>
+        <span className="text-[13px] font-medium text-[#2D2D2D] hidden xl:block uppercase tracking-wider group-hover:text-[#A6894B] transition-colors">
+          Giỏ hàng
+        </span>
       </div>
 
-      {/* CartSheet */}
+      {/* Cart Overlay */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            className="h-screen w-full flex flex-col sm:w-[500px] z-50 fixed top-0 right-0 border border-gray-200 shadow-lg bg-white"
-            initial={{ x: 200, y: 0, opacity: 0 }}
-            animate={{ x: 0, y: 0, opacity: 1 }}
-            exit={{ x: 200, y: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            <header className="flex flex-row justify-between items-center py-4 px-5 border-b border-gray-200 shadow-sm">
-              <span className="text-3xl font-bold text-col">Giỏ hàng</span>
-              <IoMdClose onClick={off} className="size-7 text-red-700 cursor-pointer" />
-            </header>
-            <div className="py-2 flex-1 overflow-y-auto">
-              {cart?.cartItems.map((item) => (
-                <CartItem key={item.id} data={item} mode="small" />
-              ))}
-            </div>
-            <footer className="flex flex-col gap-4 p-4 border-t border-gray-200">
-              <div className="flex flex-row items-center justify-start gap-4">
-                <span className=" text-lg font-bold">Tổng tiền:</span>
-                <span className="text-red-600 font-bold">{formatCurrency(totalAmount ?? 0)}</span>
-              </div>
-              <div className="flex flex-row justify-center items-center gap-2">
-                <motion.button
-                  className="bg-[#27678f] w-full text-white text-sm font-semibold px-14 py-3 rounded-xl whitespace-nowrap cursor-pointer"
-                  whileTap={{ scale: 0.9 }}
-                  whileHover={{ scale: 1.01 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  onClick={() => {
-                    off();
-                    navigate("/cart");
-                  }}
+          <>
+            {/* Backdrop làm mờ tinh tế */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={off}
+              className="fixed inset-0 bg-black/20 backdrop-blur-[2px] z-[99]"
+            />
+
+            <motion.div
+              className="h-screen w-full sm:w-[550px] z-[100] fixed top-0 right-0 shadow-[-10px_0_30px_rgba(0,0,0,0.04)] bg-white flex flex-col"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} // Bezier curve cho cảm giác lướt êm hơn
+            >
+              {/* Header: Serif & Elegant */}
+              <header className="flex justify-between items-center py-6 px-8 border-b border-[#F5F1ED]">
+                <div className="flex flex-col">
+                  <h2 className="text-xl font-serif text-[#2D2D2D]">Giỏ hàng của bạn</h2>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">
+                    Luxhouse Selection
+                  </p>
+                </div>
+                <button
+                  onClick={off}
+                  className="p-2 hover:bg-[#FAF9F6] rounded-full transition-colors group"
                 >
-                  XEM GIỎ HÀNG
-                </motion.button>
-                <motion.button
-                  className="bg-[#ef683a] w-full text-white text-sm font-semibold px-14 py-3 rounded-xl whitespace-nowrap cursor-pointer"
-                  whileTap={{ scale: 0.9 }}
-                  whileHover={{ scale: 1.01 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                  THANH TOÁN
-                </motion.button>
+                  <IoMdClose className="size-5 text-gray-400 group-hover:text-[#2D2D2D]" />
+                </button>
+              </header>
+
+              {/* Cart Content */}
+              <div className="flex-1 overflow-y-auto custom-scrollbar px-8 py-4">
+                {cart?.cartItems.length ? (
+                  cart.cartItems.map((item) => (
+                    <div key={item.id} className="border-b border-[#F5F1ED] last:border-none">
+                      <CartItem data={item} mode="small" />
+                    </div>
+                  ))
+                ) : (
+                  <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
+                    <BsBag className="size-12 text-[#F5F1ED]" />
+                    <p className="text-sm text-gray-400 font-light">
+                      Chưa có sản phẩm nào trong không gian của bạn.
+                    </p>
+                  </div>
+                )}
               </div>
-            </footer>
-          </motion.div>
+
+              {/* Footer: Sang trọng, tập trung vào Checkout */}
+              <footer className="p-2 px-8 border-t border-[#F5F1ED] bg-[#FAF9F6]/50">
+                <div className="flex justify-between items-end mb-4">
+                  <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400">
+                    Tạm tính
+                  </span>
+                  <div className="text-right">
+                    <span className="text-xl font-serif text-[#A6894B]">
+                      {formatCurrency(totalAmount ?? 0)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <button
+                    onClick={() => {
+                      off();
+                      navigate("/cart");
+                    }}
+                    className="w-full py-4 border border-[#2D2D2D] text-[#2D2D2D] text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-[#2D2D2D] hover:text-white transition-all duration-300"
+                  >
+                    Xem chi tiết giỏ hàng
+                  </button>
+                  <button className="w-full py-4 bg-[#2D2D2D] text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-[#A6894B] transition-all duration-500 shadow-xl shadow-black/5">
+                    Thanh toán ngay
+                  </button>
+                </div>
+
+                <p className="text-[10px] text-center text-gray-400 mt-4 italic">
+                  Miễn phí vận chuyển cho đơn hàng nội thất trên 20.000.000đ
+                </p>
+              </footer>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>

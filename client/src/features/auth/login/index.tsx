@@ -7,7 +7,7 @@ import { useLogin } from "../hooks/useLogin";
 import type { LoginRequest } from "../types/auth-request.type";
 
 export default function Login() {
-  const brandColor = "#C05621";
+  const brandColor = "#A6894B";
   const darkStone = "#1C1917";
 
   const [email, setEmail] = useState("");
@@ -194,8 +194,10 @@ export default function Login() {
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = brandColor)}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = darkStone)}
                 onClick={handleSubmit}
+                disabled={isPending}
               >
-                Vào không gian <ArrowRight size={14} />
+                {isPending ? "Đang đăng nhập..." : "Đăng nhập"}
+                <ArrowRight size={12} />
               </motion.button>
             </div>
           </form>

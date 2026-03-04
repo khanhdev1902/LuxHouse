@@ -4,6 +4,7 @@ import type { Cart } from "@/shared/types/cart";
 import { formatCurrency } from "@/utils/formatCurrency";
 import CartItem from "@/shared/components/cart/CartItem";
 import { useCart } from "./hooks/useCart";
+import Loading from "@/shared/components/ui/Loading";
 
 const policies: React.ReactNode[] = [
   <>
@@ -33,13 +34,8 @@ const policies: React.ReactNode[] = [
 export default function Cart() {
   const { data: cart, isLoading } = useCart();
 
-  if (isLoading) {
-    return (
-      <Container className="flex items-center justify-center w-full h-full">
-        <div className="text-xl">Đang tải giỏ hàng...</div>
-      </Container>
-    );
-  }
+  if (isLoading) return <Loading />;
+
   const totalAmount = cart?.cartItems.reduce(
     (total, item) => total + item.quantity * item.price,
     0
@@ -48,6 +44,7 @@ export default function Cart() {
     <>
       <Breadcrumbs />
       <Container className="flex flex-col text-gray-900 w-full h-full">
+        
         <h1 className="w-full text-center font-bold text-3xl my-10">Giỏ hàng của bạn</h1>
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-8">
           <div className="lg:col-span-7 flex flex-col gap-2">

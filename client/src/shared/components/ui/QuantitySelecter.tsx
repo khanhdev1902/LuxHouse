@@ -1,10 +1,19 @@
+import { cn } from "@/lib/utils";
+
 type QuantitySelectorProps = {
   value: number;
   min?: number;
   max?: number;
   onChange: (value: number) => void;
+  onMode?: "small" | "large";
 };
-export function QuantitySelector({ value, min = 1, max = 99, onChange }: QuantitySelectorProps) {
+export function QuantitySelector({
+  value,
+  min = 1,
+  max = 99,
+  onChange,
+  onMode = "large",
+}: QuantitySelectorProps) {
   const decrease = () => {
     if (value > min) onChange(value - 1);
   };
@@ -30,7 +39,10 @@ export function QuantitySelector({ value, min = 1, max = 99, onChange }: Quantit
         type="button"
         onClick={decrease}
         disabled={value <= min}
-        className="w-12 h-7 flex items-center justify-center border hover:bg-gray-100 rounded-lg m-0.5 disabled:opacity-50"
+        className={cn(
+          "w-12 h-7 flex items-center justify-center border hover:bg-gray-100 rounded-lg m-0.5 disabled:opacity-50",
+          onMode === "small" && "w-8 h-5"
+        )}
       >
         -
       </button>
@@ -41,14 +53,20 @@ export function QuantitySelector({ value, min = 1, max = 99, onChange }: Quantit
         onChange={handleInputChange}
         min={min}
         max={max}
-        className="min-w-8 max-w-14 text-center font-semibold text-gray-700 outline-none grow"
+        className={cn(
+          "w-14 text-center outline-none",
+          onMode === "small" && "w-10 text-xs"
+        )}
       />
 
       <button
         type="button"
         onClick={increase}
         disabled={value >= max}
-        className="w-12 h-7 flex items-center justify-center border hover:bg-gray-100 rounded-lg m-0.5 disabled:opacity-50"
+        className={cn(
+          "w-12 h-7 flex items-center justify-center border hover:bg-gray-100 rounded-lg m-0.5 disabled:opacity-50",
+          onMode === "small" && "w-8 h-5"
+        )}
       >
         +
       </button>

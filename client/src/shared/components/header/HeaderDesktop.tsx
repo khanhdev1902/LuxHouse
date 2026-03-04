@@ -31,7 +31,7 @@ export default function HeaderDesktop({ className, onHandleResize }: HeaderDeskt
 
   return (
     <header ref={headerRef} className={className}>
-      <Container className=" flex flex-col gap-8">
+      <Container className=" flex flex-col gap-4 pb-3">
         <div className="flex justify-between items-center gap-8">
           <Logo />
           <SearchInput className=" flex-grow" />

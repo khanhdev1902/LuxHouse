@@ -1,8 +1,9 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaAngleDown } from "react-icons/fa";
+import { ChevronDown } from "lucide-react"; // Đổi sang Lucide cho thanh mảnh
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+
 type MenuItem = {
   title: string;
   submenu: string[];
@@ -11,63 +12,94 @@ type MenuItem = {
 interface VerticalDropdownProps {
   menuItems: MenuItem[];
 }
+
 export default function VerticalDropdown({ menuItems }: VerticalDropdownProps) {
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   const navigate = useNavigate();
+
   return (
-    <div className="flex gap-6">
+    <nav className="flex gap-8 items-center">
       {menuItems.map((item, index) => (
         <div
           key={index}
-          onClick={() => navigate("/products")}
           onMouseEnter={() => setActiveIndex(index)}
           onMouseLeave={() => setActiveIndex(null)}
-          className="relative flex items-center gap-1 cursor-pointer group text-[#434343]"
+          className="relative py-2 cursor-pointer group"
         >
-          <span
-            className={cn(
-              "font-semibold transition-colors delay-75 duration-300",
-              "group-hover:bg-gradient-to-tr group-hover:from-[#c02425] group-hover:to-[#f0cb35] group-hover:bg-clip-text group-hover:text-transparent"
+          {/* Main Menu Link */}
+          <div onClick={() => navigate("/products")} className="flex items-center gap-1.5">
+            <span
+              className={cn(
+                "text-[13px] uppercase tracking-[0.15em] font-bold transition-colors duration-300",
+                activeIndex === index
+                  ? "text-[#A6894B]"
+                  : "text-[#2D2D2D] group-hover:text-[#A6894B]"
+              )}
+            >
+              {item.title}
+            </span>
+
+            {item.submenu.length > 0 && (
+              <ChevronDown
+                size={14}
+                className={cn(
+                  "transition-transform duration-300 text-gray-400 group-hover:text-[#A6894B]",
+                  activeIndex === index && "rotate-180"
+                )}
+              />
             )}
-          >
-            {item.title}
-          </span>
-          <FaAngleDown
-            className={cn(
-              item?.submenu.length === 0 && "hidden",
-              "group-hover:rotate-180 size-4 duration-300 ease-in-out group-hover:text-[#c02425]"
-            )}
+          </div>
+
+          {/* Underline hiệu ứng chạy cực mảnh */}
+          <motion.div
+            className="absolute bottom-1 left-0 h-[1.5px] bg-[#A6894B]"
+            initial={{ width: 0 }}
+            animate={{ width: activeIndex === index ? "100%" : 0 }}
+            transition={{ duration: 0.3 }}
           />
 
+          {/* Submenu Dropdown */}
           <AnimatePresence>
-            {activeIndex === index && item?.submenu?.length > 0 && (
+            {activeIndex === index && item.submenu.length > 0 && (
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="absolute top-full left-0 bg-white shadow-lg mt-2 min-w-[180px] z-20 flex flex-col rounded-sm"
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="absolute top-11 left-0 bg-white border border-[#F5F1ED] shadow-[0_15px_35px_rgba(0,0,0,0.05)] py-2 min-w-[220px] z-50 rounded-sm"
               >
-                {item?.submenu?.map((sub, i) => (
-                  <span
+                {/* Một chi tiết nhỏ tạo điểm nhấn trên cùng dropdown */}
+                <div className="absolute top-0 left-4 right-4 h-[2px] bg-[#A6894B] transform -translate-y-full opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                {item.submenu.map((sub, i) => (
+                  <div
                     key={i}
-                    className={cn(
-                      i === 0 && "rounded-t-sm",
-                      i === item?.submenu?.length - 1 && "rounded-b-sm",
-                      " text-col-hover cursor-pointer p-2 px-4 border border-gray-100"
-                    )}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       navigate("/products");
                     }}
+                    className="group/item flex items-center justify-between px-5 py-2.5 hover:bg-[#FAF9F6] transition-colors"
                   >
-                    {sub}
-                  </span>
+                    <span className="text-[12px] text-gray-500 group-hover/item:text-[#A6894B] group-hover/item:translate-x-1 transition-all duration-300 font-medium tracking-wide">
+                      {sub}
+                    </span>
+
+                    {/* Chấm tròn nhỏ chỉ hiện khi hover item con */}
+                    <div className="size-1 rounded-full bg-[#A6894B] opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                  </div>
                 ))}
+
+                {/* Footer nhỏ trong dropdown (tùy chọn) */}
+                <div className="mt-2 px-5 py-2 border-t border-[#F5F1ED] bg-[#FAF9F6]/50">
+                  <span className="text-[9px] uppercase tracking-widest text-gray-300 font-bold">
+                    Luxhouse Collection
+                  </span>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       ))}
-    </div>
+    </nav>
   );
 }

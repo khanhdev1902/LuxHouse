@@ -7,10 +7,11 @@ import { useParams } from "react-router-dom";
 import RelatedProducts from "./components/RelatedProducts";
 import { useEffect, useState } from "react";
 import type { ProductDetail } from "@/shared/types/product";
+import Loading from "@/shared/components/ui/Loading";
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const { data: product, isLoading, isError, error } = useProductDetail(slug!);
+  const { data: product, isError, error } = useProductDetail(slug!);
   const [selectedVariant, setSelectedVariant] = useState<ProductDetail["variants"][number] | null>(
     null
   );
@@ -21,8 +22,8 @@ export default function ProductDetail() {
     }
   }, [product]);
 
-  if (!product) return null;
-  if (isLoading) return <div className="py-32 text-center">Loading...</div>;
+  if (!product) return <Loading />;
+  // if (isLoading) return <div className="py-32 text-center">Loading...</div>;
   if (isError) return <div>Error: {error?.message}</div>;
 
   const handleVariantChange = (variantId: string) => {

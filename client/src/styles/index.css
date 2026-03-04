@@ -19,7 +19,7 @@ body {
 
 /* bg-[#F3F4F6] */
 .text-col {
-  @apply bg-gradient-to-tr from-[#c02425] to-[#f0cb35] bg-clip-text text-transparent;
+  @apply text-[#A6894B];
 }
 
 .bg-col {
@@ -46,12 +46,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to top left, #ffcc00, #c02425);
+  background: #A6894B;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to top left, #06b5d4c3, #8a5cf6d6);
+  background: #A6894B;
 }
 
 /* -------------------------------------------------------------- */

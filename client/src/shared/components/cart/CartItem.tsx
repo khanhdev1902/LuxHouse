@@ -38,7 +38,7 @@ export default function CartItem({ data, mode = "large" }: CartItemProps) {
         <div>{data.attributes}</div>
         <div className="flex flex-row justify-between">
           <div className={cn(mode === "small" ? "max-w-28" : "max-w-40")}>
-            <QuantitySelector value={quantity} onChange={setQuantity} />
+            <QuantitySelector value={quantity} onChange={setQuantity} onMode={mode} />
           </div>
           <span className="font-bold">{formatCurrency(data.price * quantity)}</span>
         </div>

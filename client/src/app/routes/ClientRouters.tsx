@@ -1,4 +1,4 @@
-import { Navigate, type RouteObject } from "react-router-dom";
+import { type RouteObject } from "react-router-dom";
 import Home from "@/features/home";
 import Products from "@/features/products";
 import ProductDetail from "@/features/productDetail";
@@ -13,6 +13,7 @@ import NotFound from "@/features/notfound";
 import ClientsAccountLayout from "@/shared/layouts/ClientsAccountLayout";
 import Login from "@/features/auth/login";
 import Register from "@/features/auth/register";
+import ChangePassword from "@/features/auth/change-password";
 
 export const ClientRouters: RouteObject[] = [
   {
@@ -24,14 +25,15 @@ export const ClientRouters: RouteObject[] = [
       { path: "products/:slug", element: <ProductDetail /> },
       { path: "cart", element: <Cart /> },
       {
-        path: "account",
+        path: "/",
         element: <ClientsAccountLayout />,
         children: [
-          { index: true, element: <Navigate to="profile" replace /> },
-          { path: "profile", element: <Profile /> },
+          // { index: true, element: <Navigate to="profile" replace /> },
+          { path: "account", element: <Profile /> },
           { path: "addresses", element: <Addresses /> },
           { path: "orders", element: <Orders /> },
           { path: "vouchers", element: <Vouchers /> },
+          { path: "change-password", element: <ChangePassword /> },
           { path: "setting", element: <Setting /> },
         ],
       },
