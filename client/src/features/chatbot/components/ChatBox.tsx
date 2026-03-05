@@ -14,7 +14,6 @@ export default function ChatBox({ toggle, isOpen }: { toggle: () => void; isOpen
   const chatRef = React.useRef<HTMLDivElement>(null);
   const { isAtBottom, scrollToEdge } = useAutoScroll(chatRef, [historyChat], true);
 
-  // Câu hỏi gợi ý cho khách hàng nội thất
   const suggestions = [
     "Tư vấn phối màu phòng khách",
     "Mẫu sofa phong cách tối giản",
@@ -35,7 +34,7 @@ export default function ChatBox({ toggle, isOpen }: { toggle: () => void; isOpen
           transition={{ type: "spring", damping: 25, stiffness: 200 }}
         >
         
-          <header className="relative p-4 bg-[#7c3a19] text-[#F5F5DC] overflow-hidden">
+          <header className="relative p-4 bg-[#A6894B] text-[#F5F5DC] overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-full bg-[#8B4513]/10 skew-x-[-20deg] translate-x-10" />
 
             <div className="relative flex justify-between items-start z-10">
@@ -71,7 +70,7 @@ export default function ChatBox({ toggle, isOpen }: { toggle: () => void; isOpen
             {/* Tin nhắn chào mừng mặc định nếu chưa có chat */}
             {historyChat.length === 0 && (
               <div className="text-center py-10 space-y-4">
-                <RiLayoutMasonryLine className="mx-auto size-8 text-[#D2691E]/30" />
+                <RiLayoutMasonryLine className="mx-auto size-8 text-[#A6894B]/30" />
                 <p className="text-[#4A2F1B]/60 text-sm font-light italic px-10">
                   "Ngôi nhà là nơi câu chuyện của bạn bắt đầu. Tôi có thể giúp gì cho không gian của
                   bạn hôm nay?"

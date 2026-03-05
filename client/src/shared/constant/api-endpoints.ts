@@ -8,6 +8,7 @@ export const API_ENDPOINTS = {
   REGISTER: "/auth/register",
   ME: "/auth/me",
   CART: "/cart",
+  CART_ITEMS: (productVariantId: number) => `/cart/items/${productVariantId}`,
   CHECKOUT: "/checkout",
   REFRESH_DATA: "/auth/refresh",
 } as const;

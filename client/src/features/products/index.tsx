@@ -1,7 +1,7 @@
 import Container from "@/shared/components/ui/Container";
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import ProductCard from "@/shared/components/product/ProductCard";
+import ProductCard from "@/features/products/components/ProductCard";
 import { allCategorieProducts } from "@/shared/constant/const-home";
 import useToggle from "@/shared/hooks/useToggle";
 import { BsChevronDown, BsFunnel } from "react-icons/bs";

@@ -9,8 +9,12 @@ const addToCart = async (productVariantId: number, quantity: number) =>
 const updateCartItemQuantity = async (productVariantId: number, quantity: number) =>
   http.patch(API_ENDPOINTS.CART, { productVariantId, quantity });
 
+const removeCartItem = async (productVariantId: number) =>
+  http.delete(API_ENDPOINTS.CART_ITEMS(productVariantId));
+
 export const cartApi = {
   getMyCart,
   addToCart,
   updateCartItemQuantity,
+  removeCartItem,
 };

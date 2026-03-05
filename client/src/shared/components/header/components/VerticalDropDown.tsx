@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 type MenuItem = {
   title: string;
+  path: string;
   submenu: string[];
 };
 
@@ -27,7 +28,7 @@ export default function VerticalDropdown({ menuItems }: VerticalDropdownProps) {
           className="relative py-2 cursor-pointer group"
         >
           {/* Main Menu Link */}
-          <div onClick={() => navigate("/products")} className="flex items-center gap-1.5">
+          <div onClick={() => navigate(item.path)} className="flex items-center gap-1.5">
             <span
               className={cn(
                 "text-[13px] uppercase tracking-[0.15em] font-bold transition-colors duration-300",

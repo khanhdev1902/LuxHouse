@@ -15,7 +15,7 @@ export default function Account({ className }: { className?: string }) {
   const { value: isOpen, toggle, off } = useToggle();
   useClickOutside(ref, off);
   const navigation = useNavigate();
-  const { data: user } = useCurrentUser();
+  const { data: user, isPending } = useCurrentUser();
 
   const handleLogout = () => {
     logout();
@@ -23,16 +23,32 @@ export default function Account({ className }: { className?: string }) {
     navigation("/login");
     off();
   };
-
+  if (isPending) {
+    return (
+      <div className={cn(className, "relative flex cursor-pointer select-none")}>
+        <div className="size-8 bg-gray-300 rounded-full animate-pulse" />
+        <div className="hidden xl:block text-left leading-tight space-y-1 ml-1">
+          <p className="text-[11px] font-medium text-[#2D2D2D] flex items-center gap-1">
+            <div className="w-16 h-3 bg-gray-300 rounded animate-pulse" />
+          </p>
+          <p className="text-[9px] text-[#A6894B] font-bold uppercase tracking-tighter">
+            <div className="w-16 h-3 bg-gray-300 rounded animate-pulse" />
+          </p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div ref={ref} className={cn(className, "relative cursor-pointer select-none")}>
-      {/* Trigger: Tinh gọn lại phần Header */}
       <div onClick={toggle} className="flex items-center gap-2.5 group">
         <div className="relative">
           {user ? (
             <div className="relative">
               <img
-                src={user?.avatar || "/Logo_1.jpg"}
+                src={
+                  user?.avatar ||
+                  "https://i.pinimg.com/736x/93/32/34/93323410b61d9f272cdfba2c0c361d32.jpg"
+                }
                 className="size-8 rounded-full border border-[#E8E2DA] group-hover:border-[#A6894B] transition-colors object-cover"
               />
               {user && (
@@ -67,7 +83,6 @@ export default function Account({ className }: { className?: string }) {
         )}
       </div>
 
-      {/* Dropdown: Thu gọn diện tích (Space-efficient) */}
       <AnimatePresence>
         {isOpen && user && (
           <motion.div
@@ -76,10 +91,12 @@ export default function Account({ className }: { className?: string }) {
             exit={{ opacity: 0, y: 8 }}
             className="absolute top-full right-0 z-[100] mt-2 w-56 bg-white border border-[#E8E2DA] shadow-[0_10px_30px_rgba(0,0,0,0.05)] rounded-sm overflow-hidden"
           >
-            {/* Header Mini: Gọn gàng hơn */}
             <div className="px-4 py-3 bg-[#FAF9F6] border-b border-[#F0EBE5] flex items-center gap-3">
               <img
-                src={user?.avatar || "/Logo_1.jpg"}
+                src={
+                  user?.avatar ||
+                  "https://i.pinimg.com/736x/93/32/34/93323410b61d9f272cdfba2c0c361d32.jpg"
+                }
                 className="size-10 rounded-full border border-white shadow-sm"
               />
               <div className="flex flex-col min-w-0">
@@ -93,11 +110,10 @@ export default function Account({ className }: { className?: string }) {
               </div>
             </div>
 
-            {/* Menu: Giảm padding, tăng tính chỉn chu */}
             <div className="py-1">
               {dataDropdownAccount.map((item, key) => {
                 const isLogout = item.name === "Đăng xuất";
-                if (isLogout) return null; // Xử lý đăng xuất riêng ở dưới
+                if (isLogout) return null;
                 return (
                   <div
                     key={key}

@@ -1,7 +1,7 @@
 import Container from "@/shared/components/ui/Container";
 import Banner from "./components/Banner";
-import ProductSlider from "@/shared/components/product/ProudctSlider";
-import ProductCard from "@/shared/components/product/ProductCard";
+import ProductSlider from "@/features/products/components/ProudctSlider";
+import ProductCard from "@/features/products/components/ProductCard";
 import { useProducts } from "@/shared/hooks/useProducts";
 import Loading from "@/shared/components/ui/Loading";
 

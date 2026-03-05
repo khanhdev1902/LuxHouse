@@ -6,7 +6,6 @@ import useToggle from "@/shared/hooks/useToggle";
 import useClickOutside from "@/shared/hooks/use-click-outside";
 import { cn } from "@/lib/utils";
 
-// Dữ liệu mẫu cho thông báo chuyên nghiệp
 const notifications = [
   {
     id: 1,
@@ -49,7 +48,7 @@ export default function Notification() {
           />
           {/* Badge: Nhỏ gọn, màu Gold đồng bộ với Cart */}
           <span className="absolute -top-2 -right-2 bg-[#A6894B] h-4 min-w-4 px-1 flex justify-center items-center rounded-full text-white font-bold text-[9px] leading-none shadow-sm">
-            13
+            {notifications.filter((n) => n.isUnread).length}
           </span>
         </div>
         <span className="text-[13px] font-medium text-[#2D2D2D] hidden xl:block uppercase tracking-wider group-hover:text-[#A6894B] transition-colors">

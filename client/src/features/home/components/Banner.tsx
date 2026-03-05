@@ -2,8 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
-import { TbArrowBigLeft, TbArrowBigRight } from "react-icons/tb";
 import { slideShowDesktop, slideShowMObile } from "@/shared/constant/const-home";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function Banner() {
   const swiperRef = React.useRef<any>(null);
@@ -46,7 +46,7 @@ export default function Banner() {
           onClick={() => swiperRef.current?.slidePrev(300)}
           className="absolute left-5 top-1/2 -translate-y-1/2 z-10"
         >
-          <TbArrowBigLeft className=" size-12 rounded-full bg-col p-2 text-white opacity-70" />
+          <ArrowLeft className=" size-12 p-3 rounded-full bg-col text-white" />
         </motion.button>
         <motion.button
           initial={{ x: -70, opacity: 0 }}
@@ -56,7 +56,7 @@ export default function Banner() {
           onClick={() => swiperRef.current?.slidePrev(300)}
           className="absolute right-5 top-1/2 -translate-y-1/2 z-10"
         >
-          <TbArrowBigRight className=" size-12 rounded-full bg-col p-2 text-white opacity-80" />
+          <ArrowRight className=" size-12 p-3 rounded-full bg-col text-white" />
         </motion.button>
         {slides.map((slideshow, i) => (
           <SwiperSlide key={i}>

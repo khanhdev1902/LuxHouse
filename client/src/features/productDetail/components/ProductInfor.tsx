@@ -1,5 +1,5 @@
 import { useAddToCart } from "@/features/cart/hooks/useAddToCart";
-import { QuantitySelector } from "@/shared/components/ui/QuantitySelecter";
+import { QuantitySelector } from "@/features/cart/components/QuantitySelecter";
 import Rating from "@/shared/components/ui/Rating";
 import type { ProductDetail } from "@/shared/types/product";
 import { formatCurrency } from "@/utils/formatCurrency";
@@ -126,7 +126,7 @@ export default function ProductInfor({
         <button
           onClick={handleAddToCart}
           disabled={!selectVariant || isPending}
-          className="w-full bg-[#27678f] text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors"
+          className="w-full bg-[#27678f] text-white font-bold py-3 rounded-lg hover:bg-[#1a4a6b] transition-colors"
         >
           {isPending ? "Đang thêm vào giỏ..." : "THÊM VÀO GIỎ HÀNG"}
         </button>

@@ -18,13 +18,14 @@ export const user = {
 export const navbarHeaders = [
   {
     title: "Sản phẩm",
+    path: "/products",
     submenu: ["Bộ sưu tập", "Phòng ngủ", "Phòng khách", "Phòng ăn", "Phòng làm việc"],
   },
-  { title: "Khuyến mãi", submenu: ["Khuyến mãi hè", "Mã khuyến mãi"] },
-  { title: "Tin tức", submenu: ["Bài viết", "Mọi người", "Mạng xã hội"] },
-  { title: "Liên hệ hợp tác", submenu: [] },
-  { title: "Về ZORO", submenu: [] },
-  { title: "Cửa hàng", submenu: [] },
+  { title: "Khuyến mãi", path: "/promotions", submenu: ["Khuyến mãi hè", "Mã khuyến mãi"] },
+  { title: "Tin tức", path: "/news", submenu: ["Bài viết", "Mọi người", "Mạng xã hội"] },
+  { title: "Liên hệ hợp tác", path: "/contact", submenu: [] },
+  { title: "Về Luxhouse", path: "/about", submenu: [] },
+  { title: "Cửa hàng", path: "/products", submenu: [] },
 ];
 
 export const cart: Cart = {
@@ -272,22 +273,22 @@ export const dataDropdownAccount = [
     name: "Tài khoản của tôi",
   },
   {
-    path: "/account/addresses",
+    path: "/addresses",
     icon: <FaAddressBook className="size-6 text-[#434343]" />,
     name: "Danh sách địa chỉ",
   },
   {
-    path: "/account/orders",
+    path: "/orders",
     icon: <AiFillProduct className="size-6 text-[#434343]" />,
     name: "Đơn hàng của tôi",
   },
   {
-    path: "/account/vouchers",
+    path: "/vouchers",
     icon: <MdDiscount className="size-6 text-[#434343]" />,
     name: "Mã giảm giá của tôi",
   },
   {
-    path: "/account/setting",
+    path: "/setting",
     icon: <IoSettings className="size-6 text-[#434343]" />,
     name: "Cài đặt",
   },
@@ -298,7 +299,7 @@ export const dataDropdownAccount = [
   },
 ];
 
-const images = import.meta.glob("@/shared/assets/slideshow-desktop/*.jpg", { eager: true });
-const images_mb = import.meta.glob("@/shared/assets/slideshow-mobile/*.jpg", { eager: true });
+const images = import.meta.glob("@/shared/assets/slideshow-desktop/*", { eager: true });
+const images_mb = import.meta.glob("@/shared/assets/slideshow-mobile/*", { eager: true });
 export const slideShowDesktop = Object.values(images).map((m: any) => m.default);
 export const slideShowMObile = Object.values(images_mb).map((m: any) => m.default);

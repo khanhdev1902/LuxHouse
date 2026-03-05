@@ -44,7 +44,7 @@ export class CartController {
     return ApiResponse.success(result, 'Thêm sản phẩm vào giỏ hàng thành công');
   }
 
-  @Patch('item')
+  @Patch()
   async updateCartItem(
     @Req() req: AuthRequest,
     @Body(new ValidationPipe()) dto: UpdateCartItemDto,

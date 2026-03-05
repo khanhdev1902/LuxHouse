@@ -23,7 +23,7 @@ body {
 }
 
 .bg-col {
-  @apply bg-gradient-to-tr from-[#c02425] to-[#f0cb35];
+  @apply bg-[#A6894B];
 }
 
 .text-col-hover:hover {

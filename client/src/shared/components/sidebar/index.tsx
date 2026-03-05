@@ -1,4 +1,4 @@
-import { user } from "@/shared/constant/const-home";
+import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
 import { FaEdit, FaUser, FaClipboardList, FaMapMarkerAlt, FaKey, FaGem } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -12,6 +12,7 @@ const menuItems = [
 export default function SideBar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { data: user } = useCurrentUser();
 
   return (
     <aside className="min-w-[280px] bg-white border border-[#E8E2DA] p-8 shadow-sm h-fit sticky top-24">
@@ -19,7 +20,14 @@ export default function SideBar() {
       <header className="flex flex-col items-center text-center pb-8 border-b border-[#F5F1ED]">
         <div className="relative mb-4">
           <div className="size-20 rounded-full border border-[#A6894B] p-1 flex items-center justify-center relative z-10">
-            <img src={user.avata} alt="avatar" className="rounded-full size-full object-cover" />
+            <img
+              src={
+                user.avata ||
+                "https://i.pinimg.com/736x/93/32/34/93323410b61d9f272cdfba2c0c361d32.jpg"
+              }
+              alt="avatar"
+              className="rounded-full size-full object-cover"
+            />
           </div>
           {/* Badge hạng thành viên cao cấp */}
           <div className="absolute -bottom-1 -right-1 bg-[#2D2D2D] text-[#A6894B] size-6 rounded-full flex items-center justify-center border-2 border-white z-20 shadow-sm">
@@ -28,9 +36,7 @@ export default function SideBar() {
         </div>
 
         <div className="space-y-1">
-          <h3 className="font-serif text-lg text-[#2D2D2D] tracking-wide">
-            {`${user.firstName} ${user.lastName}`}
-          </h3>
+          <h3 className="font-serif text-lg text-[#2D2D2D] tracking-wide">{`${user.name}`}</h3>
           <button className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-[0.15em] text-gray-400 hover:text-[#A6894B] transition-colors group mx-auto">
             <FaEdit className="size-2.5 group-hover:rotate-12 transition-transform" />
             Hiệu chỉnh hồ sơ

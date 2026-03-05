@@ -3,14 +3,17 @@ import { BsBag } from "react-icons/bs"; // Đổi sang BsBag nhìn thanh thoát 
 import useToggle from "@/shared/hooks/useToggle";
 import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import CartItem from "../../cart/CartItem";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useCart } from "@/features/cart/hooks/useCart";
+import { CartItem } from "@/features/cart/components/CartItem";
+import { LoadingOverlay } from "@/shared/components/ui/LoadingOverlay";
+import { useState } from "react";
 
 export default function Cart() {
   const { value: isOpen, toggle, off } = useToggle(false);
   const navigate = useNavigate();
-  const { data: cart } = useCart();
+  const { data: cart, isLoading, isFetching } = useCart();
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const totalAmount = cart?.cartItems.reduce(
     (total, item) => total + item.quantity * item.price,
@@ -19,13 +22,15 @@ export default function Cart() {
 
   return (
     <div className="relative">
-      {/* Icon Cart - Tinh chỉnh để đồng bộ với Account Trigger */}
+      {/* Icon Cart */}
       <div onClick={toggle} className="flex items-center gap-2.5 cursor-pointer group">
         <div className="relative">
           <BsBag className="size-5 text-[#2D2D2D] group-hover:text-[#A6894B] transition-colors" />
-          <span className="absolute -top-2 -right-2 bg-[#A6894B] h-4 min-w-4 px-1 flex justify-center items-center rounded-full text-white font-bold text-[9px] leading-none shadow-sm">
-            {cart?.cartItems.length ?? 0}
-          </span>
+          {cart && (
+            <span className="absolute -top-2 -right-2 bg-[#A6894B] h-4 min-w-4 px-1 flex justify-center items-center rounded-full text-white font-bold text-[9px] leading-none shadow-sm">
+              {cart?.cartItems.length ?? 0}
+            </span>
+          )}
         </div>
         <span className="text-[13px] font-medium text-[#2D2D2D] hidden xl:block uppercase tracking-wider group-hover:text-[#A6894B] transition-colors">
           Giỏ hàng
@@ -69,13 +74,21 @@ export default function Cart() {
               </header>
 
               {/* Cart Content */}
-              <div className="flex-1 overflow-y-auto custom-scrollbar px-8 py-4">
+              <div className="flex-1 overflow-y-auto custom-scrollbar px-8 py-4 relative">
+                {isUpdating || isFetching ? <LoadingOverlay /> : null}
                 {cart?.cartItems.length ? (
                   cart.cartItems.map((item) => (
                     <div key={item.id} className="border-b border-[#F5F1ED] last:border-none">
-                      <CartItem data={item} mode="small" />
+                      <CartItem
+                        data={item}
+                        isUpdating={isUpdating}
+                        setIsUpdating={setIsUpdating}
+                        mode="small"
+                      />
                     </div>
                   ))
+                ) : isLoading ? (
+                  <LoadingOverlay />
                 ) : (
                   <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
                     <BsBag className="size-12 text-[#F5F1ED]" />

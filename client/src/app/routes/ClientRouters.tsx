@@ -14,6 +14,8 @@ import ClientsAccountLayout from "@/shared/layouts/ClientsAccountLayout";
 import Login from "@/features/auth/login";
 import Register from "@/features/auth/register";
 import ChangePassword from "@/features/auth/change-password";
+import CheckOut from "@/features/checkout";
+import AboutLuxhouse from "@/features/about";
 
 export const ClientRouters: RouteObject[] = [
   {
@@ -24,6 +26,8 @@ export const ClientRouters: RouteObject[] = [
       { path: "products", element: <Products /> },
       { path: "products/:slug", element: <ProductDetail /> },
       { path: "cart", element: <Cart /> },
+      { path: "checkout", element: <CheckOut /> },
+      { path: "about", element: <AboutLuxhouse /> },
       {
         path: "/",
         element: <ClientsAccountLayout />,
