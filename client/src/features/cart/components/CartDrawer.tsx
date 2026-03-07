@@ -9,11 +9,11 @@ import { CartItem } from "@/features/cart/components/CartItem";
 import { LoadingOverlay } from "@/shared/components/ui/LoadingOverlay";
 import { useState } from "react";
 
-export default function Cart() {
+export default function CartDrawer() {
   const { value: isOpen, toggle, off } = useToggle(false);
   const navigate = useNavigate();
-  const { data: cart, isLoading, isFetching } = useCart();
-  const [isUpdating, setIsUpdating] = useState(false);
+  const { data: cart, isLoading } = useCart();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const totalAmount = cart?.cartItems.reduce(
     (total, item) => total + item.quantity * item.price,
@@ -75,14 +75,13 @@ export default function Cart() {
 
               {/* Cart Content */}
               <div className="flex-1 overflow-y-auto custom-scrollbar px-8 py-4 relative">
-                {isUpdating || isFetching ? <LoadingOverlay /> : null}
                 {cart?.cartItems.length ? (
                   cart.cartItems.map((item) => (
                     <div key={item.id} className="border-b border-[#F5F1ED] last:border-none">
                       <CartItem
                         data={item}
-                        isUpdating={isUpdating}
-                        setIsUpdating={setIsUpdating}
+                        isProcessing={isProcessing}
+                        setIsProcessing={setIsProcessing}
                         mode="small"
                       />
                     </div>
@@ -122,7 +121,17 @@ export default function Cart() {
                   >
                     Xem chi tiết giỏ hàng
                   </button>
-                  <button className="w-full py-4 bg-[#2D2D2D] text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-[#A6894B] transition-all duration-500 shadow-xl shadow-black/5">
+                  <button
+                    onClick={() => {
+                      off();
+                      navigate("/checkout", {
+                        state: {
+                          type: "cart",
+                        },
+                      });
+                    }}
+                    className="w-full py-4 bg-[#2D2D2D] text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-[#A6894B] transition-all duration-500 shadow-xl shadow-black/5"
+                  >
                     Thanh toán ngay
                   </button>
                 </div>

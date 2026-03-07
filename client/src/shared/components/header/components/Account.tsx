@@ -28,12 +28,12 @@ export default function Account({ className }: { className?: string }) {
       <div className={cn(className, "relative flex cursor-pointer select-none")}>
         <div className="size-8 bg-gray-300 rounded-full animate-pulse" />
         <div className="hidden xl:block text-left leading-tight space-y-1 ml-1">
-          <p className="text-[11px] font-medium text-[#2D2D2D] flex items-center gap-1">
+          <div className="text-[11px] font-medium text-[#2D2D2D] flex items-center gap-1">
             <div className="w-16 h-3 bg-gray-300 rounded animate-pulse" />
-          </p>
-          <p className="text-[9px] text-[#A6894B] font-bold uppercase tracking-tighter">
+          </div>
+          <div className="text-[9px] text-[#A6894B] font-bold uppercase tracking-tighter">
             <div className="w-16 h-3 bg-gray-300 rounded animate-pulse" />
-          </p>
+          </div>
         </div>
       </div>
     );

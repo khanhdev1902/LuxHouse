@@ -2,7 +2,7 @@ import Container from "@/shared/components/ui/Container";
 import { cn } from "@/lib/utils";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Account from "./components/Account";
-import Cart from "./components/Cart";
+import Cart from "../../../features/cart/components/CartDrawer";
 import Notification from "./components/Notification";
 interface HeaderMobileProps {
   className?: string;

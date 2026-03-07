@@ -4,7 +4,7 @@ export interface User {
   email: string;
   password: string;
   role?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 export type UserWithoutPassword = Omit<User, 'password'>;

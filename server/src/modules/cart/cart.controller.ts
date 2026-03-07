@@ -41,7 +41,7 @@ export class CartController {
       dto.productVariantId,
       dto.quantity,
     );
-    return ApiResponse.success(result, 'Thêm sản phẩm vào giỏ hàng thành công');
+    return ApiResponse.success(result, 'Thêm sản phẩm thành công');
   }
 
   @Patch()
@@ -54,10 +54,7 @@ export class CartController {
       dto.productVariantId,
       dto.quantity,
     );
-    return ApiResponse.success(
-      result,
-      'Cập nhật số lượng sản phẩm trong giỏ hàng thành công',
-    );
+    return ApiResponse.success(result, 'Cập nhật số lượng thành công');
   }
 
   @Delete('items/:productVariantId')
@@ -73,6 +70,6 @@ export class CartController {
       req.user.userId,
       productVariantId,
     );
-    return ApiResponse.success(result, 'Xóa sản phẩm khỏi giỏ hàng thành công');
+    return ApiResponse.success(result, 'Xóa sản phẩm thành công');
   }
 }

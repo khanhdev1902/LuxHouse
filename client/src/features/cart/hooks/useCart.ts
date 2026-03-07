@@ -4,16 +4,19 @@ import { cartApi } from "../apis/cart.api";
 import type { Cart } from "../types/cart.type";
 import { tokenManager } from "@/lib/tokenManager";
 
-export const useCart = () => {
+type UseCartOptions = {
+  enabled?: boolean;
+};
+export const useCart = (options?: UseCartOptions) => {
   const accessToken = tokenManager.getAccessToken();
   return useQuery<Cart>({
     queryKey: CART_QUERY_KEY,
-    enabled: !!accessToken,
+    enabled: options?.enabled ?? !!accessToken,
     staleTime: 5 * 60 * 1000,
     queryFn: async () => {
       const res = await cartApi.getMyCart();
       console.log("Cart data:", res.data);
-      return res.data.data;
+      return res.data;
     },
   });
 };

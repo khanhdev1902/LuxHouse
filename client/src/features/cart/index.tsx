@@ -6,7 +6,6 @@ import Loading from "@/shared/components/ui/Loading";
 import { motion } from "framer-motion";
 import { HiOutlineShieldCheck, HiOutlineTruck, HiOutlineBadgeCheck } from "react-icons/hi";
 import { CartItem } from "./components/CartItem";
-import { LoadingOverlay } from "@/shared/components/ui/LoadingOverlay";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -29,19 +28,18 @@ const policies = [
 ];
 
 export default function Cart() {
-  const { data: cart, isLoading, isFetching } = useCart();
-  const [isUpdating, setIsUpdating] = useState(false);
+  const { data: cart, isLoading } = useCart();
+  const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
 
-  if (isLoading) return <Loading />;
+  const isEmpty = !cart?.cartItems || cart.cartItems.length === 0;
 
   const totalAmount = cart?.cartItems.reduce(
     (total, item) => total + item.quantity * item.price,
     0
   );
 
-  const isEmpty = !cart?.cartItems || cart.cartItems.length === 0;
-
+  if (isLoading) return <Loading />;
   return (
     <div className="bg-[#FCFCFC] min-h-screen pb-20">
       <Breadcrumbs />
@@ -62,7 +60,6 @@ export default function Cart() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* CỘT TRÁI: DANH SÁCH SẢN PHẨM */}
           <div className="lg:col-span-8 relative">
             {isEmpty ? (
               <div className="py-20 text-center border border-dashed border-stone-200 rounded-lg">
@@ -81,13 +78,15 @@ export default function Cart() {
                 <div className="flex flex-col border-t border-stone-200">
                   {cart.cartItems.map((item) => (
                     <div key={item.id} className="border-b border-stone-100 py-6">
-                      <CartItem data={item} isUpdating={isUpdating} setIsUpdating={setIsUpdating} />
+                      <CartItem
+                        data={item}
+                        isProcessing={isProcessing}
+                        setIsProcessing={setIsProcessing}
+                      />
                     </div>
                   ))}
                 </div>
-                {isUpdating || isFetching ? <LoadingOverlay /> : null}
 
-                {/* Ghi chú đơn hàng phong cách tối giản */}
                 <div className="mt-10 space-y-4">
                   <label className="text-[11px] font-bold tracking-[0.2em] uppercase text-gray-500">
                     Ghi chú đặc biệt cho Luxhouse
@@ -133,6 +132,14 @@ export default function Cart() {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
+                  disabled={isProcessing}
+                  onClick={() =>
+                    navigate("/checkout", {
+                      state: {
+                        type: "cart",
+                      },
+                    })
+                  }
                   className="w-full bg-black text-white py-4 mt-8 text-xs font-bold tracking-[0.3em] uppercase hover:bg-[#1a1a1a] transition-colors"
                 >
                   Tiến hành thanh toán

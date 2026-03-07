@@ -23,7 +23,7 @@ export function useAddToCart() {
       }
 
       const res = await cartApi.addToCart(productVariantId, quantity);
-      return res.data.data;
+      return res.data;
     },
 
     //Optimistic Update
@@ -61,9 +61,11 @@ export function useAddToCart() {
                 id: Date.now(), // temp id
                 productVariantId: variables.productVariantId,
                 name: "",
+                slug: "",
                 originalPrice: 0,
                 price: 0,
                 quantity: variables.quantity,
+                stock: 0,
                 imageUrl: "",
                 attributes: "",
                 discount: 0,

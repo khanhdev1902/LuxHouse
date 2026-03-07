@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "@/shared/components/ui/Container";
 import Account from "./components/Account";
-import Cart from "./components/Cart";
+import CartDrawer from "../../../features/cart/components/CartDrawer";
 import Logo from "./components/Logo";
 import SearchInput from "./components/SearchInput";
 import VerticalDropdown from "./components/VerticalDropDown";
@@ -37,7 +37,7 @@ export default function HeaderDesktop({ className, onHandleResize }: HeaderDeskt
           <SearchInput className=" flex-grow" />
           <div className="flex flex-row items-center justify-end gap-10 xl:gap-5">
             <Notification />
-            <Cart />
+            <CartDrawer />
             <Account className="xl:-order-1" />
           </div>
         </div>

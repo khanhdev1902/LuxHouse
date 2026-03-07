@@ -1,16 +1,36 @@
 import { tokenManager } from "@/lib/tokenManager";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useCart } from "../cart/hooks/useCart";
+import CheckOutProduct from "./components/CheckOutProduct";
+// import { toast } from "sonner";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 export default function CheckOut() {
   const navigation = useNavigate();
-
+  const location = useLocation();
+  const accessToken = tokenManager.getAccessToken();
+  const checkoutType = location.state?.type ?? "cart";
+  const data = location.state?.data;
+  console.log("checkout data productDetail:", data);
+  const product = {
+    name: data?.product?.name,
+    imageUrl: data?.variant?.images[0].url,
+    attributes: "",
+    productVariantId: data?.variant?.id,
+    originalPrice: data?.variant?.price,
+    price: data?.variant?.price * (1 - Number(data?.variant?.discount.value || 0) / 100),
+    quantity: data?.quantity,
+  };
   useEffect(() => {
-    const accessToken = tokenManager.getAccessToken();
     if (!accessToken) {
       navigation("/");
     }
   }, [navigation]);
+  // toast.success(checkoutType);
+  const { data: cart } = useCart({
+    enabled: checkoutType === "cart",
+  });
 
   return (
     <div className="min-h-screen bg-[#f8f8f8] py-8 px-4 font-sans text-[#333]">
@@ -18,14 +38,16 @@ export default function CheckOut() {
         {/* CỘT TRÁI (8 CỘT) */}
         <div className="lg:col-span-8 space-y-4">
           {/* Banner Đăng nhập */}
-          <div className="bg-white p-4 rounded-md border border-gray-200 flex justify-between items-center shadow-sm">
-            <p className="text-sm text-gray-600 font-medium">
-              Đăng nhập để mua hàng tiện lợi và nhận nhiều ưu đãi hơn nữa
-            </p>
-            <button className="bg-[#e8e8e8] px-6 py-2 rounded text-sm font-semibold hover:bg-gray-200 transition">
-              Đăng nhập
-            </button>
-          </div>
+          {!accessToken && (
+            <div className="bg-white p-4 rounded-md border border-gray-200 flex justify-between items-center shadow-sm">
+              <p className="text-sm text-gray-600 font-medium">
+                Đăng nhập để mua hàng tiện lợi và nhận nhiều ưu đãi hơn nữa
+              </p>
+              <button className="bg-[#e8e8e8] px-6 py-2 rounded text-sm font-semibold hover:bg-gray-200 transition">
+                Đăng nhập
+              </button>
+            </div>
+          )}
 
           {/* Form Thông tin giao hàng */}
           <div className="bg-white p-6 rounded-md border border-gray-200 shadow-sm">
@@ -139,38 +161,13 @@ export default function CheckOut() {
           {/* Giỏ hàng */}
           <div className="bg-white p-5 rounded-md border border-gray-200 shadow-sm">
             <h2 className="font-bold mb-4">Giỏ hàng</h2>
-            <div className="flex gap-3">
-              <img
-                src="https://via.placeholder.com/80"
-                className="w-20 h-20 rounded object-cover border"
-                alt="prod"
-              />
-              <div className="flex-1">
-                <h3 className="text-sm font-semibold leading-tight">
-                  Bộ Bàn Ăn 4 Ghế Gỗ MOHO MILAN 901 (1m25)
-                </h3>
-                <div className="mt-1 inline-block bg-gray-100 px-2 py-0.5 rounded text-[11px] text-gray-500">
-                  Nâu / 4 Ghế FYN ›
-                </div>
-                <div className="mt-2 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-gray-400 line-through">13,550,000đ</p>
-                    <p className="text-red-600 font-bold">8,490,000đ</p>
-                  </div>
-                  <div className="flex border rounded overflow-hidden h-8">
-                    <button className="px-2 bg-gray-50 border-r">-</button>
-                    <input
-                      type="text"
-                      defaultValue="1"
-                      className="w-8 text-center text-xs outline-none"
-                    />
-                    <button className="px-2 bg-gray-50 border-l">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {checkoutType === "cart" ? (
+              cart?.cartItems.map((product) => <CheckOutProduct product={product} />)
+            ) : (
+              <CheckOutProduct product={product} />
+            )}
             <p className="text-[11px] text-red-500 mt-3 font-medium text-right italic">
-              Bạn đã được giảm 5,060,000đ ⌄
+              {`Bạn đã được giảm ${formatCurrency(product.originalPrice - product.price || 0)} ⌄`}
             </p>
           </div>
 

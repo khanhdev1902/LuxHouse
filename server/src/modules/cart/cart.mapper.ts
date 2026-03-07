@@ -19,7 +19,9 @@ export const cartMapper = (cart: CartDbType): Cart => {
         id: item.id,
         productVariantId: item.productVariantId,
         quantity: item.quantity,
+        stock: item.productVariant.stock,
         name: item.productVariant.product.name,
+        slug: item.productVariant.product.slug,
         originalPrice,
         price: finalPrice,
         imageUrl:

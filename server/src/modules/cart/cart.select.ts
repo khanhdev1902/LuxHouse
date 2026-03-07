@@ -13,6 +13,7 @@ export const cartSelect = {
         select: {
           id: true,
           price: true,
+          stock: true,
           images: {
             where: { isMain: true },
             select: {
@@ -23,6 +24,7 @@ export const cartSelect = {
           product: {
             select: {
               name: true,
+              slug: true,
             },
           },
 

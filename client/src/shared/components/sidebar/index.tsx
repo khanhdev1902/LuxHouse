@@ -22,7 +22,7 @@ export default function SideBar() {
           <div className="size-20 rounded-full border border-[#A6894B] p-1 flex items-center justify-center relative z-10">
             <img
               src={
-                user.avata ||
+                user?.avata ||
                 "https://i.pinimg.com/736x/93/32/34/93323410b61d9f272cdfba2c0c361d32.jpg"
               }
               alt="avatar"
@@ -36,7 +36,7 @@ export default function SideBar() {
         </div>
 
         <div className="space-y-1">
-          <h3 className="font-serif text-lg text-[#2D2D2D] tracking-wide">{`${user.name}`}</h3>
+          <h3 className="font-serif text-lg text-[#2D2D2D] tracking-wide">{`${user?.name}`}</h3>
           <button className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-[0.15em] text-gray-400 hover:text-[#A6894B] transition-colors group mx-auto">
             <FaEdit className="size-2.5 group-hover:rotate-12 transition-transform" />
             Hiệu chỉnh hồ sơ

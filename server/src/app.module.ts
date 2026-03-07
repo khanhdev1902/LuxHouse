@@ -14,6 +14,7 @@ import { CartModule } from './modules/cart/cart.module';
 import { GeminiModule } from './modules/gemini/gemini.module';
 // import { ConfigModule } from '@nestjs/config';
 import 'dotenv/config';
+import { OrderModule } from './modules/orders/order.module';
 @Module({
   imports: [
     // ConfigModule.forRoot({
@@ -48,6 +49,7 @@ import 'dotenv/config';
     AuthModule,
     ProductModule,
     CartModule,
+    OrderModule,
     GeminiModule,
   ],
   controllers: [AppController],

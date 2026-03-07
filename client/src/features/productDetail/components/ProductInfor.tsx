@@ -5,6 +5,9 @@ import type { ProductDetail } from "@/shared/types/product";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useEffect, useState } from "react";
 import { FaFacebook } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import { tokenManager } from "@/lib/tokenManager";
+import { toast } from "sonner";
 
 type ProductInforProps = {
   product: ProductDetail;
@@ -17,9 +20,11 @@ export default function ProductInfor({
   selectVariant,
   onVariantChange,
 }: ProductInforProps) {
+  const navigate = useNavigate();
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
   const [quantity, setQuantity] = useState(1);
   const { mutate, isPending } = useAddToCart();
+  const accessToken = tokenManager.getAccessToken();
 
   const handleAddToCart = () => {
     console.log("Adding to cart:", {
@@ -30,6 +35,20 @@ export default function ProductInfor({
     mutate({
       productVariantId: Number(selectVariant?.id),
       quantity: quantity,
+    });
+  };
+
+  const handleCheckOut = () => {
+    if (!accessToken) return toast.info("Bạn cần đăng nhập để thực hiện chức năng này!");
+    navigate("/checkout", {
+      state: {
+        type: "productDetail",
+        data: {
+          product: product,
+          variant: selectVariant,
+          quantity: quantity,
+        },
+      },
     });
   };
 
@@ -130,7 +149,11 @@ export default function ProductInfor({
         >
           {isPending ? "Đang thêm vào giỏ..." : "THÊM VÀO GIỎ HÀNG"}
         </button>
-        <button className="w-full mt-3 bg-[#ef683a] text-white font-bold border border-gray-300 py-3 rounded-lg">
+        <button
+          disabled={!selectVariant || isPending}
+          onClick={handleCheckOut}
+          className="w-full mt-3 bg-[#ef683a] text-white font-bold border border-gray-300 py-3 rounded-lg"
+        >
           MUA NGAY
         </button>
       </div>
