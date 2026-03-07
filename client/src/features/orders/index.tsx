@@ -1,50 +1,26 @@
 import Container from "@/shared/components/ui/Container";
 import { FaReceipt, FaGem, FaShippingFast, FaSearch } from "react-icons/fa";
-
-const orders = [
-  {
-    id: "LUX-2026-001",
-    date: "28 Feb, 2026",
-    status: "Đang thi công",
-    total: "145.200.000đ",
-    items: [
-      {
-        name: "Sofa Sectional Velvet",
-        type: "Phòng khách",
-        price: "42.000.000đ",
-        img: "https://images.unsplash.com/photo-1550254478-ead40cc54513?q=80&w=300",
-      },
-      {
-        name: "Bàn ăn gỗ Óc Chó",
-        type: "Phòng ăn",
-        price: "68.000.000đ",
-        img: "https://images.unsplash.com/photo-1577145946459-1ad4519f0a7e?q=80&w=300",
-      },
-      {
-        name: "Bộ đèn chùm thả trần",
-        type: "Trang trí",
-        price: "35.200.000đ",
-        img: "https://images.unsplash.com/photo-1513506496266-3d241991aa0d?q=80&w=300",
-      },
-    ],
-  },
-  {
-    id: "LUX-2026-005",
-    date: "15 Jan, 2026",
-    status: "Đã bàn giao",
-    total: "28.500.000đ",
-    items: [
-      {
-        name: "Giường ngủ bọc nệm",
-        type: "Phòng ngủ",
-        price: "28.500.000đ",
-        img: "https://images.unsplash.com/photo-1505693419148-bf332c3f388b?q=80&w=300",
-      },
-    ],
-  },
-];
+import { orderApi } from "./apis/order.api";
+import { useEffect, useState } from "react";
+import { formatCurrency } from "@/utils/formatCurrency";
+import { LoadingOverlay } from "@/shared/components/ui/LoadingOverlay";
+import { useNavigate } from "react-router-dom";
+import type { OrderResponse } from "./types/order.type";
 
 export default function Orders() {
+  const [orderData, setOrderData] = useState<OrderResponse[]>([]);
+  const navigate = useNavigate();
+
+  const fetchData = async () => {
+    const res = await orderApi.getMyListOrder();
+    setOrderData(res.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log("orderData:", orderData);
   return (
     <div className="min-h-screen bg-[#FAF9F6] py-10">
       <Container>
@@ -88,7 +64,7 @@ export default function Orders() {
           </div>
 
           {/* CỘT PHẢI: DANH SÁCH ĐƠN HÀNG (9 CỘT) - Tận dụng tối đa Width */}
-          <div className="col-span-12 lg:col-span-9 space-y-6">
+          <div className="col-span-12 lg:col-span-9 space-y-6 relative">
             {/* Search Bar - Làm giao diện bớt trống và chuyên nghiệp hơn */}
             <div className="flex gap-4 mb-8">
               <div className="relative flex-1">
@@ -104,88 +80,99 @@ export default function Orders() {
               </button>
             </div>
 
-            {orders.map((order) => (
-              <div key={order.id} className="bg-white border border-[#EAE4DD] shadow-sm group">
-                {/* Order Header */}
-                <div className="px-8 py-5 border-b border-[#F5F5F0] flex justify-between items-center bg-[#FCFBFA]">
-                  <div className="flex gap-8">
-                    <div>
-                      <p className="text-[9px] uppercase text-gray-400 font-bold tracking-tighter">
-                        Mã đơn hàng
-                      </p>
-                      <p className="text-sm font-semibold text-[#2D2D2D]">{order.id}</p>
-                    </div>
-                    <div>
-                      <p className="text-[9px] uppercase text-gray-400 font-bold tracking-tighter">
-                        Ngày đặt
-                      </p>
-                      <p className="text-sm text-[#2D2D2D]">{order.date}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-[9px] uppercase text-gray-400 font-bold tracking-tighter">
-                      Trạng thái
-                    </p>
-                    <p className="text-xs text-[#A6894B] font-bold uppercase tracking-widest flex items-center gap-2 justify-end">
-                      <span className="size-1.5 bg-[#A6894B] rounded-full animate-pulse"></span>{" "}
-                      {order.status}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Items Grid - Tận dụng width bằng cách hiển thị Grid 3 cột */}
-                <div className="p-8">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {order.items.map((item, idx) => (
-                      <div key={idx} className="flex flex-col gap-3 group/item cursor-pointer">
-                        <div className="overflow-hidden bg-[#F5F5F0]">
-                          <img
-                            src={item.img}
-                            className="w-full h-40 object-cover group-hover/item:scale-105 transition-transform duration-500 opacity-90"
-                          />
-                        </div>
-                        <div>
-                          <p className="text-[9px] uppercase text-[#A6894B] font-bold tracking-wide">
-                            {item.type}
-                          </p>
-                          <h4 className="text-sm font-medium text-[#2D2D2D] line-clamp-1">
-                            {item.name}
-                          </h4>
-                          <p className="text-xs text-gray-400 mt-1">{item.price}</p>
-                        </div>
+            {orderData.length <= 0 ? (
+              <LoadingOverlay />
+            ) : (
+              orderData.map((order, key) => (
+                <div key={key} className="bg-white border border-[#EAE4DD] shadow-sm group">
+                  {/* Order Header */}
+                  <div className="px-8 py-5 border-b border-[#F5F5F0] flex justify-between items-center bg-[#FCFBFA]">
+                    <div className="flex gap-8">
+                      <div>
+                        <p className="text-[9px] uppercase text-gray-400 font-bold tracking-tighter">
+                          Mã đơn hàng
+                        </p>
+                        <p className="text-sm text-center font-semibold text-[#2D2D2D]">
+                          {order?.id}
+                        </p>
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Order Footer - Tóm tắt tiền tệ trải dài */}
-                <div className="px-8 py-6 border-t border-[#F5F5F0] flex justify-between items-center">
-                  <div className="flex gap-6 text-[#999]">
-                    <FaReceipt
-                      className="hover:text-[#A6894B] cursor-pointer transition-colors"
-                      title="Tải hóa đơn VAT"
-                    />
-                    <FaShippingFast
-                      className="hover:text-[#A6894B] cursor-pointer transition-colors"
-                      title="Tra cứu vận chuyển"
-                    />
-                  </div>
-                  <div className="flex items-center gap-10">
+                      <div>
+                        <p className="text-[9px] uppercase text-gray-400 font-bold tracking-tighter">
+                          Ngày đặt
+                        </p>
+                        <p className="text-sm text-[#2D2D2D]">{order?.createdAt}</p>
+                      </div>
+                    </div>
                     <div className="text-right">
-                      <p className="text-[10px] uppercase text-gray-400 font-bold tracking-[0.2em]">
-                        Tổng đầu tư
+                      <p className="text-[9px] uppercase text-gray-400 font-bold tracking-tighter">
+                        Trạng thái
                       </p>
-                      <p className="text-xl font-light text-[#2D2D2D] tracking-tight">
-                        {order.total}
+                      <p className="text-xs text-[#A6894B] font-bold uppercase tracking-widest flex items-center gap-2 justify-end">
+                        <span className="size-1.5 bg-[#A6894B] rounded-full animate-pulse"></span>{" "}
+                        {order?.status}
                       </p>
                     </div>
-                    <button className="px-10 py-3 bg-[#1A1A1A] text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-[#C5A25D] transition-all duration-300">
-                      Chi tiết
-                    </button>
+                  </div>
+
+                  {/* Items Grid - Tận dụng width bằng cách hiển thị Grid 3 cột */}
+                  <div className="p-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                      {order?.orderItems.map((item, idx) => (
+                        <div key={idx} className="flex flex-col gap-3 group/item cursor-pointer">
+                          <div
+                            onClick={() => navigate(`/products/${item?.slug}`)}
+                            className="overflow-hidden bg-[#F5F5F0]"
+                          >
+                            <img
+                              src={item?.imageUrl}
+                              className="w-full h-40 object-cover group-hover/item:scale-105 transition-transform duration-500 opacity-90"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-xs uppercase text-[#A6894B] font-bold tracking-wide">
+                              {item?.attribute && `${item?.attribute}`}
+                            </p>
+                            <h4 className="text-sm font-medium text-[#2D2D2D] line-clamp-1">
+                              {item?.name}
+                            </h4>
+                            <p className="text-xs text-gray-400 mt-1">
+                              {`${formatCurrency(item?.unitPrice)}`}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Order Footer - Tóm tắt tiền tệ trải dài */}
+                  <div className="px-8 py-6 border-t border-[#F5F5F0] flex justify-between items-center">
+                    <div className="flex gap-6 text-[#999]">
+                      <FaReceipt
+                        className="hover:text-[#A6894B] cursor-pointer transition-colors"
+                        title="Tải hóa đơn VAT"
+                      />
+                      <FaShippingFast
+                        className="hover:text-[#A6894B] cursor-pointer transition-colors"
+                        title="Tra cứu vận chuyển"
+                      />
+                    </div>
+                    <div className="flex items-center gap-10">
+                      <div className="text-right">
+                        <p className="text-[10px] uppercase text-gray-400 font-bold tracking-[0.2em]">
+                          Tổng thanh toán
+                        </p>
+                        <p className="text-xl font-light text-[#2D2D2D] tracking-tight">
+                          {formatCurrency(order?.totalAmount ?? 0)}
+                        </p>
+                      </div>
+                      <button className="px-10 py-3 bg-[#1A1A1A] text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-[#C5A25D] transition-all duration-300">
+                        Chi tiết
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </Container>

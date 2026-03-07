@@ -92,6 +92,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  firstName: 'firstName',
+  lastName: 'lastName',
   role: 'role',
   phone: 'phone',
   email: 'email',
@@ -245,15 +247,16 @@ export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typ
 export const OrderScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  shippingFee: 'shippingFee',
   totalAmount: 'totalAmount',
   status: 'status',
   shippingName: 'shippingName',
   shippingPhone: 'shippingPhone',
-  shippingAddress: 'shippingAddress',
-  shippingCity: 'shippingCity',
-  shippingState: 'shippingState',
-  shippingZipCode: 'shippingZipCode',
   shippingCountry: 'shippingCountry',
+  shippingCity: 'shippingCity',
+  shippingAddress: 'shippingAddress',
+  voucherCode: 'voucherCode',
+  paymentMethod: 'paymentMethod',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -266,8 +269,8 @@ export const OrderItemScalarFieldEnum = {
   orderId: 'orderId',
   productVariantId: 'productVariantId',
   quantity: 'quantity',
-  originalPrice: 'originalPrice',
-  discountedAmount: 'discountedAmount',
+  unitPrice: 'unitPrice',
+  totalDiscountedAmount: 'totalDiscountedAmount',
   finalPrice: 'finalPrice',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

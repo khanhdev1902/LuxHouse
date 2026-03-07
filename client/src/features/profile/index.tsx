@@ -20,7 +20,7 @@ export default function Profile() {
                 <div className="p-1.5 bg-white rounded-full shadow-md">
                   <img
                     src={
-                      user.avata ??
+                      user?.avata ??
                       "https://i.pinimg.com/736x/93/32/34/93323410b61d9f272cdfba2c0c361d32.jpg"
                     }
                     className="size-32 rounded-full object-cover border border-gray-100"
@@ -35,7 +35,7 @@ export default function Profile() {
               <div className="flex-1 text-center md:text-left mb-2">
                 <div className="flex items-center justify-center md:justify-start gap-3">
                   <h2 className="text-2xl font-light tracking-tight text-[#2D2D2D]">
-                    {user.name} <span className="font-semibold">{user.lastName}</span>
+                    {user?.name} <span className="font-semibold">{user?.lastName}</span>
                   </h2>
                   <span className="flex items-center gap-1 bg-[#F4EFE6] text-[#A6894B] px-2 py-0.5 rounded text-[10px] uppercase tracking-tighter font-bold border border-[#E8E2DA]">
                     <FaCrown className="size-2" /> Thành viên Gold
@@ -67,7 +67,7 @@ export default function Profile() {
                     <p className="text-[9px] uppercase text-gray-400 font-bold tracking-tighter">
                       Email
                     </p>
-                    <p className="text-sm truncate">{user.email || "khachhang@luxhouse.vn"}</p>
+                    <p className="text-sm truncate">{user?.email || "khachhang@luxhouse.vn"}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -78,7 +78,7 @@ export default function Profile() {
                     <p className="text-[9px] uppercase text-gray-400 font-bold tracking-tighter">
                       Hotline riêng
                     </p>
-                    <p className="text-sm">{user.phone || "••• ••• •••"}</p>
+                    <p className="text-sm">{user?.phone || "••• ••• •••"}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -120,7 +120,7 @@ export default function Profile() {
                       </label>
                       <input
                         type="text"
-                        defaultValue={user.name}
+                        defaultValue={user?.name}
                         className="w-full px-0 py-2 bg-transparent border-b border-[#E8E2DA] focus:border-[#C5A25D] outline-none transition-all text-sm"
                       />
                     </div>
@@ -130,7 +130,7 @@ export default function Profile() {
                       </label>
                       <input
                         type="text"
-                        defaultValue={user.lastName}
+                        defaultValue={user?.lastName}
                         className="w-full px-0 py-2 bg-transparent border-b border-[#E8E2DA] focus:border-[#C5A25D] outline-none transition-all text-sm"
                       />
                     </div>

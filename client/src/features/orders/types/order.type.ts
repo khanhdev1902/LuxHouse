@@ -1,5 +1,5 @@
-export interface OrderInterface {
-  checkoutType: 'cart' | 'product';
+export interface OrderRequest {
+  checkoutType: "cart" | "product";
   productVariantId?: number;
   quantity?: number;
 
@@ -9,7 +9,7 @@ export interface OrderInterface {
   shippingCity: string;
   shippingAddress: string;
   voucherCode?: string;
-  paymentMethod: 'COD' | 'ZALOPAY' | 'QRCODE';
+  paymentMethod: "COD" | "ZALOPAY" | "QRCODE";
 }
 
 export interface OrderItemInterface {
@@ -17,6 +17,7 @@ export interface OrderItemInterface {
   name: string;
   slug: string;
   imageUrl: string;
+  attribute: string;
   unitPrice: number;
   quantity: number;
   totalDiscountAmount: number;
@@ -35,7 +36,7 @@ export interface OrderResponse {
   shippingCity: string;
   shippingAddress: string;
   voucherCode?: string | null;
-  paymentMethod: 'COD' | 'ZALOPAY' | 'QRCODE';
+  paymentMethod: "COD" | "ZALOPAY" | "QRCODE";
   createdAt: string;
   updatedAt: string;
   orderItems: OrderItemInterface[];

@@ -9,18 +9,12 @@ datasource db {
   // provider = "mysql"
 }
 
-enum OrderStatus {
-  PENDING
-  CONFIRMED
-  SHIPPING
-  COMPLETED
-  CANCELLED
-}
-
 model User {
   id        Int      @id @default(autoincrement())
   name      String?
-  role     String   @default("customer")
+  firstName String?
+  lastName  String?
+  role     String   @default("CUSTOMMER")
   phone     String?   @unique
   email     String   @unique
   password  String
@@ -204,23 +198,43 @@ model CartItem {
   @@map("cart_items")
 }
 
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  COD
+  ZALOPAY
+  QRCODE
+}
+
 model Order {
-  id          Int             @id @default(autoincrement())
-  userId      Int
-  totalAmount Decimal         @db.Decimal(12, 2)
-  status      OrderStatus     @default(PENDING)
-  shippingName String
-  shippingPhone String
-  shippingAddress String
-  shippingCity String
-  shippingState String
-  shippingZipCode String
+  id              Int           @id @default(autoincrement())
+  userId          Int
+  shippingFee     Decimal       @default(0) @db.Decimal(12, 2)
+  totalAmount     Decimal?       @db.Decimal(12, 2)
+  status          OrderStatus   @default(PENDING)
+
+  shippingName    String
+  shippingPhone   String
   shippingCountry String
-  orderItems  OrderItem[]
-  payments    Payment[]
-  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  shippingCity    String
+  shippingAddress String
+  
+  voucherCode     String?      
+  paymentMethod   PaymentMethod
+
+  orderItems      OrderItem[]
+  payments        Payment[]
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 
   @@map("orders")
 }
@@ -230,8 +244,8 @@ model OrderItem {
   orderId         Int
   productVariantId Int
   quantity        Int
-  originalPrice   Decimal         @db.Decimal(12, 2)
-  discountedAmount Decimal         @db.Decimal(12, 2)
+  unitPrice   Decimal         @db.Decimal(12, 2)
+  totalDiscountedAmount Decimal         @db.Decimal(12, 2)
   finalPrice      Decimal         @db.Decimal(12, 2)
   order           Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productVariant   ProductVariant @relation(fields: [productVariantId], references: [id], onDelete: Cascade)
