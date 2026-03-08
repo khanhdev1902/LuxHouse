@@ -6,6 +6,7 @@ import { mapProductDetail, mapProductListItem } from './product.mapper';
 import { ProductDetail, ProductListItem } from './product.interface';
 import { ProductQueryDto } from './product-query.dto';
 import { Prisma } from 'src/generated/prisma/client';
+import { slugify } from 'src/helper/slugify';
 
 @Injectable()
 export class ProductService {
@@ -30,8 +31,8 @@ export class ProductService {
     };
 
     if (search) {
-      where.name = {
-        contains: search,
+      where.slug = {
+        contains: slugify(search),
         // mode: 'insensitive',
       };
     }

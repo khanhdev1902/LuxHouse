@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@/shared/components/ui/BreadCrumb";
 import Container from "@/shared/components/ui/Container";
 import ProductGallery from "./components/ProductGallery";
 import ProductInfor from "./components/ProductInfor";
-import { useProductDetail } from "@/shared/hooks/useProducts";
+import { useProductDetail } from "@/features/products/hooks/useProducts";
 import { useParams } from "react-router-dom";
 import RelatedProducts from "./components/RelatedProducts";
 import { useEffect, useState } from "react";

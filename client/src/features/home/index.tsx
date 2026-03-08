@@ -2,11 +2,11 @@ import Container from "@/shared/components/ui/Container";
 import Banner from "./components/Banner";
 import ProductSlider from "@/features/products/components/ProudctSlider";
 import ProductCard from "@/features/products/components/ProductCard";
-import { useProducts } from "@/shared/hooks/useProducts";
+import { useProducts } from "@/features/products/hooks/useProducts";
 import Loading from "@/shared/components/ui/Loading";
 
 export default function Home() {
-  const { data: products, isLoading, error, isFetching, status } = useProducts();
+  const { data: products = [], isLoading, error, isFetching, status } = useProducts();
   console.log({ products, isLoading, isFetching, status, error });
   if (!products.length) {
     return (

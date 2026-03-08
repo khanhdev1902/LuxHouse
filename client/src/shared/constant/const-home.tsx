@@ -248,6 +248,7 @@ export const dataTestProducts = [
 ];
 
 export const allCategorieProducts = [
+  { name: "Phòng ngủ" },
   { name: "Bếp" },
   { name: "Chăn Ga - Gối Nệm" },
   { name: "Bình - Chậu - Lọ" },

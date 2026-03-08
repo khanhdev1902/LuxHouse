@@ -1,16 +1,22 @@
 import Container from "@/shared/components/ui/Container";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "@/features/products/components/ProductCard";
-import { allCategorieProducts } from "@/shared/constant/const-home";
 import useToggle from "@/shared/hooks/useToggle";
 import { BsChevronDown, BsFunnel } from "react-icons/bs";
-import { useProducts } from "@/shared/hooks/useProducts";
+import { useProducts } from "@/features/products/hooks/useProducts";
 import Loading from "@/shared/components/ui/Loading";
+import type { ProductQuery } from "./types/productQuery.type";
+import { useSearchParams } from "react-router-dom";
+import { useCategory } from "./hooks/useCategory";
 
 export default function Products() {
   const { value: isOpen, on, off } = useToggle();
-  const { data: products } = useProducts();
+  const [params] = useSearchParams();
+  const search = params.get("search") || "";
+  const [dataFilter, setDataFilter] = useState<ProductQuery>({ search });
+  const { data: products = [] } = useProducts(dataFilter);
+  const { data: lstCategories = [] } = useCategory();
   const [categories, setCategories] = React.useState<string[]>([]);
 
   const handleChange = (value: string) => {
@@ -21,7 +27,13 @@ export default function Products() {
           : [...prev, value] // thêm nếu chưa có
     );
   };
-  if (!products.length) return <Loading />;
+  useEffect(() => {
+    setDataFilter((prev) => ({ ...prev, categories: categories.join(", ") }));
+  }, [categories]);
+  console.log("categories", categories);
+  console.log("datafilter: ", dataFilter);
+  console.log(categories);
+  if (!products.length || !lstCategories.length) return <Loading />;
   return (
     <>
       <div className="w-full h-auto">
@@ -67,18 +79,18 @@ export default function Products() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className=" absolute z-30 top-full left-0 right-0 flex flex-col bg-white border border-gray-200 rounded-b-sm"
                     >
-                      {allCategorieProducts.map((item, key) => (
+                      {lstCategories.map((category, key) => (
                         <label
                           key={key}
                           className=" text-sm font-light flex flex-row gap-2 cursor-pointer px-3 py-2 hover:bg-slate-100"
                         >
                           <input
                             type="checkbox"
-                            checked={categories.includes(item.name)}
-                            onChange={() => handleChange(item.name)}
+                            checked={categories.includes(category.slug)}
+                            onChange={() => handleChange(category.slug)}
                             className="outline-none border-none size-4"
                           />
-                          {item.name}
+                          {category.name}
                         </label>
                       ))}
                     </motion.div>
