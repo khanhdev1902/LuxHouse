@@ -1,4 +1,7 @@
-# 🏠 LuxHouse | Premium E-Commerce Ecosystem
+# 🗄 Database Design (ERD)
+![LuxHouse ERD](./server/docs/ERD-LuxHouse.png)
+
+#🏠 LuxHouse | Premium E-Commerce Ecosystem
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![NestJS](https://img.shields.io/badge/backend-NestJS-E0234E?style=for-the-badge\&logo=nestjs)](https://nestjs.com/)
@@ -8,8 +11,6 @@
 [![Docker](https://img.shields.io/badge/deployment-Docker-2496ED?style=for-the-badge\&logo=docker)](https://www.docker.com/)
 
 ---
-# 🗄 Database Design (ERD)
-![LuxHouse ERD](./server/docs/ERD-LuxHouse.png)
 
 ## 📌 Overview
 
