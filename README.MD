@@ -8,6 +8,8 @@
 [![Docker](https://img.shields.io/badge/deployment-Docker-2496ED?style=for-the-badge\&logo=docker)](https://www.docker.com/)
 
 ---
+# 🗄 Database Design (ERD)
+![LuxHouse ERD](./server/docs/ERD-LuxHouse.png)
 
 ## 📌 Overview
 
@@ -152,8 +154,7 @@ client/
 
 ---
 
-# 🗄 Database Design (ERD)
-![LuxHouse ERD](./server/docs/ERD-LuxHouse.png)
+
 
 # 🛠 Installation & Setup
 
