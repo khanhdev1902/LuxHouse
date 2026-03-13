@@ -3,7 +3,7 @@
 
 ---
 
-#🏠 LuxHouse | Premium E-Commerce Ecosystem
+# 🏠 LuxHouse | Premium E-Commerce Ecosystem
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![NestJS](https://img.shields.io/badge/backend-NestJS-E0234E?style=for-the-badge\&logo=nestjs)](https://nestjs.com/)
