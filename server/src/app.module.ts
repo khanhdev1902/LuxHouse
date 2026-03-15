@@ -16,6 +16,7 @@ import { GeminiModule } from './modules/gemini/gemini.module';
 import 'dotenv/config';
 import { OrderModule } from './modules/orders/order.module';
 import { CategoryModule } from './modules/categories/category.module';
+import { OpenAiModule } from './modules/opnen-ai/open-ai.module';
 @Module({
   imports: [
     // ConfigModule.forRoot({
@@ -53,6 +54,7 @@ import { CategoryModule } from './modules/categories/category.module';
     CartModule,
     OrderModule,
     GeminiModule,
+    OpenAiModule,
   ],
   controllers: [AppController],
   providers: [
