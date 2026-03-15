@@ -1,3 +1,8 @@
+# 🗄 Database Design (ERD)
+![LuxHouse ERD](./server/docs/ERD-LuxHouse.png)
+
+---
+
 # 🏠 LuxHouse | Premium E-Commerce Ecosystem
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -152,8 +157,7 @@ client/
 
 ---
 
-# 🗄 Database Design (ERD)
-![LuxHouse ERD](./server/docs/ERD-LuxHouse.png)
+
 
 # 🛠 Installation & Setup
 
