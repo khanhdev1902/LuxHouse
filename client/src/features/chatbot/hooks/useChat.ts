@@ -21,7 +21,7 @@ export const useChat = () => {
     setHistoryChat((prev) => [...prev, data]);
     setContent("");
 
-    const reply = await chatAPI.sendGemini({ content: icon || data.content });
+    const reply = await chatAPI.sendOpenAI({ content: icon || data.content });
     setHistoryChat((prev) => [...prev, reply.data]);
     console.log(reply);
     console.log(historyChat);
