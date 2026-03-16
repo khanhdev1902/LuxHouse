@@ -9,13 +9,15 @@ import Loading from "@/shared/components/ui/Loading";
 import type { ProductQuery } from "./types/productQuery.type";
 import { useSearchParams } from "react-router-dom";
 import { useCategory } from "./hooks/useCategory";
+import { X } from "lucide-react";
+import { Breadcrumbs } from "@/shared/components/ui/BreadCrumb";
 
 export default function Products() {
   const { value: isOpen, on, off } = useToggle();
   const [params] = useSearchParams();
   const search = params.get("search") || "";
   const [dataFilter, setDataFilter] = useState<ProductQuery>({ search });
-  const { data: products = [] } = useProducts(dataFilter);
+  const { data: products = [], isLoading } = useProducts(dataFilter);
   const { data: lstCategories = [] } = useCategory();
   const [categories, setCategories] = React.useState<string[]>([]);
 
@@ -26,16 +28,23 @@ export default function Products() {
           ? prev.filter((item) => item !== value) // bỏ nếu đã có
           : [...prev, value] // thêm nếu chưa có
     );
+    off();
   };
   useEffect(() => {
+    window.scrollTo({
+      top: 350,
+      behavior: "smooth",
+    });
     setDataFilter((prev) => ({ ...prev, categories: categories.join(", ") }));
   }, [categories]);
   console.log("categories", categories);
   console.log("datafilter: ", dataFilter);
   console.log(categories);
-  if (!products.length || !lstCategories.length) return <Loading />;
+  // if (!products.length || !lstCategories.length) return <Loading />;
+  // if (isLoading) return <Loading />;
   return (
     <>
+      <Breadcrumbs />
       <div className="w-full h-auto">
         <img src="/bg-products.jpg" alt="" className="w-full" />
       </div>
@@ -112,17 +121,30 @@ export default function Products() {
             </div>
           </div>
           {categories.length > 0 && (
-            <div className="mt-2 text-sm text-gray-700">
-              Đã chọn: {categories.length > 0 ? categories.join(", ") : "Chưa chọn gì"}
+            <div className="mt-2 text-sm text-gray-700 flex items-center gap-2 border rounded-full w-fit px-3 py-1">
+              <span className=" uppercase font-semibold text-sm">{"Danh mục:"}</span>
+              <div className=" font-medium">
+                {categories.length > 0 ? categories.join(", ") : "Chưa chọn gì"}
+              </div>
+              <X
+                onClick={() => setCategories([])}
+                className="size-5 cursor-pointer font-bold hover:rotate-180 duration-500 hover:scale-110 hover:text-red-600"
+              />
             </div>
           )}
         </nav>
 
-        <div className=" grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full h-auto">
-          {products.map((product, key) => (
-            <ProductCard key={key} product={product} className="" />
-          ))}
-        </div>
+        {isLoading ? (
+          <Loading />
+        ) : products.length < 1 ? (
+          <div className="pt-10 pl-10"> Không tìm thấy sản phẩm !</div>
+        ) : (
+          <div className=" grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full h-auto">
+            {products.map((product, key) => (
+              <ProductCard key={key} product={product} className="" />
+            ))}
+          </div>
+        )}
       </Container>
     </>
   );

@@ -8,13 +8,34 @@ import { FaFacebook } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { tokenManager } from "@/lib/tokenManager";
 import { toast } from "sonner";
+import { Check } from "lucide-react";
 
 type ProductInforProps = {
   product: ProductDetail;
   selectVariant: ProductDetail["variants"][number] | null;
   onVariantChange?: (variantId: string) => void;
 };
+const policyData = [
+  {
+    id: 1,
+    content:
+      "Miễn phí giao hàng & lắp đặt tại tất cả quận huyện thuộc TP.HCM, Hà Nội, Khu đô thị Ecopark, Biên Hòa và một số quận thuộc Bình Dương",
+    noteSymbol: "(*)",
+  },
+  {
+    id: 2,
+    content: "Miễn phí 1 đổi 1 - Bảo hành 5 năm - Bảo trì trọn đời",
+    noteSymbol: "(**)",
+  },
+];
 
+const extraNotes = [
+  { symbol: "(*)", text: "Không áp dụng cho danh mục Đồ Trang Trí và Nệm" },
+  {
+    symbol: "(**)",
+    text: "Không áp dụng cho các sản phẩm Clearance. Chỉ bảo hành 01 năm cho khung ghế, mâm và cần đối với Ghế Văn Phòng",
+  },
+];
 export default function ProductInfor({
   product,
   selectVariant,
@@ -113,14 +134,16 @@ export default function ProductInfor({
           key={option.name}
           className="flex flex-row items-center gap-4 border-t border-gray-200 pt-3"
         >
-          <span className="font-semibold text-gray-700 min-w-12">{option.name}:</span>
+          {/* <span className="font-semibold text-gray-700 min-w-12">{option.name}:</span> */}
           <div className="flex flex-row items-center gap-2">
             {option.values.map((value) => (
               <button
                 key={value}
                 onClick={() => handleOptionChange(option.name, value)}
-                className={`px-3 py-1 border rounded text-xs font-semibold text-gray-700 ${
-                  selectedOptions[option.name] === value ? "border-[#ef683a]" : "border-gray-300"
+                className={`px-5 py-2 border rounded-lg text-xs font-semibold text-gray-700 ${
+                  selectedOptions[option.name] === value
+                    ? "border-[#a6894b] text-[#a6894b] font-bold"
+                    : "border-gray-300"
                 }`}
               >
                 {value}
@@ -130,7 +153,21 @@ export default function ProductInfor({
         </div>
       ))}
 
-      <p className="text-gray-700 mb-6">{product.description}</p>
+      <div className="text-gray-600 border-t border-gray-200 pt-3 text-sm font-medium space-y-2">
+        <strong>Thông số chi tiết</strong>
+        <table className="w-full text-sm">
+          <tbody>
+            {product.description
+              ?.split("/")
+              .map((item) => item.trim())
+              .map((item, i) => (
+                <tr key={i} className={item.endsWith(":") ? "font-bold mt-4" : "pl-4"}>
+                  <td className="py-1">{item}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
 
       <div className="flex border-t border-gray-200 pt-3">
         <QuantitySelector
@@ -152,10 +189,32 @@ export default function ProductInfor({
         <button
           disabled={!selectVariant || isPending}
           onClick={handleCheckOut}
-          className="w-full mt-3 bg-[#ef683a] text-white font-bold border border-gray-300 py-3 rounded-lg"
+          className="w-full mt-3 bg-[#a6894b] text-white font-bold border border-gray-300 py-3 rounded-lg"
         >
           MUA NGAY
         </button>
+      </div>
+
+      <div className="max-w-2xl px-6 bg-white font-sans text-[#333]">
+        <div className="space-y-2">
+          {policyData.map((item) => (
+            <div key={item.id}>
+              <div className="text-[15px] leading-relaxed">
+                <Check className="inline size-5 mr-1 text-gray-700" strokeWidth={3} />
+                {item.content} <span className="text-gray-500">{item.noteSymbol}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="space-y-2 border-t pt-4 border-gray-100 mt-4">
+          {extraNotes.map((note, index) => (
+            <p key={index} className="text-sm italic text-[#555] leading-snug">
+              <span className="font-medium mr-1">{note.symbol}</span>
+              {note.text}
+            </p>
+          ))}
+        </div>
       </div>
     </div>
   );

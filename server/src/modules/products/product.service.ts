@@ -46,7 +46,7 @@ export class ProductService {
       };
     }
     if (query.categories) {
-      const categorySlugs = query.categories.split(',');
+      const categorySlugs = query.categories.split(', ');
       where.categories = {
         some: {
           category: {

@@ -4,9 +4,9 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import useToggle from "@/shared/hooks/useToggle";
-import { TbArrowMoveLeft, TbArrowMoveRight } from "react-icons/tb";
 import type { ProductListItem } from "@/shared/types/product";
 import ProductCard from "./ProductCard";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ProductSliderProps {
   title?: string;
@@ -55,7 +55,7 @@ export default function ProductSlider({
             text-white z-10 select-none cursor-pointer rounded-full 
               p-3 bg-col"
             >
-              <TbArrowMoveLeft />
+              <ChevronLeft />
             </motion.button>
             <motion.button
               whileTap={{ scale: 0.8 }}
@@ -66,7 +66,7 @@ export default function ProductSlider({
           text-white z-10 select-none cursor-pointer rounded-full 
             p-3 bg-col"
             >
-              <TbArrowMoveRight />
+              <ChevronRight />
             </motion.button>
           </>
           {products.map((product) => (

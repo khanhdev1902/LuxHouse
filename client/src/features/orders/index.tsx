@@ -24,9 +24,9 @@ export default function Orders() {
   return (
     <div className="min-h-screen bg-[#FAF9F6] py-10">
       <Container>
-        <div className="grid grid-cols-12 gap-8">
+        <div className="grid grid-cols-12 gap-8 relative">
           {/* CỘT TRÁI: BỘ LỌC VÀ THÔNG TIN PHỤ (3 CỘT) */}
-          <div className="col-span-12 lg:col-span-3 space-y-6">
+          <div className="col-span-12 lg:col-span-3 space-y-6 sticky self-start top-44">
             <div className="bg-white border border-[#EAE4DD] p-6">
               <h3 className="text-[11px] uppercase tracking-[0.2em] font-bold text-[#A6894B] mb-6">
                 Quản lý mua hàng

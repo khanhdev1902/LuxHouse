@@ -32,7 +32,7 @@ export default function CartDrawer() {
             </span>
           )}
         </div>
-        <span className="text-[13px] font-medium text-[#2D2D2D] hidden xl:block uppercase tracking-wider group-hover:text-[#A6894B] transition-colors">
+        <span className="text-[13px] whitespace-nowrap font-medium text-[#2D2D2D] hidden xl:block uppercase tracking-wider group-hover:text-[#A6894B] transition-colors">
           Giỏ hàng
         </span>
       </div>
@@ -60,7 +60,7 @@ export default function CartDrawer() {
               {/* Header: Serif & Elegant */}
               <header className="flex justify-between items-center py-6 px-8 border-b border-[#F5F1ED]">
                 <div className="flex flex-col">
-                  <h2 className="text-xl font-serif text-[#2D2D2D]">Giỏ hàng của bạn</h2>
+                  <h2 className="text-xl font-medium text-[#2D2D2D]">Giỏ hàng của bạn</h2>
                   <p className="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">
                     Luxhouse Selection
                   </p>
@@ -105,7 +105,7 @@ export default function CartDrawer() {
                     Tạm tính
                   </span>
                   <div className="text-right">
-                    <span className="text-xl font-serif text-[#A6894B]">
+                    <span className="text-xl font-semibold text-[#A6894B]">
                       {formatCurrency(totalAmount ?? 0)}
                     </span>
                   </div>

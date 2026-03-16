@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 export default function ClientsAccountLayout() {
   return (
     <Container className="flex">
-      <SideBar />
+      <SideBar className=" hidden lg:block" />
       <Outlet />
     </Container>
   );

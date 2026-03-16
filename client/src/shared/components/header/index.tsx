@@ -8,10 +8,7 @@ export default function Header({ className, onHandleResize }: HeaderProps) {
   return (
     <div className={className}>
       <HeaderMobile className="lg:hidden" />
-      <HeaderDesktop
-        onHandleResize={onHandleResize}
-        className=" hidden lg:block"
-      />
+      <HeaderDesktop className=" hidden lg:block" onHandleResize={onHandleResize} />
     </div>
   );
 }

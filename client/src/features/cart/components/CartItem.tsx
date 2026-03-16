@@ -65,7 +65,7 @@ export function CartItem({ data, mode = "large", isProcessing, setIsProcessing }
         mode === "small" ? "gap-3 py-3" : "gap-6"
       )}
     >
-      {/* 1. Ảnh sản phẩm */}
+
       <div
         className={cn(
           "relative flex-shrink-0 overflow-hidden rounded-lg border bg-gray-50",
@@ -79,7 +79,7 @@ export function CartItem({ data, mode = "large", isProcessing, setIsProcessing }
         />
       </div>
 
-      {/* 2. Nội dung chi tiết */}
+
       <div className="flex flex-1 flex-col justify-between">
         <div className="space-y-1">
           <div className="flex justify-between items-start gap-4">
@@ -100,13 +100,13 @@ export function CartItem({ data, mode = "large", isProcessing, setIsProcessing }
             </button>
           </div>
 
-          {/* Attributes / Phân loại */}
+
           <p className="text-xs text-gray-500 italic">
             Phân loại: <span className="text-gray-700">{data.attributes || "Mặc định"}</span>
           </p>
         </div>
 
-        {/* 3. Giá và Bộ chọn số lượng */}
+
         <div className="mt-4 flex flex-wrap items-end justify-between gap-3">
           <div className="space-y-1">
             <div className="flex items-baseline gap-2">
@@ -117,7 +117,7 @@ export function CartItem({ data, mode = "large", isProcessing, setIsProcessing }
                 </span>
               )}
             </div>
-            {/* Tình trạng kho */}
+
             {data.stock < 10 && (
               <p className="text-[10px] text-orange-500 font-medium italic">
                 Chỉ còn {data.stock} sản phẩm
@@ -125,8 +125,8 @@ export function CartItem({ data, mode = "large", isProcessing, setIsProcessing }
             )}
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className={cn(mode === "small" ? "scale-90 origin-right" : "")}>
+          <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className={cn(mode === "small" ? "sm:scale-90 origin-right" : "")}>
               <QuantitySelector
                 value={quantity}
                 onChange={setQuantity}
@@ -136,10 +136,10 @@ export function CartItem({ data, mode = "large", isProcessing, setIsProcessing }
               />
             </div>
 
-            {/* Tổng tiền món này */}
+
             {mode === "large" && (
-              <div className="text-right min-w-[100px]">
-                <p className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">
+              <div className="flex items-end gap-2 text-right min-w-[100px]">
+                <p className="text-xs uppercase text-gray-400 font-semibold tracking-wider">
                   Thành tiền
                 </p>
                 <p className="text-sm font-bold text-gray-900">
@@ -151,7 +151,6 @@ export function CartItem({ data, mode = "large", isProcessing, setIsProcessing }
         </div>
       </div>
 
-      {/* Loading Overlay Spinner (Optional) */}
       {isProcessing && (
         <div className="absolute inset-0 flex items-center justify-center bg-white/20">
           <div className="size-5 border-2 border-amber-700 border-t-transparent rounded-full animate-spin" />

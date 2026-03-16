@@ -78,7 +78,7 @@ export const mapProductDetail = (product: ProductDetailDbType) => {
     name: product.name,
     slug: product.slug,
     isActive: product.isActive,
-    options: buildOptions(nomalizedVariants),
+    options: buildOptions(nomalizedVariants).reverse(),
     averageRating: product.averageRating ?? 0,
     reviewCount: product.reviewCount ?? 0,
     sold: product.sold ?? 0,

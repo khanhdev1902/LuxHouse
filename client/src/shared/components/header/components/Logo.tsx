@@ -14,7 +14,7 @@ export default function Logo({ className }: LogoProps) {
       className={cn("flex items-center gap-4 cursor-pointer select-none group py-2", className)}
     >
       {/* Biểu tượng Monogram L-H Cách điệu */}
-      <div className="relative flex items-center justify-center">
+      <div className="relative hidden lg:flex items-center justify-center">
         {/* Vòng tròn hở tinh tế */}
         <div className="absolute inset-[-6px] border border-[#A6894B]/20 rounded-full scale-0 group-hover:scale-100 transition-transform duration-700 ease-out"></div>
 
@@ -43,7 +43,7 @@ export default function Logo({ className }: LogoProps) {
           <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#A6894B] -translate-x-[105%] group-hover:translate-x-0 transition-transform duration-500"></div>
         </div>
 
-        <div className="flex items-center gap-2 mt-1.5 overflow-hidden">
+        <div className="hidden lg:flex items-center gap-2 mt-1.5 overflow-hidden">
           <span className="text-[9px] uppercase tracking-[0.5em] font-medium text-gray-400 group-hover:translate-y-[-100%] transition-transform duration-300">
             Est. 2024 • Atelier
           </span>

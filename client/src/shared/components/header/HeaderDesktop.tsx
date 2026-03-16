@@ -35,7 +35,7 @@ export default function HeaderDesktop({ className, onHandleResize }: HeaderDeskt
         <div className="flex justify-between items-center gap-8">
           <Logo />
           <SearchInput className=" flex-grow" />
-          <div className="flex flex-row items-center justify-end gap-10 xl:gap-5">
+          <div className="flex flex-row items-center justify-end gap-10 lg:gap-6 xl:gap-5">
             <Notification />
             <CartDrawer />
             <Account className="xl:-order-1" />

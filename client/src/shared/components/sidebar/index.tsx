@@ -1,4 +1,5 @@
 import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
+import { cn } from "@/lib/utils";
 import { FaEdit, FaUser, FaClipboardList, FaMapMarkerAlt, FaKey, FaGem } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -9,13 +10,18 @@ const menuItems = [
   { label: "Bảo mật tài khoản", path: "/change-password", icon: <FaKey /> },
 ];
 
-export default function SideBar() {
+export default function SideBar({ className }: { className?: string }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { data: user } = useCurrentUser();
 
   return (
-    <aside className="min-w-[280px] bg-white border border-[#E8E2DA] p-8 shadow-sm h-fit sticky top-24">
+    <aside
+      className={cn(
+        "min-w-[280px] bg-white border border-[#E8E2DA] p-8 shadow-sm h-fit sticky top-40",
+        className
+      )}
+    >
       {/* Header: Luxhouse Member */}
       <header className="flex flex-col items-center text-center pb-8 border-b border-[#F5F1ED]">
         <div className="relative mb-4">
@@ -36,7 +42,7 @@ export default function SideBar() {
         </div>
 
         <div className="space-y-1">
-          <h3 className="font-serif text-lg text-[#2D2D2D] tracking-wide">{`${user?.name}`}</h3>
+          <h3 className="font-medium text-lg text-[#2D2D2D] tracking-wide">{`${user?.name}`}</h3>
           <button className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-[0.15em] text-gray-400 hover:text-[#A6894B] transition-colors group mx-auto">
             <FaEdit className="size-2.5 group-hover:rotate-12 transition-transform" />
             Hiệu chỉnh hồ sơ

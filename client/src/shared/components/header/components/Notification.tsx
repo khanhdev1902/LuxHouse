@@ -51,7 +51,7 @@ export default function Notification() {
             {notifications.filter((n) => n.isUnread).length}
           </span>
         </div>
-        <span className="text-[13px] font-medium text-[#2D2D2D] hidden xl:block uppercase tracking-wider group-hover:text-[#A6894B] transition-colors">
+        <span className="text-[13px] whitespace-nowrap font-medium text-[#2D2D2D] hidden xl:block uppercase tracking-wider group-hover:text-[#A6894B] transition-colors">
           Thông báo
         </span>
       </div>

@@ -45,7 +45,7 @@ export default function ProductGallery({
   }, [selectedVariant]);
 
   return (
-    <div className="grid lg:grid-cols-10 gap-2 xl:gap-4">
+    <div className="grid lg:grid-cols-10 gap-2 xl:gap-4 relative">
       {/* Thumbnail */}
       <div
         className={cn(
@@ -72,7 +72,7 @@ export default function ProductGallery({
 
       {/* Main Image */}
       {selectedVariant ? (
-        <div className={cn("order-1", " lg:col-span-8 lg:order-none")}>
+        <div className={cn("order-1", " lg:col-span-8 lg:order-none lg:sticky lg:self-start lg:top-10")}>
           {keyImage.url && (
             <img
               src={keyImage.url}

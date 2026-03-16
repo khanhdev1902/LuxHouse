@@ -40,7 +40,7 @@ export default function Account({ className }: { className?: string }) {
   }
   return (
     <div ref={ref} className={cn(className, "relative cursor-pointer select-none")}>
-      <div onClick={toggle} className="flex items-center gap-2.5 group">
+      <div onClick={toggle} className="flex items-center gap-2.5 group min-w-8">
         <div className="relative">
           {user ? (
             <div className="relative">
@@ -76,7 +76,7 @@ export default function Account({ className }: { className?: string }) {
         ) : (
           <div
             onClick={() => navigation("/login")}
-            className="hidden xl:block text-sm font-medium text-[#2D2D2D]"
+            className="hidden xl:block text-[13px] font-medium text-[#2D2D2D] whitespace-nowrap"
           >
             ĐĂNG NHẬP
           </div>
