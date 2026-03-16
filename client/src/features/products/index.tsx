@@ -14,7 +14,7 @@ import { Breadcrumbs } from "@/shared/components/ui/BreadCrumb";
 
 export default function Products() {
   const { value: isOpen, on, off } = useToggle();
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const search = params.get("search") || "";
   const [dataFilter, setDataFilter] = useState<ProductQuery>({ search });
   const { data: products = [], isLoading } = useProducts(dataFilter);
@@ -35,13 +35,18 @@ export default function Products() {
       top: 350,
       behavior: "smooth",
     });
-    setDataFilter((prev) => ({ ...prev, categories: categories.join(", ") }));
-  }, [categories]);
+    setDataFilter((prev) => ({ ...prev, search, categories: categories.join(", ") }));
+  }, [categories, search]);
   console.log("categories", categories);
   console.log("datafilter: ", dataFilter);
   console.log(categories);
-  // if (!products.length || !lstCategories.length) return <Loading />;
-  // if (isLoading) return <Loading />;
+
+  const handleDeleteSearch = () => {
+    const newParams = new URLSearchParams(params);
+    newParams.delete("search");
+    setParams(newParams);
+  };
+
   return (
     <>
       <Breadcrumbs />
@@ -120,6 +125,16 @@ export default function Products() {
               </div>
             </div>
           </div>
+          {search && (
+            <div className=" flex items-center gap-2 py-2 text-gray-700">
+              <span>Kết quả tìm kiếm cho</span>
+              <span className=" font-bold">{`"${search}"`}</span>
+              <X
+                onClick={handleDeleteSearch}
+                className="size-5 cursor-pointer font-bold hover:rotate-180 duration-500 hover:scale-110 hover:text-red-600"
+              />
+            </div>
+          )}
           {categories.length > 0 && (
             <div className="mt-2 text-sm text-gray-700 flex items-center gap-2 border rounded-full w-fit px-3 py-1">
               <span className=" uppercase font-semibold text-sm">{"Danh mục:"}</span>

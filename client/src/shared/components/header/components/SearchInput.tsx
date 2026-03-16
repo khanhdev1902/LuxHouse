@@ -42,6 +42,7 @@ export default function SearchInput({ className }: { className?: string }) {
   const handleSeeAll = () => {
     if (!search.trim()) return;
     navigate(`/products?search=${encodeURIComponent(search)}`);
+    setSearch("");
     off();
   };
 
