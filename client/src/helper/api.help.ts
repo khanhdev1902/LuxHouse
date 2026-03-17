@@ -1,4 +1,14 @@
 import axios, { type AxiosResponse } from "axios";
+export interface ApiErrorResponse {
+  code: number;
+  message: string;
+  error: {
+    name?: string[];
+    email?: string[];
+    password?: string[];
+    [key: string]: string[] | undefined; // Cho phép các field khác
+  };
+}
 
 export async function apiHandler<T>(promise: Promise<AxiosResponse<T>>): Promise<T> {
   try {
@@ -10,11 +20,12 @@ export async function apiHandler<T>(promise: Promise<AxiosResponse<T>>): Promise
     console.log("API Error1:", error);
     if (axios.isAxiosError(error)) {
       console.log("API Error:", error.response ?? error);
-      throw {
-        code: error.response?.data?.code,
-        error: error.response?.data?.error,
-        message: error.response?.data?.message,
+      const customError: ApiErrorResponse = {
+        code: error.response?.data?.code || 500,
+        error: error.response?.data?.error || {},
+        message: error.response?.data?.message || "Something went wrong",
       };
+      throw customError;
     }
     throw error;
   }

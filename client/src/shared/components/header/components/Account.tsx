@@ -56,7 +56,7 @@ export default function Account({ className }: { className?: string }) {
               )}
             </div>
           ) : (
-            <CircleUser size={26} className=" text-gray-600" />
+            <CircleUser size={26} className=" text-gray-600" onClick={() => navigation("/login")} />
           )}
         </div>
 

@@ -79,14 +79,15 @@ export default function Login() {
         {/* Right Side: Form - Padding vừa đủ để không bị scroll */}
         <div className="w-full lg:w-[55%] flex flex-col p-8 md:p-14 justify-center relative bg-white">
           <motion.a
-            whileHover={{ x: -3 }}
+            whileHover={{ x: -20, scale: 1.1 }}
+            transition={{ duration: 0.05, ease: "easeInOut" }}
             href="/"
-            className="absolute top-10 left-10 flex items-center gap-2 text-stone-400 hover:text-stone-900 transition-all text-[9px] uppercase tracking-widest font-bold"
+            className="absolute top-10 left-10 flex items-center gap-2 text-stone-400 hover:text-[#A6894B] transition-all text-[9px] uppercase tracking-widest font-bold"
           >
             <ArrowLeft size={12} /> Trang chủ
           </motion.a>
 
-          <div className="mb-10">
+          <div className="my-10">
             <h1
               className="text-3xl text-stone-900 mb-2"
               style={{ fontFamily: "'Playfair Display', serif" }}

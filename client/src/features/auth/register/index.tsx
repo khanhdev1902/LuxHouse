@@ -11,7 +11,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [focused, setFocused] = useState("");
-  const { mutate } = useRegister();
+  const { mutate, error, isPending } = useRegister();
 
   const brandColor = "#C05621";
   const darkStone = "#1C1917";
@@ -24,6 +24,7 @@ export default function Register() {
     };
     mutate(formData);
   };
+  console.log("e in register", error?.error.email);
   return (
     <div
       className="h-screen w-full flex items-center justify-center bg-[#FDFCFB] relative overflow-hidden px-4"
@@ -153,6 +154,13 @@ export default function Register() {
                     {field.icon}
                   </span>
                 </div>
+                <span className="text-xs text-red-500 py-1">
+                  {field.type === "text" && error?.error.name && error.error.name.at(-1)}
+                  {field.type === "email" && error?.error.email && error.error.email.at(-1)}
+                  {field.type === "password" &&
+                    error?.error.password &&
+                    error.error.password.at(-1)}
+                </span>
               </div>
             ))}
 
@@ -162,11 +170,13 @@ export default function Register() {
                 whileTap={{ scale: 0.99 }}
                 className="w-full py-3.5 rounded-full text-[10px] tracking-[0.2em] uppercase font-bold text-white shadow-md flex items-center justify-center gap-2 transition-colors"
                 style={{ backgroundColor: darkStone }}
+                disabled={isPending}
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = brandColor)}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = darkStone)}
                 onClick={handleSubmit}
               >
-                Đăng ký <ArrowRight size={14} />
+                {isPending ? `Đang gửi yêu cầu...` : `Đăng ký`}
+                <ArrowRight size={14} />
               </motion.button>
             </div>
           </form>
