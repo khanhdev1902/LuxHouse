@@ -46,7 +46,7 @@ export const useChat = () => {
 
       setHistoryChat((prev) => [...prev, reply.data]);
     } catch (e) {
-      console.log(e);
+      console.log("lỗi sendMes",e);
       setHistoryChat((prev) => [
         ...prev,
         {
