@@ -14,6 +14,9 @@ export class OrderService {
     const myListOrders = await this.prisma.order.findMany({
       where,
       include: orderInclude,
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
     const mapData: OrderResponse[] = myListOrders.map((order) => ({
       id: order.id,
