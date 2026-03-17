@@ -1,23 +1,26 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { HiOutlineArrowRight } from "react-icons/hi2";
-import { RiCompass3Line, RiLayoutMasonryLine } from "react-icons/ri";
+import { RiCompass3Line, RiLayoutMasonryLine } from "react-icons/ri"; // Thêm RiRestartLine
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { useAutoScroll } from "@/shared/hooks/use-auto-scroll";
 import { cn } from "@/lib/utils";
 import { useChat } from "../hooks/useChat";
+import { BrushCleaning } from "lucide-react";
 
 export default function ChatBox({ toggle, isOpen }: { toggle: () => void; isOpen: boolean }) {
-  const { historyChat, content, setContent, isSending, sendGemini } = useChat();
+  const { historyChat = [], content, setContent, isSending, sendOpenAI, clearHistory } = useChat();
   const chatRef = React.useRef<HTMLDivElement>(null);
   const { isAtBottom, scrollToEdge } = useAutoScroll(chatRef, [historyChat], true);
 
   const suggestions = [
-    "Tư vấn phối màu phòng khách",
-    "Mẫu sofa phong cách tối giản",
-    "Xu hướng nội thất 2024",
+    "Có sofa nào đang giảm giá không?",
+    "Gợi ý giường ngủ phù hợp phòng nhỏ",
+    "Tư vấn tủ quần áo cho 2 người dùng",
+    "Bàn ăn 4 người nên chọn loại nào?",
+    "Combo nội thất phòng ngủ gồm những gì?",
   ];
 
   return (
@@ -33,7 +36,7 @@ export default function ChatBox({ toggle, isOpen }: { toggle: () => void; isOpen
           exit={{ opacity: 0, scale: 0.9, y: 40 }}
           transition={{ type: "spring", damping: 25, stiffness: 200 }}
         >
-        
+          {/* HEADER */}
           <header className="relative p-4 bg-[#A6894B] text-[#F5F5DC] overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-full bg-[#8B4513]/10 skew-x-[-20deg] translate-x-10" />
 
@@ -56,12 +59,30 @@ export default function ChatBox({ toggle, isOpen }: { toggle: () => void; isOpen
                   </p>
                 </div>
               </div>
-              <button
-                onClick={toggle}
-                className="p-1 hover:rotate-90 transition-transform duration-300 opacity-70 hover:opacity-100"
-              >
-                <IoMdClose size={24} />
-              </button>
+
+              {/* ACTION BUTTONS */}
+              <div className="flex items-center gap-2">
+                {/* NÚT NEW CHAT (CLEAR HISTORY) */}
+                {
+                  <button
+                    onClick={clearHistory}
+                    title="Làm mới cuộc hội thoại"
+                    className="p-1.5 hover:bg-white/10 rounded-full transition-colors duration-200 opacity-70 hover:opacity-100 flex items-center gap-1"
+                  >
+                    <BrushCleaning
+                      size={20}
+                      className=" hover:text-red-500 hover:scale-110 transition-transform duration-300"
+                    />
+                  </button>
+                }
+
+                <button
+                  onClick={toggle}
+                  className="p-1 hover:rotate-90 transition-transform duration-300 opacity-70 hover:opacity-100"
+                >
+                  <IoMdClose size={24} />
+                </button>
+              </div>
             </div>
           </header>
 
@@ -89,35 +110,36 @@ export default function ChatBox({ toggle, isOpen }: { toggle: () => void; isOpen
               </div>
             )}
 
-            {historyChat.map((msg, i) => {
-              const isUser = msg.sender === "User";
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: isUser ? 20 : -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className={cn("flex w-full", isUser ? "justify-end" : "justify-start")}
-                >
-                  <div
-                    className={cn(
-                      "max-w-[85%] px-5 py-4 relative",
-                      isUser
-                        ? "bg-[#8B4513] text-white rounded-[20px] rounded-tr-[2px]"
-                        : "bg-white border border-[#E5E1DA] text-[#2C2420] rounded-[20px] rounded-tl-[2px] shadow-sm"
-                    )}
+            {historyChat.length > 0 &&
+              historyChat.map((msg, i) => {
+                const isUser = msg.role === "user";
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: isUser ? 20 : -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className={cn("flex w-full", isUser ? "justify-end" : "justify-start")}
                   >
                     <div
                       className={cn(
-                        "text-[14.5px] leading-relaxed prose prose-stone",
-                        isUser ? "prose-invert" : ""
+                        "max-w-[85%] px-5 py-4 relative",
+                        isUser
+                          ? "bg-[#8B4513] text-white rounded-[20px] rounded-tr-[2px]"
+                          : "bg-white border border-[#E5E1DA] text-[#2C2420] rounded-[20px] rounded-tl-[2px] shadow-sm"
                       )}
                     >
-                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                      <div
+                        className={cn(
+                          "text-[14.5px] leading-relaxed prose prose-stone",
+                          isUser ? "prose-invert" : ""
+                        )}
+                      >
+                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+                  </motion.div>
+                );
+              })}
 
             {isSending && (
               <div className="flex justify-start">
@@ -138,11 +160,11 @@ export default function ChatBox({ toggle, isOpen }: { toggle: () => void; isOpen
                 placeholder="Hỏi về chất liệu, phong cách..."
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && content.trim() && sendGemini()}
+                onKeyDown={(e) => e.key === "Enter" && content.trim() && sendOpenAI()}
                 className="w-full bg-transparent py-4 pl-5 pr-14 text-[14px] outline-none text-[#2C2420] placeholder:text-stone-400"
               />
               <button
-                onClick={() => content.trim() && sendGemini()}
+                onClick={() => content.trim() && sendOpenAI()}
                 className={cn(
                   "absolute right-2 size-10 rounded-xl flex items-center justify-center transition-all",
                   content.trim() ? "bg-[#2C2420] text-white" : "text-stone-300"

@@ -36,7 +36,7 @@ import { OpenAiModule } from './modules/opnen-ai/open-ai.module';
         stores: [
           new Keyv({
             store: new CacheableMemory({
-              ttl: 60000,
+              ttl: 60 * 1000,
               lruSize: 5000,
             }),
             namespace: 'luxhouse-memory-cache',

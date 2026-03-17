@@ -1,4 +1,4 @@
 export type Message = {
-  sender: "User" | "Gemini";
+  role: "user" | "assistant";
   content: string;
 };
