@@ -28,6 +28,18 @@ export class ProductQueryDto {
   categories?: string;
 
   @IsOptional()
+  @IsString()
+  prices?: string;
+
+  @IsOptional()
+  @IsString()
+  colors?: string;
+
+  @IsOptional()
+  @IsString()
+  sizes?: string;
+
+  @IsOptional()
   @Type(() => Number)
   minPrice?: number;
 

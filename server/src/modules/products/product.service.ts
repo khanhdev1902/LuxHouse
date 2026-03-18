@@ -14,39 +14,27 @@ export class ProductService {
 
   async getListProducts(
     query: ProductQueryDto,
-  ): Promise<ApiResponseType<ProductListItem[]>> {
+  ): Promise<{ lstProducts: ProductListItem[]; meta: object }> {
     const {
       page = 1,
       limit = 10,
       search,
-      category,
-      minPrice,
-      maxPrice,
+      categories,
+      colors,
+      sizes,
+      prices,
       // sort = 'newest',
     } = query;
-    console.log('haha', query);
+
     const skip = (page - 1) * limit;
     const where: Prisma.ProductWhereInput = {
       isActive: true,
     };
 
-    if (search) {
-      where.slug = {
-        contains: slugify(search),
-        // mode: 'insensitive',
-      };
-    }
-    if (category) {
-      where.categories = {
-        some: {
-          category: {
-            slug: category,
-          },
-        },
-      };
-    }
-    if (query.categories) {
-      const categorySlugs = query.categories.split(', ');
+    if (search) where.slug = { contains: slugify(search) };
+
+    if (categories) {
+      const categorySlugs = categories.split(', ');
       where.categories = {
         some: {
           category: {
@@ -58,40 +46,67 @@ export class ProductService {
       };
     }
 
-    //Price filter (theo variant)
-    if (minPrice !== undefined || maxPrice !== undefined) {
+    if (colors) {
+      const lstColors = colors.split(',').map((c) => c.trim());
+      console.log(lstColors);
       where.variants = {
         some: {
-          price: {
-            ...(minPrice !== undefined && { gte: minPrice }),
-            ...(maxPrice !== undefined && { lte: maxPrice }),
+          attributeValues: {
+            some: {
+              attributeValue: {
+                value: {
+                  in: lstColors,
+                },
+                attribute: {
+                  name: 'Color',
+                },
+              },
+            },
           },
         },
       };
     }
 
-    //Sort
-    // let orderBy: Prisma.ProductOrderByWithRelationInput = { createdAt: 'desc' };
+    if (sizes) {
+      const lstsizes = sizes.split(',').map((c) => c.trim());
+      console.log(lstsizes);
+      where.variants = {
+        some: {
+          attributeValues: {
+            some: {
+              attributeValue: {
+                value: {
+                  in: lstsizes,
+                },
+                attribute: {
+                  name: 'Size',
+                },
+              },
+            },
+          },
+        },
+      };
+    }
 
-    // if (sort === 'price_asc') {
-    //   orderBy = {
-    //     variants: {
-    //       _min: {
-    //         price: 'asc',
-    //       },
-    //     },
-    //   };
-    // }
+    if (prices) {
+      const lstPrices = prices.split(', ');
+      const priceConditions = lstPrices.map((price) => {
+        const [min, max] = price.split('-').map(Number);
+        return {
+          price: {
+            gte: min,
+            lte: max,
+          },
+        };
+      });
+      console.log(lstPrices, priceConditions);
 
-    // if (sort === 'price_desc') {
-    //   orderBy = {
-    //     variants: {
-    //       _min: {
-    //         price: 'desc',
-    //       },
-    //     },
-    //   };
-    // }
+      where.variants = {
+        some: {
+          OR: priceConditions,
+        },
+      };
+    }
 
     const [products, total] = await Promise.all([
       this.prismaService.product.findMany({
@@ -104,18 +119,16 @@ export class ProductService {
       this.prismaService.product.count({ where }),
     ]);
 
-    const items = products.map(mapProductListItem);
-    return ApiResponse.success(
-      items,
-      'Lấy danh sách sản phẩm thành công',
-      200,
-      {
+    const lstProducts = products.map(mapProductListItem);
+    return {
+      lstProducts,
+      meta: {
         total,
         page,
         limit,
         totalPages: Math.ceil(total / limit),
       },
-    );
+    };
   }
 
   async getProductBySlug(
