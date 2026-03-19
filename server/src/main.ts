@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { VersioningType } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
@@ -17,11 +17,14 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
-  // app.useGlobalPipes(
-  //   new ValidationPipe({
-  //     transform: true,
-  //   }),
-  // );
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // xóa những trường dư
+      // forbidNonWhitelisted: true, //chặn những data truyền dư trường
+      transform: true, // fomat cho chuẩn dataDTO
+    }),
+  );
+
   app.use(cookieParser());
   app.enableVersioning({
     type: VersioningType.URI,

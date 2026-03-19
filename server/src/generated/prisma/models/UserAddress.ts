@@ -39,11 +39,14 @@ export type UserAddressSumAggregateOutputType = {
 export type UserAddressMinAggregateOutputType = {
   id: number | null
   userId: number | null
-  address: string | null
-  city: string | null
-  state: string | null
-  zipCode: string | null
-  country: string | null
+  addressType: $Enums.AddressType | null
+  fullName: string | null
+  phoneNumber: string | null
+  province: string | null
+  district: string | null
+  ward: string | null
+  streetAddress: string | null
+  isDefault: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -51,11 +54,14 @@ export type UserAddressMinAggregateOutputType = {
 export type UserAddressMaxAggregateOutputType = {
   id: number | null
   userId: number | null
-  address: string | null
-  city: string | null
-  state: string | null
-  zipCode: string | null
-  country: string | null
+  addressType: $Enums.AddressType | null
+  fullName: string | null
+  phoneNumber: string | null
+  province: string | null
+  district: string | null
+  ward: string | null
+  streetAddress: string | null
+  isDefault: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -63,11 +69,14 @@ export type UserAddressMaxAggregateOutputType = {
 export type UserAddressCountAggregateOutputType = {
   id: number
   userId: number
-  address: number
-  city: number
-  state: number
-  zipCode: number
-  country: number
+  addressType: number
+  fullName: number
+  phoneNumber: number
+  province: number
+  district: number
+  ward: number
+  streetAddress: number
+  isDefault: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -87,11 +96,14 @@ export type UserAddressSumAggregateInputType = {
 export type UserAddressMinAggregateInputType = {
   id?: true
   userId?: true
-  address?: true
-  city?: true
-  state?: true
-  zipCode?: true
-  country?: true
+  addressType?: true
+  fullName?: true
+  phoneNumber?: true
+  province?: true
+  district?: true
+  ward?: true
+  streetAddress?: true
+  isDefault?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -99,11 +111,14 @@ export type UserAddressMinAggregateInputType = {
 export type UserAddressMaxAggregateInputType = {
   id?: true
   userId?: true
-  address?: true
-  city?: true
-  state?: true
-  zipCode?: true
-  country?: true
+  addressType?: true
+  fullName?: true
+  phoneNumber?: true
+  province?: true
+  district?: true
+  ward?: true
+  streetAddress?: true
+  isDefault?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -111,11 +126,14 @@ export type UserAddressMaxAggregateInputType = {
 export type UserAddressCountAggregateInputType = {
   id?: true
   userId?: true
-  address?: true
-  city?: true
-  state?: true
-  zipCode?: true
-  country?: true
+  addressType?: true
+  fullName?: true
+  phoneNumber?: true
+  province?: true
+  district?: true
+  ward?: true
+  streetAddress?: true
+  isDefault?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -210,11 +228,14 @@ export type UserAddressGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type UserAddressGroupByOutputType = {
   id: number
   userId: number
-  address: string
-  city: string
-  state: string
-  zipCode: string
-  country: string
+  addressType: $Enums.AddressType
+  fullName: string
+  phoneNumber: string
+  province: string
+  district: string
+  ward: string
+  streetAddress: string
+  isDefault: boolean
   createdAt: Date
   updatedAt: Date
   _count: UserAddressCountAggregateOutputType | null
@@ -245,11 +266,14 @@ export type UserAddressWhereInput = {
   NOT?: Prisma.UserAddressWhereInput | Prisma.UserAddressWhereInput[]
   id?: Prisma.IntFilter<"UserAddress"> | number
   userId?: Prisma.IntFilter<"UserAddress"> | number
-  address?: Prisma.StringFilter<"UserAddress"> | string
-  city?: Prisma.StringFilter<"UserAddress"> | string
-  state?: Prisma.StringFilter<"UserAddress"> | string
-  zipCode?: Prisma.StringFilter<"UserAddress"> | string
-  country?: Prisma.StringFilter<"UserAddress"> | string
+  addressType?: Prisma.EnumAddressTypeFilter<"UserAddress"> | $Enums.AddressType
+  fullName?: Prisma.StringFilter<"UserAddress"> | string
+  phoneNumber?: Prisma.StringFilter<"UserAddress"> | string
+  province?: Prisma.StringFilter<"UserAddress"> | string
+  district?: Prisma.StringFilter<"UserAddress"> | string
+  ward?: Prisma.StringFilter<"UserAddress"> | string
+  streetAddress?: Prisma.StringFilter<"UserAddress"> | string
+  isDefault?: Prisma.BoolFilter<"UserAddress"> | boolean
   createdAt?: Prisma.DateTimeFilter<"UserAddress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserAddress"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -258,11 +282,14 @@ export type UserAddressWhereInput = {
 export type UserAddressOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
-  zipCode?: Prisma.SortOrder
-  country?: Prisma.SortOrder
+  addressType?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
+  phoneNumber?: Prisma.SortOrder
+  province?: Prisma.SortOrder
+  district?: Prisma.SortOrder
+  ward?: Prisma.SortOrder
+  streetAddress?: Prisma.SortOrder
+  isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -274,11 +301,14 @@ export type UserAddressWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserAddressWhereInput[]
   NOT?: Prisma.UserAddressWhereInput | Prisma.UserAddressWhereInput[]
   userId?: Prisma.IntFilter<"UserAddress"> | number
-  address?: Prisma.StringFilter<"UserAddress"> | string
-  city?: Prisma.StringFilter<"UserAddress"> | string
-  state?: Prisma.StringFilter<"UserAddress"> | string
-  zipCode?: Prisma.StringFilter<"UserAddress"> | string
-  country?: Prisma.StringFilter<"UserAddress"> | string
+  addressType?: Prisma.EnumAddressTypeFilter<"UserAddress"> | $Enums.AddressType
+  fullName?: Prisma.StringFilter<"UserAddress"> | string
+  phoneNumber?: Prisma.StringFilter<"UserAddress"> | string
+  province?: Prisma.StringFilter<"UserAddress"> | string
+  district?: Prisma.StringFilter<"UserAddress"> | string
+  ward?: Prisma.StringFilter<"UserAddress"> | string
+  streetAddress?: Prisma.StringFilter<"UserAddress"> | string
+  isDefault?: Prisma.BoolFilter<"UserAddress"> | boolean
   createdAt?: Prisma.DateTimeFilter<"UserAddress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserAddress"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -287,11 +317,14 @@ export type UserAddressWhereUniqueInput = Prisma.AtLeast<{
 export type UserAddressOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
-  zipCode?: Prisma.SortOrder
-  country?: Prisma.SortOrder
+  addressType?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
+  phoneNumber?: Prisma.SortOrder
+  province?: Prisma.SortOrder
+  district?: Prisma.SortOrder
+  ward?: Prisma.SortOrder
+  streetAddress?: Prisma.SortOrder
+  isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserAddressCountOrderByAggregateInput
@@ -307,21 +340,27 @@ export type UserAddressScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserAddressScalarWhereWithAggregatesInput | Prisma.UserAddressScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"UserAddress"> | number
   userId?: Prisma.IntWithAggregatesFilter<"UserAddress"> | number
-  address?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
-  city?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
-  state?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
-  zipCode?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
-  country?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
+  addressType?: Prisma.EnumAddressTypeWithAggregatesFilter<"UserAddress"> | $Enums.AddressType
+  fullName?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
+  phoneNumber?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
+  province?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
+  district?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
+  ward?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
+  streetAddress?: Prisma.StringWithAggregatesFilter<"UserAddress"> | string
+  isDefault?: Prisma.BoolWithAggregatesFilter<"UserAddress"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserAddress"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserAddress"> | Date | string
 }
 
 export type UserAddressCreateInput = {
-  address: string
-  city: string
-  state: string
-  zipCode: string
-  country: string
+  addressType?: $Enums.AddressType
+  fullName: string
+  phoneNumber: string
+  province: string
+  district: string
+  ward: string
+  streetAddress: string
+  isDefault?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAddressesInput
@@ -330,21 +369,27 @@ export type UserAddressCreateInput = {
 export type UserAddressUncheckedCreateInput = {
   id?: number
   userId: number
-  address: string
-  city: string
-  state: string
-  zipCode: string
-  country: string
+  addressType?: $Enums.AddressType
+  fullName: string
+  phoneNumber: string
+  province: string
+  district: string
+  ward: string
+  streetAddress: string
+  isDefault?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserAddressUpdateInput = {
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  addressType?: Prisma.EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  ward?: Prisma.StringFieldUpdateOperationsInput | string
+  streetAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAddressesNestedInput
@@ -353,11 +398,14 @@ export type UserAddressUpdateInput = {
 export type UserAddressUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  addressType?: Prisma.EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  ward?: Prisma.StringFieldUpdateOperationsInput | string
+  streetAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -365,21 +413,27 @@ export type UserAddressUncheckedUpdateInput = {
 export type UserAddressCreateManyInput = {
   id?: number
   userId: number
-  address: string
-  city: string
-  state: string
-  zipCode: string
-  country: string
+  addressType?: $Enums.AddressType
+  fullName: string
+  phoneNumber: string
+  province: string
+  district: string
+  ward: string
+  streetAddress: string
+  isDefault?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserAddressUpdateManyMutationInput = {
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  addressType?: Prisma.EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  ward?: Prisma.StringFieldUpdateOperationsInput | string
+  streetAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -387,11 +441,14 @@ export type UserAddressUpdateManyMutationInput = {
 export type UserAddressUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  addressType?: Prisma.EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  ward?: Prisma.StringFieldUpdateOperationsInput | string
+  streetAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -409,11 +466,14 @@ export type UserAddressOrderByRelationAggregateInput = {
 export type UserAddressCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
-  zipCode?: Prisma.SortOrder
-  country?: Prisma.SortOrder
+  addressType?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
+  phoneNumber?: Prisma.SortOrder
+  province?: Prisma.SortOrder
+  district?: Prisma.SortOrder
+  ward?: Prisma.SortOrder
+  streetAddress?: Prisma.SortOrder
+  isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -426,11 +486,14 @@ export type UserAddressAvgOrderByAggregateInput = {
 export type UserAddressMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
-  zipCode?: Prisma.SortOrder
-  country?: Prisma.SortOrder
+  addressType?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
+  phoneNumber?: Prisma.SortOrder
+  province?: Prisma.SortOrder
+  district?: Prisma.SortOrder
+  ward?: Prisma.SortOrder
+  streetAddress?: Prisma.SortOrder
+  isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -438,11 +501,14 @@ export type UserAddressMaxOrderByAggregateInput = {
 export type UserAddressMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  state?: Prisma.SortOrder
-  zipCode?: Prisma.SortOrder
-  country?: Prisma.SortOrder
+  addressType?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
+  phoneNumber?: Prisma.SortOrder
+  province?: Prisma.SortOrder
+  district?: Prisma.SortOrder
+  ward?: Prisma.SortOrder
+  streetAddress?: Prisma.SortOrder
+  isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -494,23 +560,37 @@ export type UserAddressUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.UserAddressScalarWhereInput | Prisma.UserAddressScalarWhereInput[]
 }
 
+export type EnumAddressTypeFieldUpdateOperationsInput = {
+  set?: $Enums.AddressType
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type UserAddressCreateWithoutUserInput = {
-  address: string
-  city: string
-  state: string
-  zipCode: string
-  country: string
+  addressType?: $Enums.AddressType
+  fullName: string
+  phoneNumber: string
+  province: string
+  district: string
+  ward: string
+  streetAddress: string
+  isDefault?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserAddressUncheckedCreateWithoutUserInput = {
   id?: number
-  address: string
-  city: string
-  state: string
-  zipCode: string
-  country: string
+  addressType?: $Enums.AddressType
+  fullName: string
+  phoneNumber: string
+  province: string
+  district: string
+  ward: string
+  streetAddress: string
+  isDefault?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -547,54 +627,69 @@ export type UserAddressScalarWhereInput = {
   NOT?: Prisma.UserAddressScalarWhereInput | Prisma.UserAddressScalarWhereInput[]
   id?: Prisma.IntFilter<"UserAddress"> | number
   userId?: Prisma.IntFilter<"UserAddress"> | number
-  address?: Prisma.StringFilter<"UserAddress"> | string
-  city?: Prisma.StringFilter<"UserAddress"> | string
-  state?: Prisma.StringFilter<"UserAddress"> | string
-  zipCode?: Prisma.StringFilter<"UserAddress"> | string
-  country?: Prisma.StringFilter<"UserAddress"> | string
+  addressType?: Prisma.EnumAddressTypeFilter<"UserAddress"> | $Enums.AddressType
+  fullName?: Prisma.StringFilter<"UserAddress"> | string
+  phoneNumber?: Prisma.StringFilter<"UserAddress"> | string
+  province?: Prisma.StringFilter<"UserAddress"> | string
+  district?: Prisma.StringFilter<"UserAddress"> | string
+  ward?: Prisma.StringFilter<"UserAddress"> | string
+  streetAddress?: Prisma.StringFilter<"UserAddress"> | string
+  isDefault?: Prisma.BoolFilter<"UserAddress"> | boolean
   createdAt?: Prisma.DateTimeFilter<"UserAddress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserAddress"> | Date | string
 }
 
 export type UserAddressCreateManyUserInput = {
   id?: number
-  address: string
-  city: string
-  state: string
-  zipCode: string
-  country: string
+  addressType?: $Enums.AddressType
+  fullName: string
+  phoneNumber: string
+  province: string
+  district: string
+  ward: string
+  streetAddress: string
+  isDefault?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserAddressUpdateWithoutUserInput = {
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  addressType?: Prisma.EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  ward?: Prisma.StringFieldUpdateOperationsInput | string
+  streetAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserAddressUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  addressType?: Prisma.EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  ward?: Prisma.StringFieldUpdateOperationsInput | string
+  streetAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserAddressUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  state?: Prisma.StringFieldUpdateOperationsInput | string
-  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  addressType?: Prisma.EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  ward?: Prisma.StringFieldUpdateOperationsInput | string
+  streetAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -604,11 +699,14 @@ export type UserAddressUncheckedUpdateManyWithoutUserInput = {
 export type UserAddressSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  address?: boolean
-  city?: boolean
-  state?: boolean
-  zipCode?: boolean
-  country?: boolean
+  addressType?: boolean
+  fullName?: boolean
+  phoneNumber?: boolean
+  province?: boolean
+  district?: boolean
+  ward?: boolean
+  streetAddress?: boolean
+  isDefault?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -617,11 +715,14 @@ export type UserAddressSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 export type UserAddressSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  address?: boolean
-  city?: boolean
-  state?: boolean
-  zipCode?: boolean
-  country?: boolean
+  addressType?: boolean
+  fullName?: boolean
+  phoneNumber?: boolean
+  province?: boolean
+  district?: boolean
+  ward?: boolean
+  streetAddress?: boolean
+  isDefault?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -630,11 +731,14 @@ export type UserAddressSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 export type UserAddressSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  address?: boolean
-  city?: boolean
-  state?: boolean
-  zipCode?: boolean
-  country?: boolean
+  addressType?: boolean
+  fullName?: boolean
+  phoneNumber?: boolean
+  province?: boolean
+  district?: boolean
+  ward?: boolean
+  streetAddress?: boolean
+  isDefault?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -643,16 +747,19 @@ export type UserAddressSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type UserAddressSelectScalar = {
   id?: boolean
   userId?: boolean
-  address?: boolean
-  city?: boolean
-  state?: boolean
-  zipCode?: boolean
-  country?: boolean
+  addressType?: boolean
+  fullName?: boolean
+  phoneNumber?: boolean
+  province?: boolean
+  district?: boolean
+  ward?: boolean
+  streetAddress?: boolean
+  isDefault?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserAddressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "address" | "city" | "state" | "zipCode" | "country" | "createdAt" | "updatedAt", ExtArgs["result"]["userAddress"]>
+export type UserAddressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "addressType" | "fullName" | "phoneNumber" | "province" | "district" | "ward" | "streetAddress" | "isDefault" | "createdAt" | "updatedAt", ExtArgs["result"]["userAddress"]>
 export type UserAddressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -671,11 +778,14 @@ export type $UserAddressPayload<ExtArgs extends runtime.Types.Extensions.Interna
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     userId: number
-    address: string
-    city: string
-    state: string
-    zipCode: string
-    country: string
+    addressType: $Enums.AddressType
+    fullName: string
+    phoneNumber: string
+    province: string
+    district: string
+    ward: string
+    streetAddress: string
+    isDefault: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["userAddress"]>
@@ -1104,11 +1214,14 @@ export interface Prisma__UserAddressClient<T, Null = never, ExtArgs extends runt
 export interface UserAddressFieldRefs {
   readonly id: Prisma.FieldRef<"UserAddress", 'Int'>
   readonly userId: Prisma.FieldRef<"UserAddress", 'Int'>
-  readonly address: Prisma.FieldRef<"UserAddress", 'String'>
-  readonly city: Prisma.FieldRef<"UserAddress", 'String'>
-  readonly state: Prisma.FieldRef<"UserAddress", 'String'>
-  readonly zipCode: Prisma.FieldRef<"UserAddress", 'String'>
-  readonly country: Prisma.FieldRef<"UserAddress", 'String'>
+  readonly addressType: Prisma.FieldRef<"UserAddress", 'AddressType'>
+  readonly fullName: Prisma.FieldRef<"UserAddress", 'String'>
+  readonly phoneNumber: Prisma.FieldRef<"UserAddress", 'String'>
+  readonly province: Prisma.FieldRef<"UserAddress", 'String'>
+  readonly district: Prisma.FieldRef<"UserAddress", 'String'>
+  readonly ward: Prisma.FieldRef<"UserAddress", 'String'>
+  readonly streetAddress: Prisma.FieldRef<"UserAddress", 'String'>
+  readonly isDefault: Prisma.FieldRef<"UserAddress", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"UserAddress", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserAddress", 'DateTime'>
 }

@@ -376,6 +376,7 @@ export async function seedProducts(prisma: PrismaService) {
 
       for (const [attrName, valueName] of Object.entries(variant.combination)) {
         const attributeValueId =
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
           attributeMap[attrName].values[valueName as string];
         if (attributeValueId) {
           mappingData.push({

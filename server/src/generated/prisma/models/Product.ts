@@ -536,10 +536,6 @@ export type ProductScalarRelationFilter = {
   isNot?: Prisma.ProductWhereInput
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type FloatFieldUpdateOperationsInput = {
   set?: number
   increment?: number

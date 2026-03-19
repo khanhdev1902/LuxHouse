@@ -17,6 +17,7 @@ import 'dotenv/config';
 import { OrderModule } from './modules/orders/order.module';
 import { CategoryModule } from './modules/categories/category.module';
 import { OpenAiModule } from './modules/opnen-ai/open-ai.module';
+import { AddressModule } from './modules/address/address.module';
 @Module({
   imports: [
     // ConfigModule.forRoot({
@@ -51,6 +52,7 @@ import { OpenAiModule } from './modules/opnen-ai/open-ai.module';
     AuthModule,
     ProductModule,
     CategoryModule,
+    AddressModule,
     CartModule,
     OrderModule,
     GeminiModule,

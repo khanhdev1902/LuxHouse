@@ -11,5 +11,6 @@ export const API_ENDPOINTS = {
   CART_ITEMS: (productVariantId: number) => `/cart/items/${productVariantId}`,
   CHECKOUT: "/checkout",
   REFRESH_DATA: "/auth/refresh",
-  ORDER: '/orders'
+  ORDER: "/orders",
+  USERADDRESS: "/addresses",
 } as const;

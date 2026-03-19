@@ -27,15 +27,24 @@ model User {
   @@map("users")
 }
 
+enum AddressType { 
+  HOME 
+  OFFICE
+  OTHER
+}
 model UserAddress {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  address   String
-  city      String
-  state     String
-  zipCode   String
-  country   String
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id              Int      @id @default(autoincrement())
+  userId          Int
+  addressType    AddressType @default(HOME)
+  fullName        String
+  phoneNumber     String
+  province        String
+  district        String
+  ward            String
+  streetAddress   String
+  isDefault       Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

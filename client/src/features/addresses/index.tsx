@@ -7,118 +7,166 @@ import {
   FaBriefcase,
   FaTrashAlt,
   FaPen,
+  FaEllipsisV,
 } from "react-icons/fa";
-
-const addressList = [
-  {
-    id: 1,
-    name: "Nguyễn Văn Admin",
-    phone: "090 ••• 8888",
-    address: "Căn hộ A12, Tòa nhà Serenity Sky Villas, 259 Điện Biên Phủ",
-    ward: "Phường Võ Thị Sáu, Quận 3",
-    city: "TP. Hồ Chí Minh",
-    isDefault: true,
-    type: "Nhà riêng",
-    icon: <FaHome />,
-  },
-  {
-    id: 2,
-    name: "Nguyễn Văn Admin",
-    phone: "098 ••• 3210",
-    address: "Tòa nhà Bitexco Financial, Số 2 Hải Triều",
-    ward: "Phường Bến Nghé, Quận 1",
-    city: "TP. Hồ Chí Minh",
-    isDefault: false,
-    type: "Văn phòng",
-    icon: <FaBriefcase />,
-  },
-];
+import useAddress from "./hooks/useAddress";
+import type { AddressType } from "./types/address.type";
+import AddressModal from "./components/AddressModal";
+import { useState } from "react";
 
 export default function Addresses() {
-  return (
-    <div className="min-h-screen bg-[#FAF9F6] py-12">
-      <Container>
-        <div className="max-w-5xl mx-auto">
-          {/* Header Section */}
-          <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
-            <div>
-              <h2 className="text-3xl font-light tracking-tight text-[#2D2D2D] font-serif text-center md:text-left">
-                Sổ địa chỉ <span className="font-semibold text-[#A6894B]">Giao hàng</span>
-              </h2>
-              <p className="text-gray-400 text-[10px] uppercase tracking-[0.2em] mt-2 text-center md:text-left">
-                Quản lý các địa điểm nhận tuyệt tác nội thất
-              </p>
-            </div>
+  const { addresses, isLoading, onDelete, onUpdate, onCreate, isPending } = useAddress();
 
-            <button className="flex items-center gap-3 px-8 py-3 bg-[#2D2D2D] text-white text-[11px] uppercase tracking-widest font-bold hover:bg-[#C5A25D] transition-all shadow-lg active:scale-95">
-              <FaPlus className="size-3" /> Thêm địa chỉ mới
-            </button>
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState<AddressType | null>(null);
+
+  const IconAddress = {
+    HOME: <FaHome />,
+    OFFICE: <FaBriefcase />,
+    OTHER: <FaMapMarkerAlt />,
+  };
+
+  const handleSetDefault = (id: number) => {
+    onUpdate(id, { isDefault: true });
+  };
+
+  const handleOpenCreate = () => {
+    setSelectedAddress(null);
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEdit = (addr: AddressType) => {
+    setSelectedAddress(addr);
+    setIsModalOpen(true);
+  };
+
+  return (
+    <Container className=" relative min-h-screen bg-[#FAF9F6] py-12 w-full">
+      <div className="max-w-5xl mx-auto">
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-14 gap-6 border-b border-[#E8E2DA] pb-8">
+          <div className="space-y-2">
+            <h2 className="text-4xl text-[#1A1A1A]">
+              Sổ địa chỉ <span className="italic text-[#A6894B]">Giao hàng</span>
+            </h2>
+            <p className="text-gray-500 text-[10px] uppercase tracking-[0.3em] font-medium">
+              Nơi lưu giữ các tọa độ không gian sống của LuxHouse
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {addressList.map((addr) => (
+          <button
+            onClick={handleOpenCreate}
+            className="group relative flex items-center gap-3 px-10 py-4 bg-[#1A1A1A] text-white text-[11px] uppercase tracking-[0.2em] font-bold overflow-hidden transition-all hover:bg-[#A6894B] disabled:opacity-50"
+            disabled={isPending}
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              <FaPlus className="size-3" /> Thêm địa chỉ mới
+            </span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* Trạng thái Loading Skeleton */}
+          {isLoading &&
+            [1, 2].map((i) => (
+              <div
+                key={i}
+                className="h-[300px] bg-white animate-pulse border border-[#F0EDE8] p-10"
+              >
+                <div className="size-12 bg-gray-100 mb-6"></div>
+                <div className="h-6 bg-gray-100 w-1/2 mb-4"></div>
+                <div className="h-4 bg-gray-100 w-full mb-2"></div>
+                <div className="h-4 bg-gray-100 w-2/3"></div>
+              </div>
+            ))}
+
+          {/* Danh sách địa chỉ thực tế */}
+          {!isLoading &&
+            addresses.map((addr: AddressType) => (
               <div
                 key={addr.id}
-                className={`bg-white border transition-all duration-300 relative group overflow-hidden ${
+                className={`group relative bg-white transition-all duration-500 hover:-translate-y-2 ${
                   addr.isDefault
-                    ? "border-[#C5A25D] shadow-md"
-                    : "border-[#E8E2DA] hover:border-gray-300 shadow-sm"
+                    ? "ring-1 ring-[#A6894B] shadow-[0_20px_50px_rgba(166,137,75,0.1)]"
+                    : "border border-[#F0EDE8] hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)]"
                 }`}
               >
-                {/* Badge Trạng thái */}
                 {addr.isDefault && (
-                  <div className="absolute top-0 right-0 bg-[#C5A25D] text-white text-[9px] uppercase font-bold px-3 py-1 tracking-wider">
+                  <div className="absolute -top-3 -right-3 bg-[#A6894B] text-white text-[9px] uppercase font-bold px-4 py-2 tracking-tighter shadow-lg rotate-3 z-20">
                     Mặc định
                   </div>
                 )}
 
-                <div className="p-8">
-                  {/* Header Card */}
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="size-10 rounded-full bg-[#F8F5F2] text-[#A6894B] flex items-center justify-center border border-[#E8E2DA]">
-                      {addr.icon}
+                {isPending && (
+                  <div className=" absolute inset-0 m-auto bg-white bg-opacity-35 z-10 flex justify-center items-center">
+                    <div className=" animate-spin rounded-full border-4 border-main border-b-white w-8 h-8 opacity-80 duration-700"></div>
+                  </div>
+                )}
+
+                <div className="p-10">
+                  <div className="flex justify-between items-start mb-8">
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`size-12 flex items-center justify-center text-lg transition-colors ${
+                          addr.isDefault ? "bg-[#A6894B] text-white" : "bg-[#F8F5F2] text-[#A6894B]"
+                        }`}
+                      >
+                        {IconAddress[addr.addressType as keyof typeof IconAddress] || (
+                          <FaMapMarkerAlt />
+                        )}
+                      </div>
+                      <div>
+                        <span className="text-[9px] uppercase text-[#A6894B] font-bold tracking-[0.2em]">
+                          {addr.addressType}
+                        </span>
+                        <h4 className="text-xl font-semibold text-gray-600">{addr.fullName}</h4>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-[10px] uppercase text-[#A6894B] font-bold tracking-widest">
-                        {addr.type}
-                      </span>
-                      <h4 className="text-lg font-medium text-[#2D2D2D] flex items-center gap-2">
-                        {addr.name}
-                      </h4>
-                    </div>
+                    <button className="text-gray-300 hover:text-[#1A1A1A] transition-colors p-2">
+                      <FaEllipsisV />
+                    </button>
                   </div>
 
-                  {/* Body Card */}
-                  <div className="space-y-4 mb-8">
-                    <div className="flex items-start gap-3 text-sm text-gray-600">
-                      <FaPhoneAlt className="mt-1 text-gray-300 size-3" />
-                      <span>{addr.phone}</span>
+                  <div className="space-y-4 mb-8 min-h-[80px]">
+                    <div className="flex items-center gap-3 text-sm text-gray-600">
+                      <FaPhoneAlt className="text-[#A6894B]/50 size-3" />
+                      <span className="tracking-widest">{addr.phoneNumber}</span>
                     </div>
                     <div className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed">
-                      <FaMapMarkerAlt className="mt-1 text-gray-300 size-3" />
+                      <FaMapMarkerAlt className="mt-1 text-[#A6894B]/50 size-3" />
                       <p>
-                        {addr.address}
+                        {addr.streetAddress}
                         <br />
-                        {addr.ward}, {addr.city}
+                        <span className="text-gray-400">
+                          {addr.ward}, {addr.district}, {addr.province}
+                        </span>
                       </p>
                     </div>
                   </div>
 
-                  {/* Actions Footer */}
-                  <div className="pt-6 border-t border-[#F5F5F0] flex justify-between items-center">
-                    <div className="flex gap-4">
-                      <button className="text-[10px] uppercase font-bold text-gray-400 hover:text-[#2D2D2D] transition-colors flex items-center gap-2">
-                        <FaPen className="size-2.5" /> Chỉnh sửa
+                  <div className="pt-6 border-t border-[#F8F5F2] flex justify-between items-center">
+                    <div className="flex gap-6">
+                      <button
+                        onClick={() => handleOpenEdit(addr)}
+                        className="text-[10px] uppercase font-bold text-gray-400 hover:text-[#A6894B] transition-colors flex items-center gap-2"
+                      >
+                        <FaPen className="size-2.5" /> Sửa
                       </button>
                       {!addr.isDefault && (
-                        <button className="text-[10px] uppercase font-bold text-red-300 hover:text-red-500 transition-colors flex items-center gap-2">
+                        <button
+                          onClick={() => onDelete(addr.id!)}
+                          className="text-[10px] uppercase font-bold text-red-200 hover:text-red-500 transition-colors flex items-center gap-2"
+                        >
                           <FaTrashAlt className="size-2.5" /> Xóa
                         </button>
                       )}
                     </div>
 
                     {!addr.isDefault && (
-                      <button className="text-[10px] uppercase font-bold text-[#A6894B] border-b border-[#A6894B] pb-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => handleSetDefault(addr.id!)}
+                        className="text-[10px] uppercase font-bold text-[#A6894B] border-b border-transparent hover:border-[#A6894B] transition-all opacity-0 group-hover:opacity-100"
+                      >
                         Đặt làm mặc định
                       </button>
                     )}
@@ -127,27 +175,42 @@ export default function Addresses() {
               </div>
             ))}
 
-            {/* Empty State / Add Placeholder - Giúp lấp đầy khoảng trống */}
-            <div className="border-2 border-dashed border-[#E8E2DA] rounded-sm flex flex-col items-center justify-center p-12 text-gray-400 hover:bg-[#FDFCFB] hover:border-[#C5A25D] transition-all group cursor-pointer">
-              <div className="size-12 rounded-full border border-gray-200 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <FaPlus className="size-4" />
-              </div>
-              <p className="text-[11px] uppercase tracking-widest font-bold">
-                Thêm địa chỉ giao hàng
-              </p>
-              <p className="text-[10px] mt-2 italic">Dành cho các dự án nội thất mới</p>
+          {/* Nút thêm địa chỉ nhanh */}
+          <div
+            onClick={handleOpenCreate}
+            className="border-2 border-dashed border-[#E8E2DA] flex flex-col items-center justify-center p-12 text-gray-400 hover:bg-white hover:border-[#A6894B] transition-all group cursor-pointer min-h-[300px]"
+          >
+            <div className="size-14 rounded-full border border-gray-200 flex items-center justify-center mb-4 group-hover:bg-[#1A1A1A] group-hover:text-white transition-all duration-500">
+              <FaPlus className="size-4" />
             </div>
-          </div>
-
-          {/* Lưu ý nhỏ */}
-          <div className="mt-12 text-center">
-            <p className="text-gray-400 text-xs italic">
-              * Lưu ý: Địa chỉ mặc định sẽ được ưu tiên sử dụng cho các đơn hàng và báo giá thi
-              công.
+            <p className="text-[11px] uppercase tracking-[0.2em] font-bold text-[#1A1A1A]">
+              Thêm địa chỉ giao hàng
+            </p>
+            <p className="text-[10px] mt-2 italic font-serif">
+              Dành cho các tuyệt tác nội thất mới
             </p>
           </div>
         </div>
-      </Container>
-    </div>
+
+        {/* Footer info */}
+        <div className="mt-16 text-center border-t border-[#E8E2DA] pt-8">
+          <p className="text-gray-400 text-[10px] uppercase tracking-widest">
+            © 2026 LuxHouse Nội thất ZORO — Premium Furniture Experience
+          </p>
+        </div>
+      </div>
+
+      <AddressModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialData={selectedAddress}
+        onSubmit={(data) => {
+          if (selectedAddress) onUpdate(selectedAddress.id, data);
+          else onCreate(data);
+          setIsModalOpen(false);
+        }}
+        isPending={isPending}
+      />
+    </Container>
   );
 }
