@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserRequest } from 'src/common/interfaces/auth-request.interface';
 import { PrismaService } from 'src/prisma.service';
 import { OrderInterface, OrderResponse } from './order.interface';
@@ -54,7 +58,7 @@ export class OrderService {
     return mapData;
   }
 
-  async createOrder(user: UserRequest, requestData: OrderInterface) {
+  async createOrderFromCart(user: UserRequest, requestData: OrderInterface) {
     const cart = await this.prisma.cart.findUnique({
       where: { userId: user.userId },
       select: {
@@ -131,6 +135,86 @@ export class OrderService {
         where: { id: createOrder.id },
         data: {
           totalAmount: orderTotal,
+        },
+      });
+
+      return createOrder;
+    });
+
+    return newOrder;
+  }
+
+  async createOrderBuyNow(user: UserRequest, requestData: OrderInterface) {
+    console.log('data', requestData);
+    const productVariant = await this.prisma.productVariant.findUnique({
+      where: { id: requestData.productVariantId },
+      select: {
+        id: true,
+        price: true,
+        stock: true,
+        discounts: {
+          select: {
+            discount: {
+              select: {
+                value: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!productVariant)
+      throw new NotFoundException('Không tìm thấy sản phẩm này trong kho!');
+
+    if (productVariant.stock < Number(requestData.quantity))
+      throw new BadRequestException('Số lượng vượt quá số lượng tồn kho!');
+
+    console.log(productVariant);
+    const discount =
+      (productVariant?.discounts[0] &&
+        productVariant?.discounts[0].discount.value) ||
+      0;
+    console.log(discount);
+    const newOrder = await this.prisma.$transaction(async (tx) => {
+      const createOrder = await tx.order.create({
+        data: {
+          totalAmount:
+            Number(requestData.quantity) *
+            Number(productVariant.price) *
+            ((100 - Number(discount)) / 100),
+          userId: user.userId,
+          shippingName: requestData.shippingName,
+          shippingPhone: requestData.shippingPhone,
+          shippingCountry: requestData.shippingCountry,
+          shippingCity: requestData.shippingCity,
+          shippingAddress: requestData.shippingAddress,
+          voucherCode: requestData.voucherCode,
+          paymentMethod: requestData.paymentMethod,
+        },
+      });
+
+      await tx.orderItem.create({
+        data: {
+          orderId: createOrder.id,
+          productVariantId: productVariant.id,
+          quantity: Number(requestData.quantity),
+          unitPrice: productVariant.price,
+          totalDiscountedAmount:
+            Number(requestData.quantity) *
+            Number(productVariant.price) *
+            (Number(discount) / 100),
+          finalPrice:
+            Number(requestData.quantity) *
+            Number(productVariant.price) *
+            ((100 - Number(discount)) / 100),
+        },
+      });
+      await tx.productVariant.update({
+        where: {
+          id: productVariant.id,
+        },
+        data: {
+          stock: productVariant.stock - Number(requestData.quantity),
         },
       });
 

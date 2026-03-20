@@ -12,5 +12,7 @@ export const API_ENDPOINTS = {
   CHECKOUT: "/checkout",
   REFRESH_DATA: "/auth/refresh",
   ORDER: "/orders",
+  ORDERCART: "/orders/cart",
+  ORDERBUYNOW: "/orders/buynow",
   USERADDRESS: "/addresses",
 } as const;

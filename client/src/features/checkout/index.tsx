@@ -7,11 +7,14 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import type { OrderRequest } from "../orders/types/order.type";
 import { toast } from "sonner";
 import { orderApi } from "../orders/apis/order.api";
+import useAddress from "../addresses/hooks/useAddress";
 
 export default function CheckOut() {
   const navigate = useNavigate();
   const location = useLocation();
   const accessToken = tokenManager.getAccessToken();
+  const { addresses, isLoading } = useAddress();
+  const uAddrDefault = useMemo(() => addresses.find((addr) => addr.isDefault), [addresses]);
 
   // Kiểm tra đăng nhập
   useEffect(() => {
@@ -30,16 +33,30 @@ export default function CheckOut() {
   // Khởi tạo state cho form
   const [orderRequest, setOrderRequest] = useState<OrderRequest>({
     checkoutType: checkoutType,
-    productVariantId: data?.variant?.id ?? null,
+    productVariantId: (data?.variant?.id && Number(data?.variant?.id)) ?? null,
     quantity: data?.quantity ?? 1,
-    shippingName: "",
-    shippingPhone: "",
+    shippingName: uAddrDefault?.fullName ?? "",
+    shippingPhone: uAddrDefault?.phoneNumber ?? "",
     shippingCountry: "Vietnam",
-    shippingCity: "",
-    shippingAddress: "",
+    shippingCity: uAddrDefault?.province ?? "",
+    shippingAddress: [uAddrDefault?.district, uAddrDefault?.streetAddress]
+      .filter(Boolean)
+      .join(" "),
     voucherCode: "",
     paymentMethod: "COD",
   });
+
+  useEffect(() => {
+    if (uAddrDefault) {
+      setOrderRequest((prev) => ({
+        ...prev,
+        shippingName: uAddrDefault.fullName,
+        shippingPhone: uAddrDefault.phoneNumber,
+        shippingCity: uAddrDefault.province,
+        shippingAddress: `${uAddrDefault.district || ""} ${uAddrDefault.streetAddress || ""}`,
+      }));
+    }
+  }, [uAddrDefault]);
 
   // Tính toán dữ liệu hiển thị và tổng tiền
   const { displayProducts, totalPrice, totalDiscount } = useMemo(() => {
@@ -110,15 +127,20 @@ export default function CheckOut() {
     try {
       console.log("Gửi đơn hàng:", orderRequest);
       toast.loading("Đang đặt hàng...");
-      await orderApi.createOrder(orderRequest);
-      toast.dismiss()
+      orderRequest.checkoutType === "cart"
+        ? await orderApi.createOrderFormCart(orderRequest)
+        : await orderApi.createOrderFormBuyNow(orderRequest);
+      toast.dismiss();
       toast.success("Đặt hàng thành công!");
       navigate("/orders");
-    } catch (error) {
-      toast.error(`Có lỗi xảy ra, thử lại sau. - ${error}`);
+    } catch (error: any) {
+      toast.dismiss();
+      console.log("haaaaaaaaaaaaaaaaaaaaaaaa", error);
+      const message =
+        error?.response?.data?.message || error?.message || "Có lỗi xảy ra, thử lại sau.";
+      toast.error(message);
     }
   };
-
   return (
     <div className="min-h-screen bg-[#f8f8f8] py-8 px-4 font-sans text-[#333]">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -127,7 +149,7 @@ export default function CheckOut() {
           <div className="bg-white p-6 rounded-md border border-gray-200 shadow-sm">
             <h2 className="text-lg font-bold mb-5 uppercase tracking-wide">Thông tin giao hàng</h2>
             <div className="grid grid-cols-1 gap-4">
-              <div>
+              <div className={`${isLoading && " animate-puls"}`}>
                 <label className="text-[11px] font-semibold text-gray-500 uppercase ml-1">
                   Họ và tên
                 </label>
@@ -137,7 +159,7 @@ export default function CheckOut() {
                   placeholder="Nhập tên..."
                   value={orderRequest.shippingName}
                   onChange={handleInputChange}
-                  className="w-full border border-gray-300 p-2.5 rounded mt-1 focus:ring-1 focus:ring-black outline-none transition"
+                  className={` w-full border border-gray-300 p-2.5 rounded mt-1 focus:ring-1 focus:ring-black outline-none transition `}
                 />
                 {errors.shippingName && (
                   <p className="text-red-500 text-xs mt-1 ml-1">{errors.shippingName}</p>
@@ -205,7 +227,7 @@ export default function CheckOut() {
             </h2>
             <div className="divide-y border border-gray-200 rounded-md">
               {[
-                { id: "BANK", label: "🏦 Thanh toán chuyển khoản ngân hàng" },
+                { id: "ZALOPAY", label: "🏦 Thanh toán qua ZALOPAY" },
                 { id: "COD", label: "💵 Thanh toán khi nhận hàng (COD)" },
                 { id: "QR", label: "📲 Chuyển khoản qua QR - VCB" },
               ].map((method) => (

@@ -28,14 +28,25 @@ export class OrderController {
       200,
     );
   }
-  @Post()
-  async createOrder(
+  @Post('cart')
+  async createOrderFormCart(
     @Req() req: AuthRequest,
     @Body(new ValidationPipe()) dto: CreateOrderDto,
   ) {
-    const result = await this.orderService.createOrder(req.user, dto);
+    const result = await this.orderService.createOrderFromCart(req.user, dto);
     return ApiResponse.success(result, 'Tạo đơn hàng thành công', 201);
   }
+
+  @Post('buynow')
+  async createOrderBuyNow(
+    @Req() req: AuthRequest,
+    @Body() dto: CreateOrderDto,
+  ) {
+    const result = await this.orderService.createOrderBuyNow(req.user, dto);
+    console.log('haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    return ApiResponse.success(result, 'Tạo đơn hàng thành công', 201);
+  }
+
   @Patch()
   updateOrder(@Req() req: AuthRequest) {
     return req.user;

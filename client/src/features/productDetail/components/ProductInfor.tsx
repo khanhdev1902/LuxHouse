@@ -48,6 +48,8 @@ export default function ProductInfor({
   const accessToken = tokenManager.getAccessToken();
 
   const handleAddToCart = () => {
+    if ((selectVariant?.stock || 0) < quantity)
+      return toast.warning(`Chỉ còn ${selectVariant?.stock || 0} trong kho!`);
     console.log("Adding to cart:", {
       productVariantId: Number(selectVariant?.id),
       quantity,
@@ -61,9 +63,11 @@ export default function ProductInfor({
 
   const handleCheckOut = () => {
     if (!accessToken) return toast.info("Bạn cần đăng nhập để thực hiện chức năng này!");
+    if ((selectVariant?.stock || 0) < quantity)
+      return toast.warning(`Chỉ còn ${selectVariant?.stock || 0} trong kho!`);
     navigate("/checkout", {
       state: {
-        type: "productDetail",
+        type: "product",
         data: {
           product: product,
           variant: selectVariant,
@@ -182,7 +186,7 @@ export default function ProductInfor({
         <button
           onClick={handleAddToCart}
           disabled={!selectVariant || isPending}
-          className="w-full bg-[#27678f] text-white font-bold py-3 rounded-lg hover:bg-[#1a4a6b] transition-colors"
+          className="w-full bg-slate-800 text-white font-bold py-3 rounded-lg hover:bg-main duration-300 transition-colors"
         >
           {isPending ? "Đang thêm vào giỏ..." : "THÊM VÀO GIỎ HÀNG"}
         </button>
