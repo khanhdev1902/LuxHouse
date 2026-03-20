@@ -64,11 +64,13 @@ export class OrderService {
       select: {
         cartItems: {
           select: {
+            id: true,
             quantity: true,
             productVariant: {
               select: {
                 id: true,
                 price: true,
+                stock: true,
                 discounts: {
                   select: {
                     discount: {
@@ -128,6 +130,17 @@ export class OrderService {
             totalDiscountedAmount: quantity * discountAmount,
             finalPrice,
           },
+        });
+
+        await tx.productVariant.update({
+          where: { id: Number(item.productVariant.id) },
+          data: {
+            stock: item.productVariant.stock - Number(item.quantity),
+          },
+        });
+
+        await tx.cartItem.delete({
+          where: { id: item.id },
         });
       }
 
