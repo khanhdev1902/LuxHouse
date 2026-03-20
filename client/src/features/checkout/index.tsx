@@ -8,12 +8,14 @@ import type { OrderRequest } from "../orders/types/order.type";
 import { toast } from "sonner";
 import { orderApi } from "../orders/apis/order.api";
 import useAddress from "../addresses/hooks/useAddress";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CheckOut() {
   const navigate = useNavigate();
   const location = useLocation();
   const accessToken = tokenManager.getAccessToken();
   const { addresses, isLoading } = useAddress();
+  const queryClient = useQueryClient();
   const uAddrDefault = useMemo(() => addresses.find((addr) => addr.isDefault), [addresses]);
 
   // Kiểm tra đăng nhập
@@ -132,6 +134,7 @@ export default function CheckOut() {
         : await orderApi.createOrderFormBuyNow(orderRequest);
       toast.dismiss();
       toast.success("Đặt hàng thành công!");
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
       navigate("/orders");
     } catch (error: any) {
       toast.dismiss();
