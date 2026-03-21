@@ -6,14 +6,18 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import { LoadingOverlay } from "@/shared/components/ui/LoadingOverlay";
 import { useNavigate } from "react-router-dom";
 import type { OrderResponse } from "./types/order.type";
+import { ShoppingBag } from "lucide-react";
 
 export default function Orders() {
   const [orderData, setOrderData] = useState<OrderResponse[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const fetchData = async () => {
+    setIsLoading(true);
     const res = await orderApi.getMyListOrder();
     setOrderData(res.data);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -80,8 +84,41 @@ export default function Orders() {
               </button>
             </div>
 
-            {orderData.length <= 0 ? (
+            {isLoading ? (
               <LoadingOverlay />
+            ) : orderData.length < 1 ? (
+              <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 animate-in fade-in zoom-in duration-500">
+                {/* Icon hoặc Illustration */}
+                <div className="relative mb-6">
+                  <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center">
+                    <ShoppingBag className="w-12 h-12 text-gray-400" />
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm">
+                    <span className="text-lg">📦</span>
+                  </div>
+                </div>
+
+                {/* Text thông báo */}
+                <h2 className="text-xl font-bold text-gray-800 mb-2">Bạn chưa có đơn hàng nào</h2>
+                <p className="text-gray-500 text-center max-w-[280px] mb-8 leading-relaxed">
+                  Có vẻ như bạn chưa đặt món đồ nào từ LuxHouse. Hãy khám phá những bộ sưu tập mới
+                  nhất của chúng mình nhé!
+                </p>
+
+                {/* Nút điều hướng */}
+                <button
+                  onClick={() => navigate("/")}
+                  className="px-8 py-3 bg-slate-500 text-white rounded-full font-semibold hover:bg-zinc-800 transition-all active:scale-95 hover:scale-105"
+                >
+                  Khám phá ngay
+                </button>
+
+                {/* Decoration phụ (tùy chọn) */}
+                <div className="mt-12 flex gap-4 opacity-20 grayscale">
+                  <img src="/logo-brand-1.png" alt="" className="h-6" />
+                  <img src="/logo-brand-2.png" alt="" className="h-6" />
+                </div>
+              </div>
             ) : (
               orderData.map((order, key) => (
                 <div key={key} className="bg-white border border-[#EAE4DD] shadow-sm group">
@@ -93,7 +130,7 @@ export default function Orders() {
                           Mã đơn hàng
                         </p>
                         <p className="text-sm text-center font-semibold text-[#2D2D2D]">
-                          {order?.id}
+                          {order?.orderCode}
                         </p>
                       </div>
                       <div>

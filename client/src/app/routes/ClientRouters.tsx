@@ -16,6 +16,7 @@ import Register from "@/features/auth/register";
 import ChangePassword from "@/features/auth/change-password";
 import CheckOut from "@/features/checkout";
 import AboutLuxhouse from "@/features/about";
+import Payment from "@/features/payment";
 
 export const ClientRouters: RouteObject[] = [
   {
@@ -27,6 +28,7 @@ export const ClientRouters: RouteObject[] = [
       { path: "products/:slug", element: <ProductDetail /> },
       { path: "cart", element: <Cart /> },
       { path: "checkout", element: <CheckOut /> },
+      { path: "/payment/:orderCode", element: <Payment /> },
       { path: "about", element: <AboutLuxhouse /> },
       {
         path: "/",

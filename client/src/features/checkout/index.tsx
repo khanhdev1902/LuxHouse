@@ -17,6 +17,11 @@ export default function CheckOut() {
   const { addresses, isLoading } = useAddress();
   const queryClient = useQueryClient();
   const uAddrDefault = useMemo(() => addresses.find((addr) => addr.isDefault), [addresses]);
+  // const [qrCode, setQrCode] = useState<string | null>(() => {
+  //   return localStorage.getItem("pending_qr");
+  // });
+
+  // const isQRCode = !!qrCode; // Nếu có qrCode thì hiển thị
 
   // Kiểm tra đăng nhập
   useEffect(() => {
@@ -125,17 +130,26 @@ export default function CheckOut() {
       toast.error("Vui lòng kiểm tra lại thông tin giao hàng!");
       return;
     }
-
     try {
       console.log("Gửi đơn hàng:", orderRequest);
       toast.loading("Đang đặt hàng...");
-      orderRequest.checkoutType === "cart"
-        ? await orderApi.createOrderFormCart(orderRequest)
-        : await orderApi.createOrderFormBuyNow(orderRequest);
+      const res =
+        orderRequest.checkoutType === "cart"
+          ? await orderApi.createOrderFormCart(orderRequest)
+          : await orderApi.createOrderFormBuyNow(orderRequest);
       toast.dismiss();
       toast.success("Đặt hàng thành công!");
       queryClient.invalidateQueries({ queryKey: ["cart"] });
+      if (orderRequest.paymentMethod === "QRCODE") {
+        // const qrUrl = res.data.QRCODE;
+        // setQrCode(qrUrl);
+        // localStorage.setItem("pending_qr", qrUrl);
+        // toast.success("Vui lòng quét mã QR để thanh toán!");
+        navigate(`/payment/${res.data.newOrder.orderCode}`);
+        return;
+      }
       navigate("/orders");
+      return;
     } catch (error: any) {
       toast.dismiss();
       console.log("haaaaaaaaaaaaaaaaaaaaaaaa", error);
@@ -232,7 +246,7 @@ export default function CheckOut() {
               {[
                 { id: "ZALOPAY", label: "🏦 Thanh toán qua ZALOPAY" },
                 { id: "COD", label: "💵 Thanh toán khi nhận hàng (COD)" },
-                { id: "QR", label: "📲 Chuyển khoản qua QR - VCB" },
+                { id: "QRCODE", label: "📲 Chuyển khoản qua QR - VCB" },
               ].map((method) => (
                 <label
                   key={method.id}
@@ -299,3 +313,9 @@ export default function CheckOut() {
     </div>
   );
 }
+
+// {isQRCode && (
+//   <div>
+//     <img src={qrCode} alt="" />
+//   </div>
+// )}

@@ -221,9 +221,20 @@ enum PaymentMethod {
   ZALOPAY
   QRCODE
 }
+enum PaymentStatus {
+  PENDING             // Chưa thanh toán
+  PROCESSING          // Đang xử lý (đang gọi cổng thanh toán)
+  SUCCESS             // Thanh toán thành công
+  FAILED              // Thanh toán thất bại
+  CANCELLED           // Người dùng hủy thanh toán
+  EXPIRED             // Hết thời gian thanh toán
+  REFUNDED            // Đã hoàn tiền
+  PARTIALLY_REFUNDED  // Hoàn tiền 1 phần
+}
 
 model Order {
   id              Int           @id @default(autoincrement())
+  orderCode       String?
   userId          Int
   shippingFee     Decimal       @default(0) @db.Decimal(12, 2)
   totalAmount     Decimal?       @db.Decimal(12, 2)
@@ -237,6 +248,8 @@ model Order {
   
   voucherCode     String?      
   paymentMethod   PaymentMethod
+  paymentStatus   PaymentStatus?
+  expiresAt       DateTime?
 
   orderItems      OrderItem[]
   payments        Payment[]
@@ -245,6 +258,7 @@ model Order {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
+  @@unique([orderCode])
   @@map("orders")
 }
 

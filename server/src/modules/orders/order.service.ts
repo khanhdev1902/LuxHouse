@@ -7,10 +7,93 @@ import { UserRequest } from 'src/common/interfaces/auth-request.interface';
 import { PrismaService } from 'src/prisma.service';
 import { OrderInterface, OrderResponse } from './order.interface';
 import { orderInclude } from './order.select';
+import { Cron } from '@nestjs/schedule';
+import { Prisma } from 'src/generated/prisma/client';
 
 @Injectable()
 export class OrderService {
   constructor(private prisma: PrismaService) {}
+
+  @Cron('* * * * *') //mỗi phút
+  async handleExpiredOrders(): Promise<void> {
+    type OrderWithItems = Prisma.OrderGetPayload<{
+      include: {
+        orderItems: { select: { productVariantId: true; quantity: true } };
+      };
+    }>;
+    // 1. Tìm đơn hàng hết hạn
+    const expiredOrders: OrderWithItems[] = await this.prisma.order.findMany({
+      where: {
+        paymentStatus: 'PENDING',
+        expiresAt: { lt: new Date() },
+      },
+      include: {
+        orderItems: {
+          select: { productVariantId: true, quantity: true },
+        },
+      },
+    });
+
+    if (expiredOrders.length === 0) return;
+
+    // 2. Gom tất cả các thao tác vào 1 Transaction
+    // await this.prisma.$transaction(async (tx) => {
+    //   for (const order of expiredOrders) {
+    //     // Hoàn lại kho cho từng sản phẩm trong đơn hàng
+    //     const updateStockPromises = order.orderItems.map((item) =>
+    //       tx.productVariant.update({
+    //         where: { id: item.productVariantId },
+    //         data: { stock: { increment: Number(item.quantity) } },
+    //       }),
+    //     );
+
+    //     await Promise.all(updateStockPromises);
+
+    //     // Cập nhật trạng thái đơn hàng
+    //     await tx.order.update({
+    //       where: { id: order.id },
+    //       data: { paymentStatus: 'EXPIRED' },
+    //     });
+    //   }
+    // });
+
+    // 2. Gom tất cả các thao tác vào 1 Transaction
+    await this.prisma.$transaction(async (tx) => {
+      const tasks = expiredOrders.map(async (order) => {
+        // 1. Hoàn kho tất cả item trong 1 đơn hàng cùng lúc
+        await Promise.all(
+          order.orderItems.map((item) =>
+            tx.productVariant.update({
+              where: { id: item.productVariantId },
+              data: { stock: { increment: Number(item.quantity) } },
+            }),
+          ),
+        );
+
+        // 2. Cập nhật trạng thái đơn hàng
+        return tx.order.update({
+          where: { id: order.id },
+          data: { paymentStatus: 'EXPIRED' },
+        });
+      });
+
+      await Promise.all(tasks);
+    });
+
+    console.log(`Đã xử lý ${expiredOrders.length} đơn hàng hết hạn.`);
+  }
+
+  private generateOrderCode() {
+    const date = new Date();
+
+    const y = date.getFullYear().toString().slice(-2);
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+
+    const random = Math.floor(1000 + Math.random() * 9000);
+
+    return `OD${y}${m}${d}${random}`;
+  }
 
   async getMyOrder(user: UserRequest) {
     const where = user.role === 'CUSTOMMER' ? { userId: user.userId } : {};
@@ -24,6 +107,7 @@ export class OrderService {
     const mapData: OrderResponse[] = myListOrders.map((order) => ({
       id: order.id,
       userId: order.userId,
+      orderCode: order.orderCode,
       shippingFee: Number(order.shippingFee),
       totalAmount: Number(order.totalAmount ?? 0),
       status: order.status,
@@ -89,13 +173,14 @@ export class OrderService {
     });
 
     if (!cart || cart.cartItems.length === 0) {
-      throw new Error('Cart is empty');
+      throw new Error('Giỏ hàng trống!');
     }
 
     const newOrder = await this.prisma.$transaction(async (tx) => {
       const createOrder = await tx.order.create({
         data: {
           userId: user.userId,
+          orderCode: this.generateOrderCode(),
           shippingName: requestData.shippingName,
           shippingPhone: requestData.shippingPhone,
           shippingCountry: requestData.shippingCountry,
@@ -103,6 +188,8 @@ export class OrderService {
           shippingAddress: requestData.shippingAddress,
           voucherCode: requestData.voucherCode,
           paymentMethod: requestData.paymentMethod,
+          paymentStatus: 'PENDING',
+          expiresAt: new Date(Date.now() + 15 * 60 * 1000), // 15 phút
         },
       });
 
@@ -132,27 +219,45 @@ export class OrderService {
           },
         });
 
-        await tx.productVariant.update({
-          where: { id: Number(item.productVariant.id) },
-          data: {
-            stock: item.productVariant.stock - Number(item.quantity),
-          },
-        });
-
         await tx.cartItem.delete({
           where: { id: item.id },
         });
+
+        const updated = await tx.productVariant.updateMany({
+          where: {
+            id: item.productVariant.id,
+            stock: { gte: quantity },
+          },
+          data: {
+            stock: { decrement: quantity },
+          },
+        });
+
+        if (updated.count === 0) {
+          throw new Error('Hết hàng');
+        }
       }
 
-      await tx.order.update({
+      const updatedOrder = await tx.order.update({
         where: { id: createOrder.id },
-        data: {
-          totalAmount: orderTotal,
-        },
+        data: { totalAmount: orderTotal },
       });
 
-      return createOrder;
+      return updatedOrder;
     });
+
+    if (newOrder.paymentMethod === 'QRCODE') {
+      // Tạo nội dung nội dung chuyển khoản trước
+      const description = `Thanh toan don hang tai LuxHouse ${newOrder.orderCode}`;
+
+      // Encode nó để đưa vào URL
+      const encodedDes = encodeURIComponent(description);
+
+      return {
+        QRCODE_URL: `${process.env.QRCODE_URL}&amount=${Number(newOrder.totalAmount)}&des=${encodedDes}`,
+        newOrder,
+      };
+    }
 
     return newOrder;
   }
@@ -196,6 +301,7 @@ export class OrderService {
             Number(productVariant.price) *
             ((100 - Number(discount)) / 100),
           userId: user.userId,
+          orderCode: this.generateOrderCode(),
           shippingName: requestData.shippingName,
           shippingPhone: requestData.shippingPhone,
           shippingCountry: requestData.shippingCountry,
@@ -203,6 +309,8 @@ export class OrderService {
           shippingAddress: requestData.shippingAddress,
           voucherCode: requestData.voucherCode,
           paymentMethod: requestData.paymentMethod,
+          paymentStatus: 'PENDING',
+          expiresAt: new Date(Date.now() + 15 * 60 * 1000), // 15 phút
         },
       });
 
@@ -222,17 +330,35 @@ export class OrderService {
             ((100 - Number(discount)) / 100),
         },
       });
-      await tx.productVariant.update({
+      const updated = await tx.productVariant.updateMany({
         where: {
           id: productVariant.id,
+          stock: { gte: Number(requestData.quantity) },
         },
         data: {
-          stock: productVariant.stock - Number(requestData.quantity),
+          stock: { decrement: Number(requestData.quantity) },
         },
       });
 
+      if (updated.count === 0) {
+        throw new BadRequestException('Hết hàng');
+      }
+
       return createOrder;
     });
+
+    if (newOrder.paymentMethod === 'QRCODE') {
+      // Tạo nội dung nội dung chuyển khoản trước
+      const description = `Thanh toan don hang tai LuxHouse ${newOrder.orderCode}`;
+
+      // Encode nó để đưa vào URL
+      const encodedDes = encodeURIComponent(description);
+
+      return {
+        QRCODE_URL: `${process.env.QRCODE_URL}&amount=${Number(newOrder.totalAmount)}&des=${encodedDes}`,
+        newOrder,
+      };
+    }
 
     return newOrder;
   }

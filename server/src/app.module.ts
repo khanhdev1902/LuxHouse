@@ -18,8 +18,11 @@ import { OrderModule } from './modules/orders/order.module';
 import { CategoryModule } from './modules/categories/category.module';
 import { OpenAiModule } from './modules/opnen-ai/open-ai.module';
 import { AddressModule } from './modules/address/address.module';
+import { PaymentModule } from './modules/payments/payment.module';
+import { ScheduleModule } from '@nestjs/schedule';
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     // ConfigModule.forRoot({
     //   isGlobal: true,
     // }),
@@ -57,6 +60,7 @@ import { AddressModule } from './modules/address/address.module';
     OrderModule,
     GeminiModule,
     OpenAiModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [
