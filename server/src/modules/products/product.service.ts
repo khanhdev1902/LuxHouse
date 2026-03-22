@@ -120,6 +120,14 @@ export class ProductService {
     ]);
 
     const lstProducts = products.map(mapProductListItem);
+    console.log({
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    });
     return {
       lstProducts,
       meta: {
