@@ -516,80 +516,344 @@ export const DATA_PRODUCTS = [
   //     },
   //   ],
   // },
+  // {
+  //   name: 'Bàn Ăn Gỗ 1m6 SERENA',
+  //   description: `Kích thước: Dài 160 cm x Rộng 80 cm x Cao 75 cm
+  //                 / Chất liệu mặt bàn: MDF chuẩn CARB-P2 phủ veneer gỗ sồi
+  //                 / Chất liệu khung & chân bàn: Gỗ cao su tự nhiên
+  //                 / Thanh giằng: Sắt sơn tĩnh điện`,
+  //   categories: ['Bàn Ăn'],
+  //   attributes: [
+  //     {
+  //       name: 'Color',
+  //       values: ['Màu Tự Nhiên', 'Nâu'],
+  //     },
+  //   ],
+  //   variants: [
+  //     {
+  //       price: 7690000,
+  //       stock: 50,
+  //       defaultVariant: true,
+  //       combination: {
+  //         Color: 'Nâu',
+  //       },
+  //       discount: {
+  //         type: 'percentage',
+  //         discountType: 'VARIANT',
+  //         value: 22,
+  //         startDate: new Date(),
+  //         endDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+  //         priority: 1,
+  //       },
+  //       images: [
+  //         {
+  //           url: 'https://cdn.hstatic.net/products/200000065946/pro_nau_bo_ban_an_4_cho_6_cho_serena_noi_that_moho_3_f3c4f0afa9164a78b42f416cfab57763_master.png',
+  //           isMain: true,
+  //         },
+  //         {
+  //           url: 'https://cdn.hstatic.net/products/200000065946/pro_nau_bo_ban_an_4_cho_6_cho_serena_noi_that_moho_1_68762d6e9fd94782a40e996ceb7472e9_master.png',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://cdn.hstatic.net/products/200000065946/pro_nau_ban_an_serena_noi_that_moho_1b6e834de9ce429eb69010d120f5df33_master.jpg',
+  //           isMain: false,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       price: 7690000,
+  //       stock: 15,
+  //       defaultVariant: false,
+  //       combination: {
+  //         Color: 'Màu Tự Nhiên',
+  //       },
+  //       discount: {
+  //         type: 'percentage',
+  //         discountType: 'VARIANT',
+  //         value: 22,
+  //         startDate: new Date(),
+  //         endDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+  //         priority: 1,
+  //       },
+  //       images: [
+  //         {
+  //           url: 'https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_bo_ban_an_4_ghe_6_ghe_serena_noi_that_moho_ban_an_1m6_238807752ee145c19f3e3ccdb43977d6_master.jpg',
+  //           isMain: true,
+  //         },
+  //         {
+  //           url: 'https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_bo_ban_an_4_ghe_6_ghe_serena_noi_that_moho_2_10cfbc49497846abbcdae72eb34690b3_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_bo_ban_an_4_ghe_6_ghe_serena_noi_that_moho_5_0ba747cbf5c04ed7aa16294b3d05ad6c_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_bo_ban_an_4_ghe_6_ghe_serena_noi_that_moho_6_a825566cee404209a58a45792f7322e8_master.jpg',
+  //           isMain: false,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: 'Hệ tủ bếp MOHO Kitchen Premium Narvik Nhiều Kích Thước',
+  //   description: `Chất liệu chính:
+  //                 /- Cánh tủ: ván công nghiệp phủ melamine, dày 18mm
+  //                 /- Thân tủ: ván công nghiệp phủ melamine, dày 18mm
+  //                 /- Thân tủ chậu rửa: ván nhựa chống nước, dày 18mm.
+  //                 Kích thước tường đề nghị với tủ bếp chữ L:
+  //                /- Bếp chữ L 3.4m: 2274 x 1724mm trở lên
+  //                /- Bếp chữ L 2.6m: 1874 x 1324mm trở lên
+  //                 `,
+  //   categories: ['Bếp'],
+  //   attributes: [
+  //     {
+  //       name: 'Size',
+  //       values: ['1m5', '2m3'],
+  //     },
+  //   ],
+  //   variants: [
+  //     {
+  //       price: 9690000,
+  //       stock: 50,
+  //       defaultVariant: true,
+  //       combination: {
+  //         Size: '1m5',
+  //       },
+  //       discount: {
+  //         type: 'percentage',
+  //         discountType: 'VARIANT',
+  //         value: 12,
+  //         startDate: new Date(),
+  //         endDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+  //         priority: 1,
+  //       },
+  //       images: [
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_1m5_chu_i_noi_that_moho_tu_bep_premium_chu_i_1m5_narvik_a_a35d7137894a4c11ae4d3a2a20cbddae_master.jpg',
+  //           isMain: true,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_1m5_chu_i_noi_that_moho_tu_bep_premium_chu_i_1m5_narvik_b_804c3680a33649c097732eaf825f08a8_master.jpg',
+  //           isMain: false,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       price: 11690000,
+  //       stock: 15,
+  //       defaultVariant: false,
+  //       combination: {
+  //         Size: '2m3',
+  //       },
+  //       discount: {
+  //         type: 'percentage',
+  //         discountType: 'VARIANT',
+  //         value: 19,
+  //         startDate: new Date(),
+  //         endDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+  //         priority: 1,
+  //       },
+  //       images: [
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_1m5_chu_i_noi_that_moho_tu_bep_premium_chu_i_1m5_narvik_c_8273740dc0ef4573906ba2ffed50ffdd_master.jpg',
+  //           isMain: true,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: 'Bàn Làm Việc Gỗ FYN 601 Màu Nâu',
+  //   description: `Chất liệu chính:
+  //                 /Kích thước bàn: Dài 120cm x Rộng 60cm x Cao 74cm
+  //                 /Kích thước hộc kéo: Dài 23cm x Rộng 40cm x Cao 7cm
+  //                 /Chất liệu:
+  //                 /Mặt bàn: Gỗ công nghiệp PB chuẩn CARB-P2 (*), Veneer gỗ sồi tự nhiên
+  //                 /Chân bàn: Gỗ cao su tự nhiên
+  //                 /Cụm hộc tủ: Gỗ công nghiệp PB chuẩn CARB-P2 (*), phần mặt hộc tủ được dán veneer gỗ sồi tự nhiên.
+  //                 `,
+  //   categories: ['Bàn làm việc'],
+  //   attributes: [
+  //     {
+  //       name: 'Color',
+  //       values: ['Nâu'],
+  //     },
+  //   ],
+  //   variants: [
+  //     {
+  //       price: 3290000,
+  //       stock: 50,
+  //       defaultVariant: true,
+  //       combination: {
+  //         Color: 'Nâu',
+  //       },
+  //       discount: {
+  //         type: 'percentage',
+  //         discountType: 'VARIANT',
+  //         value: 9,
+  //         startDate: new Date(),
+  //         endDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+  //         priority: 1,
+  //       },
+  //       images: [
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ban_lam_viec_go_fyn_nau2_f607075e46254fc190dfabcd5108f91c_master.jpg',
+  //           isMain: true,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ban_lam_viec_go_fyn_nau1_61d8be0aebc64b6e923da493f2dd5358_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ban_lam_viec_go_fyn_2_86bb6ecf2f4b4045b54b6cec911b6ac8_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ban_lam_viec_go_fyn_3_737ddfb5021a40628b743f280b60143b_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ban_lam_viec_go_fyn_4_86a42313d0314712bdc354bb8cbde417_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ban_lam_viec_go_fyn_5_28e800aa5bed4f5294ce95afac273cb1_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_nau_noi_that_moho_ban_lam_viec_go_fyn_6_8edd61fadc3f4e349cff89ec495b9175_master.jpg',
+  //           isMain: false,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: 'Bàn Trang Điểm Gỗ Đa Năng VIENNA 202 Màu Tự Nhiên',
+  //   description: `Kích thước:
+  //                 /- Bàn trang điểm: Dài 100cm x Rộng 40cm x Cao 75cm
+  //                 /- Gương trang điểm: Dài 60cm x Cao 55cm
+  //                 /Chất liệu:
+  //                 /- Thân bàn: Gỗ công nghiệp MFC chuẩn CARB-P2 (*), Sơn phủ UV
+  //                 /- Hộc bàn: Gỗ công nghiệp MFC chuẩn CARB-P2 (*), Sơn phủ UV
+  //                 /- Chân bàn: Gỗ cao su tự nhiên
+  //                 /- Gương: Gỗ công nghiệp MFC, gương cao cấp dễ lau chùi, hạn chế bám bụi và hạn chế được sát thương nếu bị vỡ.
+  //                 `,
+  //   categories: ['Bàn trang điểm'],
+  //   attributes: [
+  //     {
+  //       name: 'Color',
+  //       values: ['Màu Tự Nhiên'],
+  //     },
+  //   ],
+  //   variants: [
+  //     {
+  //       price: 5490000,
+  //       stock: 50,
+  //       defaultVariant: true,
+  //       combination: {
+  //         Color: 'Màu Tự Nhiên',
+  //       },
+  //       discount: {
+  //         type: 'percentage',
+  //         discountType: 'VARIANT',
+  //         value: 27,
+  //         startDate: new Date(),
+  //         endDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+  //         priority: 1,
+  //       },
+  //       images: [
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_mau_tu_nhien_noi_that_moho_combo_ban_va_guong_trang_diem_4_1ca3bb5e864d457b8017481f66fb20a7_master.jpg',
+  //           isMain: true,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_mau_tu_nhien_noi_that_moho_combo_ban_va_guong_trang_diem_2_b1b0519b9dc84f0bba38fc1f0976329f_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_mau_tu_nhien_noi_that_moho_ban_trang_diem_vienna_9_9617dfc2ccda4aa18216ae4562fde939_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_mau_tu_nhien_noi_that_moho_ban_trang_diem_2_df3051d5b7c74e85b0b83b777c329b67_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_mau_tu_nhien_noi_that_moho_ban_trang_diem_vienna_1_692762459c3e4c5a9119b3de2a9f0726_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_mau_tu_nhien_noi_that_moho_combo_ban_va_guong_trang_diem_3_78969e0586f04f12a89dea4074eaf3f0_master.jpg',
+  //           isMain: false,
+  //         },
+  //         {
+  //           url: 'https://product.hstatic.net/200000065946/product/pro_mau_tu_nhien_noi_that_moho_combo_ban_va_guong_trang_diem_6_121eefa000e448918890ece6fd7adab9_master.jpg',
+  //           isMain: false,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
-    name: 'Bàn Ăn Gỗ 1m6 SERENA',
-    description: `Kích thước: Dài 160 cm x Rộng 80 cm x Cao 75 cm
-                  / Chất liệu mặt bàn: MDF chuẩn CARB-P2 phủ veneer gỗ sồi 
-                  / Chất liệu khung & chân bàn: Gỗ cao su tự nhiên
-                  / Thanh giằng: Sắt sơn tĩnh điện`,
-    categories: ['Bàn Ăn'],
+    name: 'Tủ Đầu Giường VIENNA (Màu gỗ phối trắng)',
+    description: `Kích thước:
+                  /W50 x D40 x H45 cm
+                  /Vật liệu:
+                  /MFC chuẩn CARB-P2 (*)
+                  `,
+    categories: ['Tủ & Kệ'],
     attributes: [
       {
         name: 'Color',
-        values: ['Màu Tự Nhiên', 'Nâu'],
+        values: ['Mix'],
       },
     ],
     variants: [
       {
-        price: 7690000,
+        price: 1890000,
         stock: 50,
         defaultVariant: true,
         combination: {
-          Color: 'Nâu',
+          Color: 'Mix',
         },
         discount: {
           type: 'percentage',
           discountType: 'VARIANT',
-          value: 22,
+          value: 11,
           startDate: new Date(),
           endDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
           priority: 1,
         },
         images: [
           {
-            url: 'https://cdn.hstatic.net/products/200000065946/pro_nau_bo_ban_an_4_cho_6_cho_serena_noi_that_moho_3_f3c4f0afa9164a78b42f416cfab57763_master.png',
+            url: 'https://cdn.hstatic.net/products/200000065946/pro_mix_tu_dau_giuong_moho_vienna_a27cbbe06280419a89571f625b6594de_master.png',
             isMain: true,
           },
           {
-            url: 'https://cdn.hstatic.net/products/200000065946/pro_nau_bo_ban_an_4_cho_6_cho_serena_noi_that_moho_1_68762d6e9fd94782a40e996ceb7472e9_master.png',
+            url: 'https://cdn.hstatic.net/products/200000065946/pro_mix_tu_dau_giuong_moho_vienna_d1946e6516ec43139205dd992e006ada_master.jpg',
             isMain: false,
           },
           {
-            url: 'https://cdn.hstatic.net/products/200000065946/pro_nau_ban_an_serena_noi_that_moho_1b6e834de9ce429eb69010d120f5df33_master.jpg',
-            isMain: false,
-          },
-        ],
-      },
-      {
-        price: 7690000,
-        stock: 15,
-        defaultVariant: false,
-        combination: {
-          Color: 'Màu Tự Nhiên',
-        },
-        discount: {
-          type: 'percentage',
-          discountType: 'VARIANT',
-          value: 22,
-          startDate: new Date(),
-          endDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
-          priority: 1,
-        },
-        images: [
-          {
-            url: 'https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_bo_ban_an_4_ghe_6_ghe_serena_noi_that_moho_ban_an_1m6_238807752ee145c19f3e3ccdb43977d6_master.jpg',
-            isMain: true,
-          },
-          {
-            url: 'https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_bo_ban_an_4_ghe_6_ghe_serena_noi_that_moho_2_10cfbc49497846abbcdae72eb34690b3_master.jpg',
+            url: 'https://cdn.hstatic.net/products/200000065946/pro_mix_tu_dau_giuong_moho_vienna_1_301fad5c7b154320919bd700ef8b163f_master.jpg',
             isMain: false,
           },
           {
-            url: 'https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_bo_ban_an_4_ghe_6_ghe_serena_noi_that_moho_5_0ba747cbf5c04ed7aa16294b3d05ad6c_master.jpg',
+            url: 'https://cdn.hstatic.net/products/200000065946/pro_mix_tu_dau_giuong_moho_vienna_2_5f3b31ffc5c245c5af6eb3526001b93d_master.jpg',
             isMain: false,
           },
           {
-            url: 'https://cdn.hstatic.net/products/200000065946/pro_mau_tu_nhien_bo_ban_an_4_ghe_6_ghe_serena_noi_that_moho_6_a825566cee404209a58a45792f7322e8_master.jpg',
+            url: 'https://cdn.hstatic.net/products/200000065946/pro_mix_tu_dau_giuong_moho_vienna_3_dbfe26f34fbc4825bafb18541589e331_master.jpg',
+            isMain: false,
+          },
+          {
+            url: 'https://cdn.hstatic.net/products/200000065946/pro_mix_tu_dau_giuong_moho_vienna_4_4f67363bff2b4043832e868b716e9d3c_master.jpg',
+            isMain: false,
+          },
+          {
+            url: 'https://cdn.hstatic.net/products/200000065946/pro_mix_tu_dau_giuong_moho_vienna_5_e311d4e252984617a7b55c36e50bd6cc_master.jpg',
             isMain: false,
           },
         ],

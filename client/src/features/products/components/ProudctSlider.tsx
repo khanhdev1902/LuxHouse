@@ -25,7 +25,7 @@ export default function ProductSlider({
   return (
     <div className={cn("space-y-6", className)}>
       <div className="flex flex-row justify-between">
-        {title && <span className="text-2xl font-bold text-col">{title}</span>}
+        {title && <span className="text-2xl font-bold text-main">{title}</span>}
         {/* <button className=" font-semibold price-color cursor-pointer opacity-90">Xem thêm</button> */}
       </div>
       <motion.div onHoverStart={on} onHoverEnd={off}>

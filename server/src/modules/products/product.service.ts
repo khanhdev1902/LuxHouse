@@ -17,7 +17,7 @@ export class ProductService {
   ): Promise<{ lstProducts: ProductListItem[]; meta: object }> {
     const {
       page = 1,
-      limit = 10,
+      limit = 16,
       search,
       categories,
       colors,
